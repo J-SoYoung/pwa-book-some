@@ -6,19 +6,20 @@ import Home from "@/pages/home/";
 import Login from "@/pages/login";
 import MyBook from "@/pages/my-book";
 import Posts from "@/pages/posts";
+import Detail from "@/pages/detail";
 
 const router = createBrowserRouter([
   {
-    path: "/landing",
+    path: "/",
     element: <App />
   },
   {
-    path: "/",
+    path: "/home",
     element: <Home />
   },
   {
-    path: "/",
-    element: <Home />
+    path: "/detail",
+    element: <Detail />
   },
   {
     path: "/login",

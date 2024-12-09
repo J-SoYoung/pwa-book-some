@@ -19,7 +19,36 @@ export default defineConfig({
         name: "book-some",
         short_name: "book-some",
         description: "책과 친해지는 어플",
-        theme_color: "#ffffff"
+        start_url: "/",
+        display: "standalone",
+        background_color: "#ffffff",
+        theme_color: "#000000",
+        icons: [
+          {
+            src: "/images/logo.png",
+            sizes: "192x192",
+            type: "image/png"
+          },
+          {
+            src: "/images/logo2.png",
+            sizes: "512x512",
+            type: "image/png"
+          }
+        ],
+        screenshots: [
+          {
+            src: "/screenshots/desktop.png",
+            sizes: "1280x720",
+            type: "image/png",
+            form_factor: "wide"
+          },
+          {
+            src: "/screenshots/mobile.png",
+            sizes: "360x640",
+            type: "image/png",
+            form_factor: "narrow"
+          }
+        ]
       },
 
       workbox: {

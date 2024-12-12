@@ -27,6 +27,19 @@ h4 {
   padding: 0;
 }
 
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.2rem;
+}
+h3 {
+  font-size: 1rem;
+}
+p {
+  font-size: 0.8rem;
+}
+
 body {
   max-width: 400px;
   min-height: 100vh;
@@ -35,16 +48,16 @@ body {
   box-shadow: 2px 2px 5px #bebebe;
 }
 
-/* 반응형 스타일 */
-/* @media (max-width: 400px) {
+@media (min-width: 768px) {
   body {
+    max-width: 1200px;
     margin: 0 auto;
-    background-color: #ffe4e1; 
+    padding: 2rem;
   }
-  h1{
-    font-size: 1.5rem; 
+  h1 {
+    font-size: 1.5rem;
   }
-} */
+}
 
 .title {
   font-size: 2.5rem;

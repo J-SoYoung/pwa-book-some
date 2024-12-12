@@ -1,0 +1,33 @@
+.recommendations {
+  padding: 1rem;
+}
+.recommendations h2{
+  margin-bottom: 8px;
+}
+.bookGrid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookItem {
+  width: 100px;
+  height: 130px;
+  background-color: #ddd;
+  border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+  .recommendations {
+    padding: 2rem;
+  }
+
+  .bookGrid {
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+
+  .bookItem {
+    width: 150px;
+    height: 200px;
+  }
+}

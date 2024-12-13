@@ -7,15 +7,22 @@ function PWABadge() {
   // You can remove onRegisteredSW callback and registerPeriodicSync function
   const period = 0;
 
-  const { needRefresh: [needRefresh, setNeedRefresh],  updateServiceWorker  } = useRegisterSW({
+  const {
+    needRefresh: [needRefresh, setNeedRefresh],
+    updateServiceWorker
+  } = useRegisterSW({
+    // 업데이트 트리거 확인 - 추가함함
+    onNeedRefresh() {
+      console.log("New content detected, prompting user for update.");
+      setNeedRefresh(true);
+    },
     onRegisteredSW(swUrl, r) {
+      console.log("Service Worker registered.");
       if (period <= 0) return;
 
       if (r?.active?.state === "activated") {
         registerPeriodicSync(period, swUrl, r);
-      } 
-      
-      else if (r?.installing) {
+      } else if (r?.installing) {
         r.installing.addEventListener("statechange", (e) => {
           const sw = e.target as ServiceWorker;
           if (sw.state === "activated") registerPeriodicSync(period, swUrl, r);
@@ -34,7 +41,8 @@ function PWABadge() {
         <div className="PWABadge-toast">
           <div className="PWABadge-message">
             <span id="toast-message">
-              New content available, click on reload button to update. 새로운 내용이 있습니다. 업데이트 하시겠습니까? 
+              New content available, click on reload button to update. 새로운
+              내용이 있습니다. 업데이트 하시겠습니까?
             </span>
           </div>
           <div className="PWABadge-buttons">

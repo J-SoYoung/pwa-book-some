@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { InstallButton } from "./InstallButton";
-import PWABadge from "./PWABadge"; // 서비스워커 업데이트
+import PWABadge from "../../PWABadge"; // 서비스워커 업데이트
 
 // 랜딩페이지
 export const Landing = () => {

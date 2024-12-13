@@ -20,6 +20,7 @@ export default defineConfig({
         short_name: "book-some",
         description: "책과 친해지는 어플",
         start_url: "/",
+        scope: "/",
         display: "standalone",
         background_color: "#ffffff",
         theme_color: "#000000",

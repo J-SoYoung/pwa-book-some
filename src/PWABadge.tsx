@@ -28,6 +28,9 @@ function PWABadge() {
           if (sw.state === "activated") registerPeriodicSync(period, swUrl, r);
         });
       }
+    },
+    onRegisterError(error) {
+      console.log("SW registration error", error);
     }
   });
 

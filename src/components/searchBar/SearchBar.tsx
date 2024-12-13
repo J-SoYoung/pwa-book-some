@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./searchBar.module.css";
 
 function SearchBar() {
@@ -5,7 +6,9 @@ function SearchBar() {
     <>
       <div className={styles.searchBar}>
         <span className={styles.placeholder}>Search</span>
-        <span className={styles.searchIcon}>🔍</span>
+        <Link to={"/search"} className={styles.searchIcon}>
+          🔍
+        </Link>
       </div>
     </>
   );

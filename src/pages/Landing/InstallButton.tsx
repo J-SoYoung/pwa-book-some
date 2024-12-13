@@ -11,7 +11,6 @@ export const InstallButton = () => {
 
     useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
-      console.log("beforeinstallprompt이벤트--", e);
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
     };

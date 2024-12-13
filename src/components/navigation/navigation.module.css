@@ -1,0 +1,78 @@
+.bottomNav {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  background-color: #f8f8f8;
+  border-top: 1px solid #ccc;
+  position: fixed;
+  bottom: 0;
+}
+
+button,
+a {
+  flex-grow: 1;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+button:hover,
+a:hover {
+  background-color: #eaeaea;
+}
+
+.desktopNavbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navLinks li {
+  font-size: 1rem;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.navLinks a:hover {
+  color: #007bff;
+}
+
+/* 모바일 전용 */
+@media (max-width: 768px) {
+  .desktopNavbar {
+    display: none;
+  }
+}
+
+/* 데스크탑 전용*/
+@media (min-width: 768px) {
+  .bottomNav {
+    display: none;
+  }
+}

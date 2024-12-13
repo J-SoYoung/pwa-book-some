@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PopupButton from "../popupButton/PopupButton";
-import styles from "./bottomNav.module.css";
+import styles from "./navigation.module.css";
 import { Link } from "react-router-dom";
 
 function BottomNav() {

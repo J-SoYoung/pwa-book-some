@@ -1,7 +1,9 @@
 .recommendations {
-  padding: 1rem;
+  width: 100%;
+  padding:  1rem;
+  box-sizing: border-box;
 }
-.recommendations h2{
+.recommendations h2 {
   margin-bottom: 8px;
 }
 .bookGrid {
@@ -16,6 +18,7 @@
   border-radius: 4px;
 }
 
+/* 데스크탑 전용*/
 @media (min-width: 768px) {
   .recommendations {
     padding: 2rem;

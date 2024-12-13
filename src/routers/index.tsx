@@ -30,9 +30,8 @@
 //   );
 // }
 
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import '../index.css'
+import "../index.css";
 
 import Home from "@/pages/home/";
 import Login from "@/pages/login";
@@ -40,32 +39,39 @@ import MyBook from "@/pages/my-book";
 import Posts from "@/pages/posts";
 import Detail from "@/pages/detail";
 import Landing from "@/pages/Landing";
+import Layout from "@/components/layout/Layout";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Landing />
-  },
-  {
-    path: "/home",
-    element: <Home />
-  },
-  {
-    path: "/detail",
-    element: <Detail />
-  },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/mybook",
-    element: <MyBook />
-  },
-  {
-    path: "/posts",
-    element: <Posts />
-  },
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Landing />
+      },
+      {
+        path: "/home",
+        element: <Home />
+      },
+      {
+        path: "/detail",
+        element: <Detail />
+      },
+      {
+        path: "/login",
+        element: <Login />
+      },
+      {
+        path: "/mybook",
+        element: <MyBook />
+      },
+      {
+        path: "/posts",
+        element: <Posts />
+      }
+    ]
+  }
 ]);
 
 export default function Router() {

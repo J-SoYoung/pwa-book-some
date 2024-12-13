@@ -11,8 +11,7 @@
   bottom: 0;
 }
 
-button,
-a {
+.bottomNavItems {
   flex-grow: 1;
   padding: 0.5rem 0;
   font-size: 1rem;
@@ -22,8 +21,7 @@ a {
   text-align: center;
 }
 
-button:hover,
-a:hover {
+.bottomNavItems:hover {
   background-color: #eaeaea;
 }
 
@@ -63,9 +61,26 @@ a:hover {
   color: #007bff;
 }
 
+.scrollToTop {
+  position: fixed;
+  bottom: 70px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+}
+
+.scrollToTop:hover {
+  background-color: #0056b3;
+}
+
 /* 모바일 전용 */
 @media (max-width: 768px) {
-  .desktopNavbar {
+  .desktopNavbar
+  {
     display: none;
   }
 }

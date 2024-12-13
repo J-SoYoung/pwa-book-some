@@ -1,5 +1,6 @@
 import BottomNav from "../navigation/BottomNav";
 import DesktopNavbar from "../navigation/DesktopNavbar";
+import { ScrollTopButton } from "../navigation/ScrollTopButton";
 import styles from "./layout.module.css";
 
 import { useEffect } from "react";
@@ -20,6 +21,7 @@ function Layout() {
 
   return (
     <>
+      <ScrollTopButton />
       <DesktopNavbar />
       <header className={styles.header}>
         <h1>BOOKSOME</h1>

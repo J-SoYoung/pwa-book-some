@@ -1,0 +1,10 @@
+.header h1 {
+  margin-bottom: 32px;
+}
+
+/* 데스크탑 전용*/
+@media (min-width: 768px) {
+  .header {
+    display: none; 
+  }
+}

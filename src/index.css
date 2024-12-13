@@ -48,6 +48,7 @@ body {
   box-shadow: 2px 2px 5px #bebebe;
 }
 
+/* 데스크탑 전용*/
 @media (min-width: 768px) {
   body {
     max-width: 1200px;

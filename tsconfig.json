@@ -7,8 +7,8 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "moduleResolution": "node",
+    // "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -25,7 +25,9 @@
     "paths": {
       "@/*": ["src/*"],
       "@/pages/*": ["src/pages/*"],
-      "@/components/*": ["src/components/*"]
+      "@/components/*": ["src/components/*"],
+      "@/services/*": ["src/services/*"],
+      "@/apis/*": ["src/apis/*"]
     }
   },
   "include": ["src"],

@@ -70,7 +70,19 @@ export default defineConfig({
     alias: [
       { find: "@/", replacement: "/src" },
       { find: "@/pages", replacement: "/src/pages" },
-      { find: "@/components", replacement: "/src/components" }
+      { find: "@/components", replacement: "/src/components" },
+      { find: "@/services", replacement: "/src/services" },
+      { find: "@/apis", replacement: "/src/apis" }
     ]
-  }
+  },
+  // 프록시 설정 (naver API)
+  // server: {
+  //   proxy: {
+  //     "/search/book": {
+  //       target: "https://openapi.naver.com/v1",
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/search\/book/, "/search/book.json")
+  //     }
+  //   }
+  // }
 });

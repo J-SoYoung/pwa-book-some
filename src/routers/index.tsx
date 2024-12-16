@@ -1,4 +1,3 @@
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "../index.css";
 
@@ -13,6 +12,10 @@ import Search from "@/pages/search";
 import PostsNew from "@/pages/postsNew";
 
 const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />
+  },
   {
     path: "/",
     element: <Layout />,
@@ -29,10 +32,7 @@ const router = createBrowserRouter([
         path: "/detail",
         element: <Detail />
       },
-      {
-        path: "/login",
-        element: <Login />
-      },
+
       {
         path: "/mybook",
         element: <MyBook />

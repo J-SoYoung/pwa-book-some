@@ -14,6 +14,7 @@ function BottomNav() {
         <Link to="/home" className={styles.bottomNavItems}>HOME</Link>
         <button onClick={togglePopup} className={styles.bottomNavItems}>+ 글쓰기</button>
         <Link to="/mybook" className={styles.bottomNavItems}>내 서재</Link>
+        <Link to="/login" className={styles.bottomNavItems}>로그인</Link>
       </nav>
       {showPopup && <PopupButton onClose={togglePopup} />}
     </>

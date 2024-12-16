@@ -22,6 +22,9 @@ function DesktopNavbar() {
           <li>
             <Link to="/mybook">내 서재</Link>
           </li>
+          <li>
+            <Link to="/login">로그인</Link>
+          </li>
         </ul>
       </nav>
       {showPopup && <PopupButton onClose={togglePopup} />}

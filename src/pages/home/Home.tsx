@@ -7,8 +7,8 @@ import UserBooks from "./userBooks/UserBooks";
 import { searchBooks } from "@/apis/book";
 
 export const Home = () => {
-
   useEffect(() => {
+    console.log("미리보기중");
     searchBooks();
   }, []);
 

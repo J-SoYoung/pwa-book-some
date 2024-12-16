@@ -2,7 +2,6 @@ export const searchBooks = async () => {
   try {
     const response = await fetch(
       "/search/book?query=주식&display=10&start=1&sort=sim",
-      // "https://openapi.naver.com/v1/search/book.json?query=주식&display=10&start=1&sort=sim",
       // 'https://openapi.naver.com/v1/search/blog?query=' + encodeURI(req.query.query);
       {
         method: "GET",
@@ -12,25 +11,28 @@ export const searchBooks = async () => {
         }
       }
     );
-    if (!response.ok) throw new Error("HTTP에러");
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
     console.log(data);
-    return data;
   } catch (error) {
-    console.error(error);
+    console.error("Error:", error);
   }
 };
 
-export const vercerSearchBooks = async () => {
-  try {
-    const response = await fetch(
-      "/api/search?query=주식&display=10&start=1&sort=sim"
-    );
-    if (!response.ok) throw new Error("HTTP에러");
-    // const data = await response.json();
-    console.log("이거된건가?", response);
-    return response;
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const vercerSearchBooks = async () => {
+//   try {
+//     const response = await fetch(
+//       "/api/search?query=주식&display=10&start=1&sort=sim"
+//     );
+//     if (!response.ok) throw new Error("HTTP에러");
+//     // const data = await response.json();
+//     console.log("이거된건가?", response);
+//     return response;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };

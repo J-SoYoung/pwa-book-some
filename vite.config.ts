@@ -76,13 +76,13 @@ export default defineConfig({
     ]
   },
   // 프록시 설정 (naver API)
-  // server: {
-  //   proxy: {
-  //     "/search/book": {
-  //       target: "https://openapi.naver.com/v1",
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/search\/book/, "/search/book.json")
-  //     }
-  //   }
-  // }
+  server: {
+    proxy: {
+      "/search/book": {
+        target: "https://openapi.naver.com/v1",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/search\/book/, "/search/book.json")
+      }
+    }
+  }
 });

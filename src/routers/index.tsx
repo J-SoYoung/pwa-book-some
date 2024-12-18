@@ -10,6 +10,7 @@ import Landing from "@/pages/Landing";
 import Layout from "@/components/layout/Layout";
 import Search from "@/pages/search";
 import PostsNew from "@/pages/postsNew";
+import PWABadge from "@/components/layout/PWABadge";
 
 const router = createBrowserRouter([
   {
@@ -54,5 +55,10 @@ const router = createBrowserRouter([
 ]);
 
 export default function Router() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <PWABadge />
+      <RouterProvider router={router} />
+    </>
+  );
 }

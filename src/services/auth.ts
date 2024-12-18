@@ -1,17 +1,17 @@
-import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut, User } from "firebase/auth";
 import { auth, database } from "./firebase";
 import { get, ref, set } from "firebase/database";
 
 // 구글 로그인 호출
-export const firebaseGoogleLogin = async () => {
+export const signInFormGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    
+
     // 유저 찾기 및 새 유저 등록
     const userData = await getUserData(user);
-    return userData 
+    return userData;
   } catch (error) {
     console.error("google로그인 에러", error);
   }
@@ -30,7 +30,7 @@ const getUserData = async (user: User) => {
       return newUser;
     }
   } catch (error) {
-    console.error(error);
+    console.error("firebase 유저 검색 에러", error);
   }
 };
 
@@ -48,6 +48,17 @@ const createNewUser = async (user: User) => {
     await set(userRef, newUser);
     return newUser;
   } catch (error) {
-    console.error(error);
+    console.error("firebase 유저 등록 에러", error);
+  }
+};
+
+// firebase 로그아웃
+export const signOutFromGoogle = async () => {
+  try {
+    await signOut(auth);
+    console.log('User signed out');
+  } catch (error) {
+    console.error('Sign-Out Error:', error);
+    throw error;
   }
 };

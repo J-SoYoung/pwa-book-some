@@ -72,7 +72,8 @@ export default defineConfig({
       { find: "@/pages", replacement: "/src/pages" },
       { find: "@/components", replacement: "/src/components" },
       { find: "@/services", replacement: "/src/services" },
-      { find: "@/apis", replacement: "/src/apis" }
+      { find: "@/bookApis", replacement: "/src/bookApis" },
+      { find: "@/recoil", replacement: "/src/recoil" },
     ]
   },
   // 프록시 설정 (naver API)

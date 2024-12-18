@@ -28,7 +28,8 @@
       "@/pages/*": ["src/pages/*"],
       "@/components/*": ["src/components/*"],
       "@/services/*": ["src/services/*"],
-      "@/apis/*": ["src/apis/*"]
+      "@/bookApis/*": ["src/bookApis/*"],
+      "@/recoil/*": ["src/recoil/*"]
     }
   },
   "include": ["src"],

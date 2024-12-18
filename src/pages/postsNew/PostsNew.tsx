@@ -1,26 +1,98 @@
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import styles from "./postNew.module.css";
+import { SearchModal } from "./modal/SearchModal";
+import { uploadDiaryPosting } from "@/services/apis";
+import { userState } from "@/recoil/atoms";
+import { useRecoilValue } from "recoil";
+
 export const PostsNew = () => {
+  const user = useRecoilValue(userState);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedBook, setSelectedBook] = useState("");
+  const [diaryData, setDiaryData] = useState({
+    diaryTitle: "",
+    todayTitle: "",
+    content: ""
+  });
+
+  const onSelectBook = (book) => {
+    setSelectedBook(book);
+    setShowModal(false);
+  };
+  console.log("책선택함", selectedBook);
+
+  const onSubmitForm = async (e) => {
+    const diaryId = uuidv4();
+    const postId = uuidv4();
+
+    e.preventDefault();
+    const newDiaryData = {
+      books: {
+        id: selectedBook.isbn,
+        title: selectedBook.title,
+        image: selectedBook.image,
+        author: selectedBook.author,
+        description: selectedBook.description,
+        createdAt: new Date()
+      },
+      diaries: {
+        id: diaryId,
+        title: diaryData.diaryTitle,
+        createdAt: new Date()
+      },
+      posts: {
+        id: postId,
+        title: diaryData.todayTitle,
+        content: diaryData.content,
+        createdAt: new Date()
+      },
+      user
+    };
+    uploadDiaryPosting(newDiaryData);
+  };
+
   return (
     <div className={styles.posts}>
       <h2>새 다이어리 만들기</h2>
-
       <div className={styles.searchSection}>
-        <button className={styles.searchButton}>
-          <span role="img" aria-label="search">
-            책
-          </span>
-        </button>
+        <div className={styles.searchBar}>
+          <button
+            onClick={() => {
+              setShowModal(!showModal);
+            }}
+          >
+            📓 BOOK{" "}
+          </button>
+          {showModal && (
+            <SearchModal
+              onClose={() => {
+                setShowModal(false);
+              }}
+              onSelect={onSelectBook}
+            />
+          )}
+        </div>
+
         <div className={styles.bookInfo}>
-          <img src={"/"} className={styles.bookImage} />
-          <div className={styles.bookDetails}></div>
+          <img src={selectedBook?.image ?? ""} className={styles.bookImage} />
+          <div className={styles.bookDetails}>
+            <strong>{selectedBook?.title ?? ""}</strong>
+            <p>{selectedBook?.author ?? ""}</p>
+          </div>
         </div>
       </div>
 
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={onSubmitForm}>
         <label className={styles.label}>
           나만의 책 제목을 적어주세요.
           <input
             type="text"
+            value={diaryData.diaryTitle}
+            onChange={(e) =>
+              setDiaryData({ ...diaryData, diaryTitle: e.target.value })
+            }
             placeholder="책 다이어리 제목이 됩니다"
             className={styles.input}
           />
@@ -30,6 +102,10 @@ export const PostsNew = () => {
           오늘의 독서 제목을 적어주세요.
           <input
             type="text"
+            value={diaryData.todayTitle}
+            onChange={(e) =>
+              setDiaryData({ ...diaryData, todayTitle: e.target.value })
+            }
             placeholder="오늘 작성된 감상평의 제목이 됩니다."
             className={styles.input}
           />
@@ -37,7 +113,14 @@ export const PostsNew = () => {
 
         <label className={styles.label}>
           오늘 읽은 부분을 기록해보세요.
-          <textarea placeholder="" className={styles.textarea}></textarea>
+          <textarea
+            value={diaryData.content}
+            onChange={(e) =>
+              setDiaryData({ ...diaryData, content: e.target.value })
+            }
+            placeholder="나의 느낀점을 자유롭게 작성해보세요"
+            className={styles.textarea}
+          ></textarea>
         </label>
 
         <button type="submit" className={styles.submitButton}>

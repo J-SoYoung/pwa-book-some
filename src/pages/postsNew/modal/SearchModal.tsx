@@ -1,9 +1,16 @@
 import { useState } from "react";
 import styles from "./searchModal.module.css";
 import { searchBooks } from "@/bookApis/book";
+import { SelectedBookType } from "@/types";
 
-export const SearchModal = ({ onClose, onSelect }) => {
-  const [bookSearchData, setBookSearchData] = useState([]);
+export const SearchModal = ({
+  onClose,
+  onSelect
+}: {
+  onClose: () => void;
+  onSelect: (book: SelectedBookType) => void;
+}) => {
+  const [bookSearchData, setBookSearchData] = useState<SelectedBookType[]>([]);
   const [bookQuery, setBookQuery] = useState("");
 
   const onClickSearchBook = async () => {
@@ -26,9 +33,9 @@ export const SearchModal = ({ onClose, onSelect }) => {
         </button>
         {bookSearchData.length > 0 ? (
           <ul className={styles.bookList}>
-            {bookSearchData.map((book, idx) => (
+            {bookSearchData.map((book) => (
               <li
-                key={idx}
+                key={book.isbn}
                 className={styles.bookItem}
                 onClick={() => onSelect(book)}
               >

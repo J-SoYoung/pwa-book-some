@@ -1,8 +1,51 @@
 export interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed';
+    outcome: "accepted" | "dismissed";
     platform: string;
   }>;
   prompt: () => void;
+}
+
+export interface SelectedBookType {
+  author: string;
+  description: string;
+  image: string;
+  isbn: string;
+  title: string;
+}
+
+export interface BookDiaryType {
+  diaries?: { [key: string]: boolean };
+  id: string;
+  image: string;
+  title: string;
+  createdAt: string;
+}
+
+export interface DiariesType {
+  id: string;
+  title: string;
+  createdAt: string;
+}
+
+export interface PostsType {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+}
+
+export interface UserType {
+  avatar: string;
+  email: string;
+  userId: string;
+  username: string;
+}
+
+export interface NewDiaryDataType {
+  books: SelectedBookType;
+  diaries: DiariesType;
+  posts: PostsType;
+  user: UserType;
 }

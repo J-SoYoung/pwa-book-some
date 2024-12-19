@@ -1,23 +1,24 @@
+import { UserType } from "@/types";
 import { atom } from "recoil";
 
-export const userState = atom({
-  key: "userState", // unique ID 
-  default: "", // default value 
+export const userState = atom<UserType | null>({
+  key: "userState", // unique ID
+  default: null, // default value
   dangerouslyAllowMutability: true,
   effects_UNSTABLE: [
     ({ setSelf, onSet }) => {
-      const savedValue = localStorage.getItem('userState');
+      const savedValue = localStorage.getItem("userState");
       if (savedValue != null) {
         setSelf(JSON.parse(savedValue));
       }
 
       onSet((newValue) => {
         if (newValue != null) {
-          localStorage.setItem('userState', JSON.stringify(newValue));
+          localStorage.setItem("userState", JSON.stringify(newValue));
         } else {
-          localStorage.removeItem('userState');
+          localStorage.removeItem("userState");
         }
       });
-    },
-  ],
+    }
+  ]
 });

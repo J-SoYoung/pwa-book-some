@@ -24,9 +24,19 @@ export interface BookDiaryType {
 }
 
 export interface DiariesType {
+  bookId?: string;
+  bookImage?: string;
+  bookTitle?: string;
   id: string;
   title: string;
   createdAt: string;
+}
+
+export interface DiariesWithPostsType {
+  diaryTitle: string;
+  bookImage: string;
+  bookTitle: string;
+  posts: PostsType;
 }
 
 export interface PostsType {

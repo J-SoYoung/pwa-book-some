@@ -36,7 +36,7 @@ export interface DiariesWithPostsType {
   diaryTitle: string;
   bookImage: string;
   bookTitle: string;
-  posts: PostsType;
+  posts: PostsType[];
 }
 
 export interface PostsType {

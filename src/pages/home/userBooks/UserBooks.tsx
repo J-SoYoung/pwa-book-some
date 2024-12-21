@@ -14,13 +14,14 @@ function UserBooks() {
     fetchBookDiariess();
   }, []);
   console.log(bookDiaries);
+
   return (
     <section className={styles.userBooks}>
       <h2>다른 유저들은 이런 책을 읽고 있어요!</h2>
       <div>
-        {bookDiaries.map((diary) => {
+        {bookDiaries.map((diary, idx) => {
           return (
-            <div className={styles.bookCard}>
+            <div className={styles.bookCard} key={idx}>
               <img src={diary.bookImage} className={styles.bookImage} />
 
               <div className={styles.bookInfo}>
@@ -29,12 +30,7 @@ function UserBooks() {
                 <div className={styles.likeBox}>
                   <p>❤️📒</p>
                 </div>
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
-                  explicabo magnam dolorem temporibus accusantium ipsam dolorum
-                  eligendi quas eius, doloribus totam consequuntur! Minus
-                  pariatur odit dolor iste perferendis accusamus totam.
-                </p>
+                <p>{diary.posts[0].content}</p>
               </div>
             </div>
           );

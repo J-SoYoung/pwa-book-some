@@ -7,8 +7,10 @@ import { uploadDiaryPosting } from "@/services/apis";
 import { userState } from "@/recoil/atoms";
 import { useRecoilValue } from "recoil";
 import { NewDiaryDataType, SelectedBookType, UserType } from "@/types";
+import { useNavigate } from "react-router-dom";
 
 export const PostsNew = () => {
+  const navigate = useNavigate();
   const user = useRecoilValue(userState);
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState<SelectedBookType>();
@@ -22,36 +24,39 @@ export const PostsNew = () => {
     setSelectedBook(book);
     setShowModal(false);
   };
-  console.log("책선택함", selectedBook);
 
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const diaryId = uuidv4();
     const postId = uuidv4();
-
-    e.preventDefault();
-    if (selectedBook) {
-      const newDiaryData: NewDiaryDataType = {
-        books: {
-          isbn: selectedBook.isbn,
-          author: selectedBook.author,
-          title: selectedBook.title,
-          image: selectedBook.image,
-          description: selectedBook.description
-        },
-        diaries: {
-          id: diaryId,
-          title: diaryData.diaryTitle,
-          createdAt: new Date().toISOString()
-        },
-        posts: {
-          id: postId,
-          title: diaryData.todayTitle,
-          content: diaryData.content,
-          createdAt: new Date().toISOString()
-        },
-        user : user as UserType
-      };
-      uploadDiaryPosting(newDiaryData);
+    try {
+      if (selectedBook) {
+        const newDiaryData: NewDiaryDataType = {
+          books: {
+            isbn: selectedBook.isbn,
+            author: selectedBook.author,
+            title: selectedBook.title,
+            image: selectedBook.image,
+            description: selectedBook.description
+          },
+          diaries: {
+            id: diaryId,
+            title: diaryData.diaryTitle,
+            createdAt: new Date().toISOString()
+          },
+          posts: {
+            id: postId,
+            title: diaryData.todayTitle,
+            content: diaryData.content,
+            createdAt: new Date().toISOString()
+          },
+          user: user as UserType
+        };
+        const result = await uploadDiaryPosting(newDiaryData);
+        if (result) navigate("/home");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 

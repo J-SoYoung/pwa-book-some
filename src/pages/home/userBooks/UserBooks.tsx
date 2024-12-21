@@ -1,26 +1,44 @@
+import { useEffect, useState } from "react";
 import styles from "./userBooks.module.css";
+import { getBookDiaries } from "@/services/apis";
+import { DiariesWithPostsType } from "@/types";
 
 function UserBooks() {
+  const [bookDiaries, setBookDiaries] = useState<DiariesWithPostsType[]>([]);
+
+  useEffect(() => {
+    const fetchBookDiariess = async () => {
+      const diary = await getBookDiaries();
+      setBookDiaries(diary);
+    };
+    fetchBookDiariess();
+  }, []);
+  console.log(bookDiaries);
   return (
     <section className={styles.userBooks}>
       <h2>다른 유저들은 이런 책을 읽고 있어요!</h2>
       <div>
-        <div className={styles.bookCard}>
-          <div className={styles.bookImage}></div>
-          <div className={styles.bookInfo}>
-            <h3>책제목 여기에 들어감</h3>
-            <p>나만의 책제목 여기에 들어감</p>
-            <p>유저가 쓴 글 랜덤으로 올라옴 어쨌든 생각해봄</p>
-          </div>
-        </div>
-        <div className={styles.bookCard}>
-          <div className={styles.bookImage}></div>
-          <div className={styles.bookInfo}>
-            <h3>책제목 여기에 들어감</h3>
-            <p>나만의 책제목 여기에 들어감</p>
-            <p>유저가 쓴 글 랜덤으로 올라옴 어쨌든 생각해봄</p>
-          </div>
-        </div>
+        {bookDiaries.map((diary) => {
+          return (
+            <div className={styles.bookCard}>
+              <img src={diary.bookImage} className={styles.bookImage} />
+
+              <div className={styles.bookInfo}>
+                <h3>{diary.diaryTitle}</h3>
+                <p>{diary.bookTitle}</p>
+                <div className={styles.likeBox}>
+                  <p>❤️📒</p>
+                </div>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
+                  explicabo magnam dolorem temporibus accusantium ipsam dolorum
+                  eligendi quas eius, doloribus totam consequuntur! Minus
+                  pariatur odit dolor iste perferendis accusamus totam.
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

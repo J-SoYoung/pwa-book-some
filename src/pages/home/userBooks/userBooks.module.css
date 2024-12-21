@@ -2,36 +2,79 @@
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
+  margin-bottom: 40px;
 }
 .userBooks h2 {
   margin-bottom: 8px;
 }
 .bookCard {
+  max-width: 380px;
+  height: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
   background-color: #f0f0f0;
   padding: 1rem;
+  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
 
 .bookImage {
-  width: 50px;
-  height: 50px;
+  width: 25%;
+  height: 120px;
   background-color: #ddd;
   border-radius: 4px;
-  margin-right: 1rem;
+  position: relative;
 }
 
+.bookInfo {
+  width: 72%;
+  height: 120px;
+  position: relative;
+}
 .bookInfo h3 {
   margin: 0;
   font-size: 1rem;
   color: #333;
 }
-
-.userInfo p {
-  margin: 0.2rem 0;
-  font-size: 0.8rem;
+.bookInfo > p:first-of-type {
+  width: 250px;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.bookInfo > p:last-of-type {
+  display: -webkit-box;
+  white-space: normal;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: #666;
+}
+
+.likeBox {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+@media (min-width: 768px) {
+  .userBooks > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .bookCard {
+    min-width: 48%;
+    margin-bottom: 2rem;
+  }
+  .bookImage {
+    object-fit: cover;
+  }
 }

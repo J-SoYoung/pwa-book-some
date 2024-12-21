@@ -9,7 +9,6 @@ import { signInFormGoogle, signOutFromGoogle } from "@/services/auth";
 export const Login = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useRecoilState(userState);
-  console.log(userData);
 
   const onClickGoogleSignIn = async () => {
     try {

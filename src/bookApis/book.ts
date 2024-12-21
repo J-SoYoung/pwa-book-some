@@ -24,17 +24,3 @@ export const searchBooks = async (query: string) => {
     console.error("Error:", error);
   }
 };
-
-// export const vercerSearchBooks = async () => {
-//   try {
-//     const response = await fetch(
-//       "/api/search?query=주식&display=10&start=1&sort=sim"
-//     );
-//     if (!response.ok) throw new Error("HTTP에러");
-//     // const data = await response.json();
-//     console.log("이거된건가?", response);
-//     return response;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };

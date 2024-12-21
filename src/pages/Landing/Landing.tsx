@@ -11,8 +11,6 @@ export const Landing = () => {
       "(display-mode: standalone)"
     ).matches;
 
-    console.log(window.matchMedia("(display-mode: standalone)"));
-
     if (isStandalone) {
       navigate("/home");
     }

@@ -67,14 +67,14 @@ export const uploadDiaryPosting = async (newDiaryData: NewDiaryDataType) => {
 // 다이어리 가져오기
 export const getBookDiaries = async () => {
   try {
-    // 다이어리 전체 가져오기
+    // 전체 다이어리 가져오기기
     const diaryRef = ref(database, "diaries");
     const diarySnapshot = await get(diaryRef);
     if (!diarySnapshot.exists()) {
       console.error("No diaries found.");
       return [];
     }
-    // 다이어리 가져오기
+    // 유저 기준이 아닌, 다이어리 기준으로 가져오기
     const diaryData = diarySnapshot.val();
     const allDiaries: DiariesType[] = Object.values(diaryData).flatMap(
       (userDiaries) => Object.values(userDiaries as DiariesType)
@@ -102,6 +102,25 @@ export const getBookDiaries = async () => {
     return diariesWithPosts;
   } catch (error) {
     console.error("다이어리 가져오기 에러", error);
+    return [];
+  }
+};
+
+// MyBook 읽고 있는 책 데이터 가져오기
+export const fetchMyBookData = async (
+  userId: string
+): Promise<DiariesType[]> => {
+  try {
+    const diaryRef = ref(database, `diaries/${userId}`);
+    const diarySnapshot = await get(diaryRef);
+    if (!diarySnapshot.exists()) {
+      console.error("No diaries found.");
+      return [];
+    }
+    const diaryData = Object.values(diarySnapshot.val());
+    return diaryData as DiariesType[];
+  } catch (error) {
+    console.error(error);
     return [];
   }
 };

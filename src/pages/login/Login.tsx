@@ -14,6 +14,8 @@ export const Login = () => {
     try {
       const signInUser = await signInFormGoogle();
       setUserData(signInUser);
+      alert("로그인 성공 페이지 이동");
+      navigate("/home");
     } catch (error) {
       console.error("로그인 실패:", error);
     }

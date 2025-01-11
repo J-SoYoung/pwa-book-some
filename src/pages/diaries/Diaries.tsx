@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "./diaries.module.css";
+
 import { getDiaryPosts } from "@/services/apis";
 import { useParams } from "react-router-dom";
 import { DiariesType, PostsType } from "@/types";
+import { PostItems } from "./postItems/PostItems";
 
 type FetchResultType = {
   postsData: PostsType[];
@@ -18,7 +20,7 @@ export const Diaries = () => {
   useEffect(() => {
     const fetchPosts = async (diaryId: string) => {
       try {
-        const response = await getDiaryPosts(diaryId) as FetchResultType;
+        const response = (await getDiaryPosts(diaryId)) as FetchResultType;
         setPosts(response.postsData);
         setDiary(response.diaryData);
       } catch (error) {
@@ -33,21 +35,13 @@ export const Diaries = () => {
     <main className={styles.diaries}>
       <h2>Diaries</h2>
       <div className={styles.featured}>
-        <img src={diary?.bookImage} width={130} />
+        <img src={diary?.bookImage} />
         <div className={styles.featuredText}>
           <h3 className={styles.featuredDescription}>{diary?.title}</h3>
           <p className={styles.featuredTitle}>{diary?.bookTitle}</p>
         </div>
       </div>
-      {posts.map((post) => (
-        <div className={styles.bookItem} key={post.id}>
-          <div className={styles.thumbnail}></div>
-          <div className={styles.details}>
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
-          </div>
-        </div>
-      ))}
+      <PostItems posts={posts} />
     </main>
   );
 };

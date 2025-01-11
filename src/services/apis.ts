@@ -64,8 +64,8 @@ export const uploadDiaryPosting = async (newDiaryData: NewDiaryDataType) => {
   }
 };
 
-// 다이어리 가져오기
-export const getBookDiaries = async () => {
+// HOME 모든 다이어리 가져오기
+export const getAllBookDiaries = async () => {
   try {
     // 전체 다이어리 가져오기기
     const diaryRef = ref(database, "diaries");

@@ -33,6 +33,7 @@ export interface DiariesType {
 }
 
 export interface DiariesWithPostsType {
+  diaryId: string;
   diaryTitle: string;
   bookImage: string;
   bookTitle: string;

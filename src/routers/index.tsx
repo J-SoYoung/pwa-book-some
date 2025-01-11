@@ -11,6 +11,7 @@ import Layout from "@/components/layout/Layout";
 import Search from "@/pages/search";
 import PostsNew from "@/pages/postsNew";
 import PWABadge from "@/components/layout/PWABadge";
+import Diaries from "@/pages/diaries";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/detail",
         element: <Detail />
+      },
+      {
+        path: "/diaries/:diaryId",
+        element: <Diaries />
       },
 
       {

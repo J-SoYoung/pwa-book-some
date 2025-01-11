@@ -93,6 +93,7 @@ export const getBookDiaries = async () => {
     const diariesWithPosts = allDiaries.map((diary): DiariesWithPostsType => {
       const diaryPosts = postsData[String(diary.id)] || {};
       return {
+        diaryId: diary.id,
         diaryTitle: diary.title,
         bookImage: diary.bookImage as string,
         bookTitle: diary.bookTitle as string,
@@ -103,6 +104,38 @@ export const getBookDiaries = async () => {
   } catch (error) {
     console.error("다이어리 가져오기 에러", error);
     return [];
+  }
+};
+
+export const getDiaryPosts = async (diaryId: string) => {
+  try {
+    const postsRef = ref(database, `posts/${diaryId}`);
+    const postsSnapshot = await get(postsRef);
+    if (!postsSnapshot.exists()) {
+      console.error("No posts found.");
+      return [];
+    }
+    const postsData = Object.values(postsSnapshot.val()) as PostsType[];
+
+    const diaryRef = ref(database, "diaries");
+    const diarySnapshot = await get(diaryRef);
+    if (!diarySnapshot.exists()) {
+      console.error("No diaries found.");
+      return null;
+    }
+    const diaries = diarySnapshot.val();
+    let diaryData: DiariesType | null = null;
+
+    for (const userId in diaries) {
+      const userDiaries = diaries[userId];
+      if (userDiaries[diaryId]) {
+        diaryData = userDiaries[diaryId] as DiariesType;
+      }
+    }
+    return { postsData, diaryData };
+  } catch (error) {
+    console.error("포스트 가져오기 에러", error);
+    return { postsData: [], diaryData: null };
   }
 };
 

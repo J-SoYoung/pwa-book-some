@@ -15,7 +15,7 @@ import {
   PostsType
 } from "@/types";
 
-// 다이어리 작성
+// PostNew 다이어리 처음 생성
 export const uploadDiaryPosting = async (newDiaryData: NewDiaryDataType) => {
   try {
     const { books, diaries, posts, user } = newDiaryData;
@@ -61,6 +61,43 @@ export const uploadDiaryPosting = async (newDiaryData: NewDiaryDataType) => {
     return "포스트가 정상적으로 업로드 되었습니다";
   } catch (error) {
     console.error("uploadDiaryPosting 에러 --", error);
+  }
+};
+
+// Post 다이어리의 리스트 가져오기
+export const getDiaryList = async (userId: string) => {
+  try {
+    const diaryRef = ref(database, `diaries/${userId}`);
+    const diarySnapshot = await get(diaryRef);
+    if (!diarySnapshot.exists()) {
+      console.error("No diaries found.");
+      return [];
+    }
+    const diaryData = Object.values(diarySnapshot.val());
+    return diaryData as DiariesType[];
+  } catch (error) {
+    console.error("getDiaryList 에러 --", error);
+    return [];
+  }
+};
+
+// Post 다이어리 포스트 생성
+type NewPostData = {
+  diaryId: string;
+  post: PostsType;
+};
+export const createDiaryPost = async (newPostData: NewPostData) => {
+  try {
+    const { diaryId, post } = newPostData;
+    const postsRef = ref(database, `posts/${diaryId}/${post.id}`);
+    await set(postsRef, {
+      title: post.title,
+      content: post.content,
+      createdAt: post.createdAt
+    });
+    return "포스트가 정상적으로 업로드 되었습니다";
+  } catch (error) {
+    console.error("uploadDiaryPost 에러 --", error);
   }
 };
 

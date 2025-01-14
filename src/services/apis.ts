@@ -8,6 +8,7 @@ import {
   PostsType
 } from "@/services/types";
 import { getDataFromFirebase, shuffleArray } from "./utils";
+import { DetailDataType } from "@/pages/detail/Detail";
 
 // PostNew 다이어리 처음 생성
 export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
@@ -172,4 +173,32 @@ export const getRandomBooks = async () => {
     console.error("랜덤 책 가져오기 에러", error);
     return [];
   }
+};
+// Detail페이지 데이터 가져오기
+export const getBookAndDiaries = async (bookId: string) => {
+  // 책 가져오기
+  const booksData = await getDataFromFirebase(`books/${bookId}`, false);
+  if (!booksData) {
+    console.error(`No book found with id: ${bookId}`);
+    return null;
+  }
+
+  // 다이어리 가져오기
+  const diaryIds = Object.keys(booksData.diaries); // diaryIDs 가져오기
+  const diaryData = await getDataFromFirebase("diaries", true);
+  const diaries = diaryData.flatMap((userDiaries: DiariesType) =>
+    Object.values(userDiaries)
+  );
+
+  // 다리어리 내부 포스트 가져오기 ( 첫번째 데이터만 )
+  const diaryWidthPosts = await Promise.all(
+    diaries
+      .filter((diary: DiariesType) => diaryIds.includes(diary.id))
+      .map(async (diary: DiariesType) => {
+        const postList = await getDataFromFirebase(`posts/${diary.id}`, true);
+        const firstPost = postList.length > 0 ? postList[0] : null;
+        return { ...diary, firstPost };
+      })
+  );
+  return { book: booksData, diaries: diaryWidthPosts } as DetailDataType;
 };

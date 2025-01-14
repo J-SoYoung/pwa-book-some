@@ -1,11 +1,3 @@
-// DEFAUT
-// export const uploadDiaryPosting = async () => {
-//   try {
-//   } catch (error) {
-//     console.error("uploadDiaryPosting 에러 --", error);
-//   }
-// };
-
 import { get, ref, set, update } from "firebase/database";
 import { database } from "./firebase";
 import {
@@ -15,10 +7,10 @@ import {
   NewDiaryDataType,
   PostsType
 } from "@/services/types";
-import { shuffleArray } from "./utils";
+import { getDataFromFirebase, shuffleArray } from "./utils";
 
 // PostNew 다이어리 처음 생성
-export const uploadDiaryPosting = async (newDiaryData: NewDiaryDataType) => {
+export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
   try {
     const { books, diaries, posts, user } = newDiaryData;
 
@@ -106,27 +98,17 @@ export const createDiaryPost = async (newPostData: NewPostData) => {
 // HOME 모든 다이어리 가져오기
 export const getAllBookDiaries = async () => {
   try {
-    // 전체 다이어리 가져오기기
-    const diaryRef = ref(database, "diaries");
-    const diarySnapshot = await get(diaryRef);
-    if (!diarySnapshot.exists()) {
-      console.error("No diaries found.");
-      return [];
-    }
-    // 유저 기준이 아닌, 다이어리 기준으로 가져오기
-    const diaryData = diarySnapshot.val();
-    const allDiaries: DiariesType[] = Object.values(diaryData).flatMap(
-      (userDiaries) => Object.values(userDiaries as DiariesType)
+    // 유저를 제외, 모든 다이어리 가져오기
+    const diaryData = (await getDataFromFirebase(
+      "diaries",
+      true
+    )) as DiariesType[];
+    const allDiaries: DiariesType[] = diaryData.flatMap((userDiaries) =>
+      Object.values(userDiaries as DiariesType)
     );
 
     // 포스트 데이터 가져오기
-    const postsRef = ref(database, "posts");
-    const postsSnapshot = await get(postsRef);
-    if (!postsSnapshot.exists()) {
-      console.error("No posts found.");
-      return [];
-    }
-    const postsData = postsSnapshot.val();
+    const postsData = await getDataFromFirebase("posts", false);
 
     // 다이어리와 포스트트 데이터 결합
     const diariesWithPosts = allDiaries.map((diary): DiariesWithPostsType => {
@@ -146,26 +128,16 @@ export const getAllBookDiaries = async () => {
   }
 };
 
+export const diariesWithPosts = async () => {};
+
 // 다이어리 포스트 가져오기
 export const getDiaryPosts = async (diaryId: string) => {
   try {
-    const postsRef = ref(database, `posts/${diaryId}`);
-    const postsSnapshot = await get(postsRef);
-    if (!postsSnapshot.exists()) {
-      console.error("No posts found.");
-      return [];
-    }
-    const postsData = Object.values(postsSnapshot.val()) as PostsType[];
+    const postsData = await getDataFromFirebase(`posts/${diaryId}`, true);
+    const diaries = await getDataFromFirebase(`diaries`, false);
 
-    const diaryRef = ref(database, "diaries");
-    const diarySnapshot = await get(diaryRef);
-    if (!diarySnapshot.exists()) {
-      console.error("No diaries found.");
-      return null;
-    }
-    const diaries = diarySnapshot.val();
+    // 자신이 쓴 다이어리가 아니더라도 볼 수 있도록 다이어리 검색
     let diaryData: DiariesType | null = null;
-
     for (const userId in diaries) {
       const userDiaries = diaries[userId];
       if (userDiaries[diaryId]) {
@@ -180,17 +152,9 @@ export const getDiaryPosts = async (diaryId: string) => {
 };
 
 // MyBook 읽고 있는 책 데이터 가져오기
-export const fetchMyBookData = async (
-  userId: string
-): Promise<DiariesType[]> => {
+export const getMyBookData = async (userId: string): Promise<DiariesType[]> => {
   try {
-    const diaryRef = ref(database, `diaries/${userId}`);
-    const diarySnapshot = await get(diaryRef);
-    if (!diarySnapshot.exists()) {
-      console.error("No diaries found.");
-      return [];
-    }
-    const diaryData = Object.values(diarySnapshot.val());
+    const diaryData = await getDataFromFirebase(`diaries/${userId}`, true);
     return diaryData as DiariesType[];
   } catch (error) {
     console.error(error);
@@ -198,17 +162,12 @@ export const fetchMyBookData = async (
   }
 };
 
+// Home 랜덤 책 데이터 가져오기
 export const getRandomBooks = async () => {
   try {
-    const booksRef = ref(database, "books");
-    const booksSnapshot = await get(booksRef);
-    if (!booksSnapshot.exists()) {
-      console.error("No books found.");
-      return [];
-    }
-    const booksData = Object.values(booksSnapshot.val()) as BookType[];
+    const booksData = await getDataFromFirebase("books", true);
     const randomBookData = shuffleArray(booksData).slice(0, 3);
-    return randomBookData;
+    return randomBookData as BookType[];
   } catch (error) {
     console.error("랜덤 책 가져오기 에러", error);
     return [];

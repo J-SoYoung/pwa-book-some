@@ -5,7 +5,7 @@ import { userState } from "@/recoil/atoms";
 import SearchBar from "@/components/searchBar/SearchBar";
 import Recommendations from "./recommendbooks/RecommedBooks";
 import UserBooks from "./userBooks/UserBooks";
-import { UserType } from "@/types";
+import { UserType } from "@/services/types";
 
 export const Home = () => {
   const user = useRecoilValue<UserType | null>(userState);

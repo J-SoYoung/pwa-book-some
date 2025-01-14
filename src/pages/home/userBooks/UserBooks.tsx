@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./userBooks.module.css";
 import { getAllBookDiaries } from "@/services/apis";
-import { DiariesWithPostsType } from "@/types";
+import { DiariesWithPostsType } from "@/services/types";
 import { useNavigate } from "react-router-dom";
 
 function UserBooks() {
@@ -9,13 +9,12 @@ function UserBooks() {
   const [bookDiaries, setBookDiaries] = useState<DiariesWithPostsType[]>([]);
 
   useEffect(() => {
-    const fetchBookDiariess = async () => {
+    const fetchBookDiaries = async () => {
       const diary = await getAllBookDiaries();
       setBookDiaries(diary);
     };
-    fetchBookDiariess();
+    fetchBookDiaries();
   }, []);
-  console.log(bookDiaries);
 
   return (
     <section className={styles.userBooks}>

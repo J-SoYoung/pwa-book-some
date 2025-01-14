@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import styles from "./post.module.css";
 import { userState } from "@/recoil/atoms";
 import { createDiaryPost, getDiaryList } from "@/services/apis";
-import { DiariesType, UserType } from "@/types";
+import { DiariesType, UserType } from "@/services/types";
 import { useNavigate } from "react-router-dom";
 
 export const Posts = () => {
@@ -28,22 +28,21 @@ export const Posts = () => {
     fetchDiaryList();
   }, [user.userId]);
 
-
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const postId = uuidv4();
     try {
       const newPostData = {
-        diaryId : newDiaryData.diaryId , 
-        post : {
+        diaryId: newDiaryData.diaryId,
+        post: {
           id: postId,
           title: newDiaryData.title,
           content: newDiaryData.content,
           createdAt: new Date().toISOString()
-        } 
-      }
-      const result = await createDiaryPost(newPostData)
-      if(result) navigate(`/diaries/${newDiaryData.diaryId}`)
+        }
+      };
+      const result = await createDiaryPost(newPostData);
+      if (result) navigate(`/diaries/${newDiaryData.diaryId}`);
     } catch (error) {
       console.error(error);
     }

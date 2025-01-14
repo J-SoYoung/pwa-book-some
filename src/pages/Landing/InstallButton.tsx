@@ -1,4 +1,4 @@
-import { BeforeInstallPromptEvent } from "@/types";
+import { BeforeInstallPromptEvent } from "@/services/types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +9,7 @@ export const InstallButton = () => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
@@ -29,7 +29,7 @@ export const InstallButton = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt(); // 설치 팝업 표시
       const choiceResult = await deferredPrompt.userChoice;
-      
+
       if (choiceResult.outcome === "accepted") {
         console.log("User accepted the PWA install");
         navigate("/home");

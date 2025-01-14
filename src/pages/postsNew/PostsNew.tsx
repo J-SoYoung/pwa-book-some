@@ -6,7 +6,7 @@ import { SearchModal } from "./modal/SearchModal";
 import { uploadDiaryPosting } from "@/services/apis";
 import { userState } from "@/recoil/atoms";
 import { useRecoilValue } from "recoil";
-import { NewDiaryDataType, SelectedBookType, UserType } from "@/types";
+import { NewDiaryDataType, SelectedBookType, UserType } from "@/services/types";
 import { useNavigate } from "react-router-dom";
 
 export const PostsNew = () => {

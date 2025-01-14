@@ -3,7 +3,7 @@ import styles from "./diaries.module.css";
 
 import { getDiaryPosts } from "@/services/apis";
 import { useParams } from "react-router-dom";
-import { DiariesType, PostsType } from "@/types";
+import { DiariesType, PostsType } from "@/services/types";
 import { PostItems } from "./postItems/PostItems";
 
 type FetchResultType = {

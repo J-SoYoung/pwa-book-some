@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import styles from "./mybook.module.css";
 import { userState } from "@/recoil/atoms";
 import { fetchMyBookData } from "@/services/apis";
-import { DiariesType, UserType } from "@/types";
+import { DiariesType, UserType } from "@/services/types";
 import { useNavigate } from "react-router-dom";
 
 export const MyBook = () => {

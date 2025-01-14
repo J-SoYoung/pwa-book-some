@@ -7,6 +7,15 @@ export interface BeforeInstallPromptEvent extends Event {
   prompt: () => void;
 }
 
+export interface BookType {
+  author: string;
+  description: string;
+  diaries: { [key: string]: boolean };
+  id: string;
+  image: string;
+  title: string;
+}
+
 export interface SelectedBookType {
   author: string;
   description: string;

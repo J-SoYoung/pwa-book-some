@@ -1,4 +1,4 @@
-import { PostsType } from "@/types";
+import { PostsType } from "@/services/types";
 import styles from "../diaries.module.css";
 
 export const PostItems = ({ posts }: { posts: PostsType[] }) => {

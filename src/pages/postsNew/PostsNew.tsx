@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import styles from "./postNew.module.css";
 import { SearchModal } from "./modal/SearchModal";
-import { uploadDiaryPosting } from "@/services/apis";
+import { createNewDiaryPost } from "@/services/apis";
 import { userState } from "@/recoil/atoms";
 import { useRecoilValue } from "recoil";
 import { NewDiaryDataType, SelectedBookType, UserType } from "@/services/types";
@@ -52,7 +52,7 @@ export const PostsNew = () => {
           },
           user: user as UserType
         };
-        const result = await uploadDiaryPosting(newDiaryData);
+        const result = await createNewDiaryPost(newDiaryData);
         if (result) navigate("/home");
       }
     } catch (error) {

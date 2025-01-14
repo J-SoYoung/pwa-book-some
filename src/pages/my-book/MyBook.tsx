@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 
 import styles from "./mybook.module.css";
 import { userState } from "@/recoil/atoms";
-import { fetchMyBookData } from "@/services/apis";
+import { getMyBookData } from "@/services/apis";
 import { DiariesType, UserType } from "@/services/types";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ export const MyBook = () => {
   }
   useEffect(() => {
     const fetchData = async () => {
-      const myBookData = await fetchMyBookData(user.userId);
+      const myBookData = await getMyBookData(user.userId);
       setMyBooks(myBookData);
     };
     fetchData();

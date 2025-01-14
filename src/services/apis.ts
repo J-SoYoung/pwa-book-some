@@ -9,11 +9,13 @@
 import { get, ref, set, update } from "firebase/database";
 import { database } from "./firebase";
 import {
+  BookType,
   DiariesType,
   DiariesWithPostsType,
   NewDiaryDataType,
   PostsType
-} from "@/types";
+} from "@/services/types";
+import { shuffleArray } from "./utils";
 
 // PostNew 다이어리 처음 생성
 export const uploadDiaryPosting = async (newDiaryData: NewDiaryDataType) => {
@@ -144,6 +146,7 @@ export const getAllBookDiaries = async () => {
   }
 };
 
+// 다이어리 포스트 가져오기
 export const getDiaryPosts = async (diaryId: string) => {
   try {
     const postsRef = ref(database, `posts/${diaryId}`);
@@ -191,6 +194,23 @@ export const fetchMyBookData = async (
     return diaryData as DiariesType[];
   } catch (error) {
     console.error(error);
+    return [];
+  }
+};
+
+export const getRandomBooks = async () => {
+  try {
+    const booksRef = ref(database, "books");
+    const booksSnapshot = await get(booksRef);
+    if (!booksSnapshot.exists()) {
+      console.error("No books found.");
+      return [];
+    }
+    const booksData = Object.values(booksSnapshot.val()) as BookType[];
+    const randomBookData = shuffleArray(booksData).slice(0, 3);
+    return randomBookData;
+  } catch (error) {
+    console.error("랜덤 책 가져오기 에러", error);
     return [];
   }
 };

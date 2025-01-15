@@ -5,3 +5,9 @@
 .home > h2 {
   margin-bottom: 8px;
 }
+
+.recommendations {
+  width: 100%;
+  padding-bottom: 16px;
+  box-sizing: border-box;
+}

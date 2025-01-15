@@ -1,20 +1,14 @@
 import styles from "./home.module.css";
-import { useRecoilValue } from "recoil";
-
-import { userState } from "@/recoil/atoms";
-import SearchBar from "@/components/searchBar/SearchBar";
 import Recommendations from "./recommendbooks/RecommedBooks";
 import UserBooks from "./userBooks/UserBooks";
-import { UserType } from "@/services/types";
 
 export const Home = () => {
-  const user = useRecoilValue<UserType | null>(userState);
-
   return (
     <main className={styles.home}>
-      <SearchBar />
-      <p>{user?.username}님</p>
+      <h2>이 책을 추천합니다</h2>
       <Recommendations />
+
+      <h2>다른 유저들은 이런 책을 읽고 있어요!</h2>
       <UserBooks />
     </main>
   );

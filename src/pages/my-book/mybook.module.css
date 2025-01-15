@@ -7,28 +7,7 @@
 .section h3 {
   margin-bottom: 8px;
 }
-.bookCardBox {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  padding: 16px 0;
-  box-sizing: border-box;
-}
-.bookCard {
-  /* border: 1px solid red; */
-  width: 120px;
-  margin-bottom: 16px;
-  text-align: center;
-}
 
-.bookCard > img {
-  width: 90px;
-  height: 120px;
-}
-.bookCard > p {
-  font-size: 12px;
-}
 
 .example {
   display: grid;

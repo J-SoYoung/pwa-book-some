@@ -38,6 +38,7 @@ export const Diaries = () => {
         <img src={diary?.bookImage} />
         <div className={styles.featuredText}>
           <h3 className={styles.featuredDescription}>{diary?.diaryTitle}</h3>
+          <span>책 제목</span>
           <p className={styles.featuredTitle}>{diary?.bookTitle}</p>
         </div>
       </div>

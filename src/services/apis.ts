@@ -164,7 +164,7 @@ export const getMyBookData = async (userId: string): Promise<DiariesType[]> => {
 };
 
 // Home 랜덤 책 데이터 가져오기
-export const getRandomBooks = async () => {
+export const getRecommendBooks = async () => {
   try {
     const booksData = await getDataFromFirebase("books", true);
     const randomBookData = shuffleArray(booksData).slice(0, 3);

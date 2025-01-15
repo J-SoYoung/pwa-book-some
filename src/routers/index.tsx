@@ -19,6 +19,14 @@ const router = createBrowserRouter([
     element: <Login />
   },
   {
+    path: "/posts",
+    element: <Posts />
+  },
+  {
+    path: "/postsNew",
+    element: <PostsNew />
+  },
+  {
     path: "/",
     element: <Layout />,
     children: [
@@ -43,14 +51,7 @@ const router = createBrowserRouter([
         path: `/mybook/:id`,
         element: <MyBook />
       },
-      {
-        path: "/posts",
-        element: <Posts />
-      },
-      {
-        path: "/postsNew",
-        element: <PostsNew />
-      },
+
       {
         path: "/search",
         element: <Search />

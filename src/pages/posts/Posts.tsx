@@ -66,8 +66,8 @@ export const Posts = () => {
                 다이어리를 선택해주세요
               </option>
               {diaryList.map((diary, idx) => (
-                <option key={diary.id} value={diary.id}>
-                  {`[${idx + 1}] ${diary.title} - ${diary.bookTitle?.slice(
+                <option key={diary.diaryId} value={diary.diaryId}>
+                  {`[${idx + 1}] ${diary.diaryTitle} - ${diary.bookTitle?.slice(
                     0,
                     10
                   )}..`}

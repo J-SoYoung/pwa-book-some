@@ -36,8 +36,8 @@ export interface DiariesType {
   bookId?: string;
   bookImage?: string;
   bookTitle?: string;
-  id: string;
-  title: string;
+  diaryId: string;
+  diaryTitle: string;
   createdAt: string;
 }
 

@@ -9,13 +9,13 @@ export const DiarySection = ({ diaries }: { diaries: DiaryAndPostsType[] }) => {
       <div className={styles.recommendationList}>
         {diaries.map((diary) => {
           return (
-            <div key={diary.id} className={styles.recommendationCard}>
+            <div key={diary.diaryId} className={styles.recommendationCard}>
               <div className={styles.imgBox}>
                 <img src={diary.bookImage} />
-                <Link to={`/diaries/${diary.id}`}>책장 구경가기</Link>
+                <Link to={`/diaries/${diary.diaryId}`}>책장 구경가기</Link>
               </div>
               <div className={styles.cardContent}>
-                <h3>{diary.title}</h3>
+                <h3>{diary.diaryTitle}</h3>
                 <p className={styles.subTitle}>{diary.firstPost.title}</p>
                 <p>{diary.firstPost.content}</p>
               </div>

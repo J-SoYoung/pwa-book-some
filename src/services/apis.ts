@@ -25,29 +25,29 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
         image: books.image,
         author: books.author,
         description: books.description,
-        diaries: { [diaries.id]: true }
+        diaries: { [diaries.diaryId]: true }
       });
     } else {
       // 책은 존재한다면 다이어리 내용만 추가로 저장
       const bookData = bookSnapshot.val();
       const updatedDiaries = bookData.diaries || {};
-      updatedDiaries[diaries.id] = true;
+      updatedDiaries[diaries.diaryId] = true;
       await update(bookRef, { diaries: updatedDiaries });
     }
 
     // 다이어리 저장 (내가 저장한 id경로로 바로 저장)
-    const diaryRef = ref(database, `diaries/${user.userId}/${diaries.id}`);
+    const diaryRef = ref(database, `diaries/${user.userId}/${diaries.diaryId}`);
     await set(diaryRef, {
       bookId: books.isbn,
       bookImage: books.image,
       bookTitle: books.title,
-      id: diaries.id,
-      title: diaries.title,
+      id: diaries.diaryId,
+      title: diaries.diaryTitle,
       createdAt: diaries.createdAt
     });
 
     // 포스트 저장
-    const postsRef = ref(database, `posts/${diaries.id}/${posts.id}`);
+    const postsRef = ref(database, `posts/${diaries.diaryId}/${posts.id}`);
     await set(postsRef, {
       title: posts.title,
       content: posts.content,
@@ -113,10 +113,10 @@ export const getAllBookDiaries = async () => {
 
     // 다이어리와 포스트트 데이터 결합
     const diariesWithPosts = allDiaries.map((diary): DiariesWithPostsType => {
-      const diaryPosts = postsData[String(diary.id)] || {};
+      const diaryPosts = postsData[String(diary.diaryId)] || {};
       return {
-        diaryId: diary.id,
-        diaryTitle: diary.title,
+        diaryId: diary.diaryId,
+        diaryTitle: diary.diaryTitle,
         bookImage: diary.bookImage as string,
         bookTitle: diary.bookTitle as string,
         posts: Object.values(diaryPosts) as PostsType[]
@@ -193,9 +193,9 @@ export const getBookAndDiaries = async (bookId: string) => {
   // 다리어리 내부 포스트 가져오기 ( 첫번째 데이터만 )
   const diaryWidthPosts = await Promise.all(
     diaries
-      .filter((diary: DiariesType) => diaryIds.includes(diary.id))
+      .filter((diary: DiariesType) => diaryIds.includes(diary.diaryId))
       .map(async (diary: DiariesType) => {
-        const postList = await getDataFromFirebase(`posts/${diary.id}`, true);
+        const postList = await getDataFromFirebase(`posts/${diary.diaryId}`, true);
         const firstPost = postList.length > 0 ? postList[0] : null;
         return { ...diary, firstPost };
       })

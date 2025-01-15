@@ -37,7 +37,7 @@ export const Diaries = () => {
       <div className={styles.featured}>
         <img src={diary?.bookImage} />
         <div className={styles.featuredText}>
-          <h3 className={styles.featuredDescription}>{diary?.title}</h3>
+          <h3 className={styles.featuredDescription}>{diary?.diaryTitle}</h3>
           <p className={styles.featuredTitle}>{diary?.bookTitle}</p>
         </div>
       </div>

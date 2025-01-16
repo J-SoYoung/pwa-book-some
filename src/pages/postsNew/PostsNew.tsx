@@ -40,8 +40,8 @@ export const PostsNew = () => {
             description: selectedBook.description
           },
           diaries: {
-            id: diaryId,
-            title: diaryData.diaryTitle,
+            diaryId: diaryId,
+            diaryTitle: diaryData.diaryTitle,
             createdAt: new Date().toISOString()
           },
           posts: {

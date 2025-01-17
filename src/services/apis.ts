@@ -41,8 +41,8 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
       bookId: books.isbn,
       bookImage: books.image,
       bookTitle: books.title,
-      id: diaries.diaryId,
-      title: diaries.diaryTitle,
+      diaryId: diaries.diaryId,
+      diaryTitle: diaries.diaryTitle,
       createdAt: diaries.createdAt
     });
 
@@ -174,6 +174,7 @@ export const getRecommendBooks = async () => {
     return [];
   }
 };
+
 // Detail페이지 데이터 가져오기
 export const getBookAndDiaries = async (bookId: string) => {
   // 책 가져오기
@@ -195,10 +196,28 @@ export const getBookAndDiaries = async (bookId: string) => {
     diaries
       .filter((diary: DiariesType) => diaryIds.includes(diary.diaryId))
       .map(async (diary: DiariesType) => {
-        const postList = await getDataFromFirebase(`posts/${diary.diaryId}`, true);
+        const postList = await getDataFromFirebase(
+          `posts/${diary.diaryId}`,
+          true
+        );
         const firstPost = postList.length > 0 ? postList[0] : null;
         return { ...diary, firstPost };
       })
   );
   return { book: booksData, diaries: diaryWidthPosts } as DetailDataType;
+};
+
+// 검색 결과 가져오기
+export const getSearchResults = async (query: string) => {
+  try {
+    const booksData = await getDataFromFirebase("books", true);
+    const searchResult = booksData.filter((book: BookType) =>
+      book.title.includes(query)
+    );
+    console.log(searchResult);
+    return searchResult;
+  } catch (error) {
+    console.error("검색 결과 가져오기 에러", error);
+    return [];
+  }
 };

@@ -5,7 +5,7 @@ import styles from "./layout.module.css";
 
 import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import SearchBar from "../searchBar/SearchBar";
+import SearchBar from "./SearchBar";
 import { useRecoilValue } from "recoil";
 import { UserType } from "@/services/types";
 import { userState } from "@/recoil/atoms";

@@ -1,0 +1,28 @@
+.container {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.container > h3 {
+  margin-bottom: 16px;
+}
+.searchResultsContent {
+  margin-bottom: 32px;
+  /* text-align: center; */
+
+}
+.searchResultsContent > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+}
+
+.searchMoreResults{
+  /* text-align: center; */
+}
+.searchMoreResults > button{
+
+}

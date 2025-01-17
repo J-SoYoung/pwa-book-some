@@ -8,7 +8,7 @@ import Posts from "@/pages/posts";
 import Detail from "@/pages/detail";
 import Landing from "@/pages/Landing";
 import Layout from "@/components/layout/Layout";
-import Search from "@/pages/search";
+import SearchResults from "@/pages/searchResults";
 import PostsNew from "@/pages/postsNew";
 import PWABadge from "@/components/layout/PWABadge";
 import Diaries from "@/pages/diaries";
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
 
       {
         path: "/search",
-        element: <Search />
+        element: <SearchResults />
       }
     ]
   }

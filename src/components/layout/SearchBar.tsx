@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "./searchBar.module.css";
 import { useState } from "react";
 
-function SearchBar() {
+export const SearchBar=()=> {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
@@ -27,5 +28,3 @@ function SearchBar() {
     </form>
   );
 }
-
-export default SearchBar;

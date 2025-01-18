@@ -12,6 +12,7 @@ import SearchResults from "@/pages/searchResults";
 import PostsNew from "@/pages/postsNew";
 import PWABadge from "@/components/layout/PWABadge";
 import Diaries from "@/pages/diaries";
+import { MyPage } from "@/pages/my-page";
 
 const router = createBrowserRouter([
   {
@@ -46,12 +47,14 @@ const router = createBrowserRouter([
         path: "/diaries/:diaryId",
         element: <Diaries />
       },
-
       {
         path: `/mybook/:id`,
         element: <MyBook />
       },
-
+      {
+        path: "/mypage/:userId",
+        element: <MyPage />
+      },
       {
         path: "/search",
         element: <SearchResults />

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import PopupButton from "../popupButton/PopupButton";
 import styles from "./navigation.module.css";
 
-function DesktopNavbar() {
+export const DesktopNavbar=()=> {
   // const navigate = useNavigate()
   const [showPopup, setShowPopup] = useState(false);
 
@@ -31,5 +31,3 @@ function DesktopNavbar() {
     </>
   );
 }
-
-export default DesktopNavbar;

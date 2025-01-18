@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 import { UserType } from "@/services/types";
 import { userState } from "@/recoil/atoms";
 
-function BottomNav() {
+export const BottomNav = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const user = useRecoilValue(userState) as UserType;
@@ -43,12 +43,10 @@ function BottomNav() {
         </button>
 
         <Link to="/login" className={styles.bottomNavItems}>
-          로그인
+          {user.userId ? "로그아웃" : "로그인"}
         </Link>
       </nav>
       {showPopup && <PopupButton onClose={togglePopup} />}
     </>
   );
-}
-
-export default BottomNav;
+};

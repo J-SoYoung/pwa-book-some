@@ -25,7 +25,8 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
         image: books.image,
         author: books.author,
         description: books.description,
-        diaries: { [diaries.diaryId]: true }
+        diaries: { [diaries.diaryId]: true },
+        link: books.link
       });
     } else {
       // 책은 존재한다면 다이어리 내용만 추가로 저장

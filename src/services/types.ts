@@ -14,6 +14,7 @@ export interface BookType {
   id: string;
   image: string;
   title: string;
+  link: string;
 }
 
 export interface SelectedBookType {
@@ -22,6 +23,7 @@ export interface SelectedBookType {
   image: string;
   isbn: string;
   title: string;
+  link: string;
 }
 
 export interface BookDiaryType {

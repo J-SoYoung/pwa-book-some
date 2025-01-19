@@ -1,0 +1,60 @@
+.container {
+  padding: 16px;
+  box-sizing: border-box;
+}
+.container > .header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.container > .header > .backButton {
+  margin-right: 16px;
+  cursor: pointer;
+}
+.profileImage {
+  text-align: center;
+  position: relative;
+}
+.profileImage > img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 2px #858585;
+}
+.profileImage > .imageEditPen {
+  padding: 4px;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 5px;
+  left: 58%;
+  cursor: pointer;
+}
+.profileImage > .imageEditPen:hover {
+  background-color: #e2e2e2;
+  border-radius: 50%;
+}
+
+.infoContainer{
+  margin: 16px 0;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.infoRow{
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+.infoRow:last-child {
+  border-bottom: none;
+}
+.label {
+  color: #666;
+  font-weight: bold;
+}
+.value {
+  color: #333;
+}

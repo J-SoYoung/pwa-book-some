@@ -8,6 +8,7 @@ import { userState } from "@/recoil/atoms";
 import { useRecoilValue } from "recoil";
 import { NewDiaryDataType, SelectedBookType, UserType } from "@/services/types";
 import { useLocation, useNavigate } from "react-router-dom";
+import { InputField, TextareaField } from "@/components";
 
 export const PostsNew = () => {
   const navigate = useNavigate();
@@ -29,6 +30,12 @@ export const PostsNew = () => {
     }
   }, [state]);
 
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    console.log([e.target.name], e.target.value);
+    setDiaryData({ ...diaryData, [e.target.name]: e.target.value });
+  };
   const onSelectBook = (book: SelectedBookType) => {
     setSelectedBook(book);
     setShowModal(false);
@@ -103,44 +110,27 @@ export const PostsNew = () => {
       </div>
 
       <form className={styles.form} onSubmit={onSubmitForm}>
-        <label className={styles.label}>
-          나만의 책 제목을 적어주세요.
-          <input
-            type="text"
-            value={diaryData.diaryTitle}
-            onChange={(e) =>
-              setDiaryData({ ...diaryData, diaryTitle: e.target.value })
-            }
-            placeholder="책 다이어리 제목이 됩니다"
-            className={styles.input}
-          />
-        </label>
-
-        <label className={styles.label}>
-          오늘의 독서 제목을 적어주세요.
-          <input
-            type="text"
-            value={diaryData.todayTitle}
-            onChange={(e) =>
-              setDiaryData({ ...diaryData, todayTitle: e.target.value })
-            }
-            placeholder="오늘 작성된 감상평의 제목이 됩니다."
-            className={styles.input}
-          />
-        </label>
-
-        <label className={styles.label}>
-          오늘 읽은 부분을 기록해보세요.
-          <textarea
-            value={diaryData.content}
-            onChange={(e) =>
-              setDiaryData({ ...diaryData, content: e.target.value })
-            }
-            placeholder="나의 느낀점을 자유롭게 작성해보세요"
-            className={styles.textarea}
-          ></textarea>
-        </label>
-
+        <InputField
+          label={"나만의 다이어리리 제목을 적어주세요."}
+          value={diaryData.diaryTitle}
+          name={"diaryTitle"}
+          onChange={onChange}
+          placeholder={"다이어리 제목이 됩니다"}
+        />
+        <InputField
+          label={"나만의 서평 제목을 적어주세요."}
+          value={diaryData.todayTitle}
+          onChange={onChange}
+          name={"todayTitle"}
+          placeholder={"포스팅 제목이 됩니다"}
+        />
+        <TextareaField
+          label={"나의 느낀점을 자유롭게 작성해보세요."}
+          value={diaryData.content}
+          onChange={onChange}
+          name={"content"}
+          placeholder={"포스팅 내용용이 됩니다"}
+        />
         <button type="submit" className={styles.submitButton}>
           글작성
         </button>

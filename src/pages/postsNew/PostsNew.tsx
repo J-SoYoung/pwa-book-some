@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import styles from "./postNew.module.css";
@@ -7,10 +7,12 @@ import { createNewDiaryPost } from "@/services/apis";
 import { userState } from "@/recoil/atoms";
 import { useRecoilValue } from "recoil";
 import { NewDiaryDataType, SelectedBookType, UserType } from "@/services/types";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const PostsNew = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const user = useRecoilValue(userState);
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState<SelectedBookType>();
@@ -19,6 +21,13 @@ export const PostsNew = () => {
     todayTitle: "",
     content: ""
   });
+
+  useEffect(() => {
+    if (state) {
+      const { link, isbn, author, title, image, description } = state.book;
+      setSelectedBook({ link, isbn, author, title, image, description });
+    }
+  }, [state]);
 
   const onSelectBook = (book: SelectedBookType) => {
     setSelectedBook(book);
@@ -33,6 +42,7 @@ export const PostsNew = () => {
       if (selectedBook) {
         const newDiaryData: NewDiaryDataType = {
           books: {
+            link: selectedBook.link,
             isbn: selectedBook.isbn,
             author: selectedBook.author,
             title: selectedBook.title,

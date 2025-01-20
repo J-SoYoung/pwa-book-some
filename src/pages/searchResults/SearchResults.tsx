@@ -49,7 +49,10 @@ export const SearchResults = () => {
         <p onClick={onClickMoreBooksSearch}>
           더 많은 도서 검색 결과를 원하시면 클릭하세요
         </p>
-        <BookItems items={moreBookSearchData} types="books" />
+        {moreBookSearchData.length !== 0 && (
+          <p>도서를 클릭하면 독서 다이어리를 생성할 수 있습니다 </p>
+        )}
+        <BookItems items={moreBookSearchData} types="searchResult" />
       </div>
     </div>
   );

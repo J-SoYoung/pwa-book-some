@@ -9,8 +9,6 @@
 }
 .searchResultsContent {
   margin-bottom: 32px;
-  /* text-align: center; */
-
 }
 .searchResultsContent > div {
   display: flex;
@@ -20,9 +18,9 @@
   gap: 4px;
 }
 
-.searchMoreResults{
-  /* text-align: center; */
+.searchMoreResults > p {
+  cursor: pointer;
 }
-.searchMoreResults > button{
-
+.searchMoreResults > p:hover{
+font-weight: 700;
 }

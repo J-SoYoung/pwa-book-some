@@ -26,3 +26,24 @@ export const getDataFromFirebase = async (
     return returnAsArray ? [] : null;
   }
 };
+
+interface DataType {
+  diaryTitle: string;
+  todayTitle: string;
+  content: string;
+}
+export const validateForm = (
+  data: DataType
+): { valid: boolean; message: string } => {
+  console.log(data);
+  if (!data.diaryTitle || data.diaryTitle.length < 5) {
+    return { valid: false, message: "다이어리 제목은 5자 이상이어야 합니다." };
+  }
+  if (!data.todayTitle || data.todayTitle.length < 5) {
+    return { valid: false, message: "포스트트 제목은 5자 이상이어야 합니다." };
+  }
+  if (!data.content || data.content.length < 20) {
+    return { valid: false, message: "포스트 내용은 20자 이상이어야 합니다." };
+  }
+  return { valid: true, message: "" };
+};

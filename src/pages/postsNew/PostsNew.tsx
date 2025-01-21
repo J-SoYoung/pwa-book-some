@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 import styles from "./postNew.module.css";
-import { SearchModal } from "./modal/SearchModal";
-import { createNewDiaryPost } from "@/services/apis";
 import { userState } from "@/recoil/atoms";
-import { useRecoilValue } from "recoil";
-import { NewDiaryDataType, SelectedBookType, UserType } from "@/services/types";
-import { useLocation, useNavigate } from "react-router-dom";
-import { InputField, TextareaField } from "@/components";
-import { validateForm } from "@/services/utils";
+import { SelectedBookType, UserType } from "@/services/types";
+import { InputField, TextareaField,BookSearchModal } from "@/components";
+import { handleSubmitForm } from "./handleSubmitForm";
 
 export const PostsNew = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-
   const user = useRecoilValue(userState);
+
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState<SelectedBookType>();
   const [diaryData, setDiaryData] = useState({
@@ -31,58 +28,29 @@ export const PostsNew = () => {
     }
   }, [state]);
 
+  const onClickBookSearchModal = () => {
+    setShowModal(!showModal);
+  };
+
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setDiaryData({ ...diaryData, [e.target.name]: e.target.value });
   };
+
   const onSelectBook = (book: SelectedBookType) => {
     setSelectedBook(book);
     setShowModal(false);
   };
 
-  const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const validation = validateForm(diaryData);
-
-    if (!validation.valid) {
-      alert(validation.message);
-      return;
-    }
-    
-    const diaryId = uuidv4();
-    const postId = uuidv4();
-    try {
-      if (selectedBook) {
-        const newDiaryData: NewDiaryDataType = {
-          books: {
-            link: selectedBook.link,
-            isbn: selectedBook.isbn,
-            author: selectedBook.author,
-            title: selectedBook.title,
-            image: selectedBook.image,
-            description: selectedBook.description
-          },
-          diaries: {
-            diaryId: diaryId,
-            diaryTitle: diaryData.diaryTitle,
-            createdAt: new Date().toISOString()
-          },
-          posts: {
-            id: postId,
-            title: diaryData.todayTitle,
-            content: diaryData.content,
-            createdAt: new Date().toISOString()
-          },
-          user: user as UserType
-        };
-        const result = await createNewDiaryPost(newDiaryData);
-        if (result) navigate("/home");
-      }
-    } catch (error) {
-      console.error(error);
-      alert('포스팅 작성중 에러가 발생했습니다. 다시 시도해주세요요');
-    }
+  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    handleSubmitForm(
+      e,
+      diaryData,
+      selectedBook as SelectedBookType,
+      user as UserType,
+      navigate
+    );
   };
 
   return (
@@ -90,13 +58,7 @@ export const PostsNew = () => {
       <h2>새 다이어리 만들기</h2>
       <div className={styles.searchSection}>
         <div className={styles.searchBar}>
-          <button
-            onClick={() => {
-              setShowModal(!showModal);
-            }}
-          >
-            📓BOOK
-          </button>
+          <button onClick={onClickBookSearchModal}>책검색</button>
         </div>
 
         <div className={styles.bookInfo}>
@@ -140,7 +102,7 @@ export const PostsNew = () => {
       </form>
 
       {showModal && (
-        <SearchModal
+        <BookSearchModal
           onClose={() => {
             setShowModal(false);
           }}

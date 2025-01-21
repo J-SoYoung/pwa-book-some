@@ -27,20 +27,40 @@ export const getDataFromFirebase = async (
   }
 };
 
-interface DataType {
+interface validatePostsNewFormType {
   diaryTitle: string;
   todayTitle: string;
   content: string;
 }
-export const validateForm = (
-  data: DataType
+export const validatePostsNewForm = (
+  data: validatePostsNewFormType
 ): { valid: boolean; message: string } => {
-  console.log(data);
   if (!data.diaryTitle || data.diaryTitle.length < 5) {
     return { valid: false, message: "다이어리 제목은 5자 이상이어야 합니다." };
   }
   if (!data.todayTitle || data.todayTitle.length < 5) {
     return { valid: false, message: "포스트트 제목은 5자 이상이어야 합니다." };
+  }
+  if (!data.content || data.content.length < 20) {
+    return { valid: false, message: "포스트 내용은 20자 이상이어야 합니다." };
+  }
+  return { valid: true, message: "" };
+};
+
+interface validatePostsFormType {
+  diaryId: string;
+  title: string;
+  content: string;
+}
+export const validatePostsForm = (
+  data: validatePostsFormType
+): { valid: boolean; message: string } => {
+  console.log(data);
+  if (!data.diaryId) {
+    return { valid: false, message: "포스트를 작성할 다이어리를 선택해주세요." };
+  }
+  if (!data.title || data.title.length < 5) {
+    return { valid: false, message: "포스트 제목은 5자 이상이어야 합니다." };
   }
   if (!data.content || data.content.length < 20) {
     return { valid: false, message: "포스트 내용은 20자 이상이어야 합니다." };

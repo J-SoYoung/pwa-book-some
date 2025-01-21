@@ -1,3 +1,4 @@
 import { PostsNew } from "./PostsNew";
+import { handleSubmitForm } from "./handleSubmitForm";
 
-export default PostsNew;
+export { PostsNew, handleSubmitForm };

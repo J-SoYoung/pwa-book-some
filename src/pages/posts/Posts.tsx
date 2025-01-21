@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./post.module.css";
 import { userState } from "@/recoil/atoms";
-import { createDiaryPost, getDiaryList } from "@/services/apis";
+import { getDiaryList } from "@/services/apis";
 import { DiariesType, UserType } from "@/services/types";
-import { useNavigate } from "react-router-dom";
+import { InputField, TextareaField } from "@/components";
+import { handleSubmitForm } from "./handleSubmitForm";
 
 export const Posts = () => {
   const navigate = useNavigate();
@@ -28,24 +29,16 @@ export const Posts = () => {
     fetchDiaryList();
   }, [user.userId]);
 
+  const onChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setNewDiaryData({ ...newDiaryData, [e.target.name]: e.target.value });
+  };
+
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const postId = uuidv4();
-    try {
-      const newPostData = {
-        diaryId: newDiaryData.diaryId,
-        post: {
-          id: postId,
-          title: newDiaryData.title,
-          content: newDiaryData.content,
-          createdAt: new Date().toISOString()
-        }
-      };
-      const result = await createDiaryPost(newPostData);
-      if (result) navigate(`/diaries/${newDiaryData.diaryId}`);
-    } catch (error) {
-      console.error(error);
-    }
+    handleSubmitForm(e,newDiaryData,navigate)
   };
 
   return (
@@ -58,11 +51,11 @@ export const Posts = () => {
           <div className={styles.selectWrapper}>
             <select
               className={styles.select}
-              onChange={(e) =>
-                setNewDiaryData({ ...newDiaryData, diaryId: e.target.value })
-              }
+              name="diaryId"
+              onChange={onChange}
+              value={newDiaryData.diaryId}
             >
-              <option value="" disabled selected>
+              <option value="" disabled>
                 다이어리를 선택해주세요
               </option>
               {diaryList.map((diary, idx) => (
@@ -76,31 +69,20 @@ export const Posts = () => {
             </select>
           </div>
         </label>
-        <label className={styles.label}>
-          오늘의 독서 제목을 적어주세요.
-          <input
-            type="text"
-            value={newDiaryData.title}
-            onChange={(e) =>
-              setNewDiaryData({ ...newDiaryData, title: e.target.value })
-            }
-            placeholder="오늘 작성된 감상평의 제목이 됩니다."
-            className={styles.input}
-          />
-        </label>
-
-        <label className={styles.label}>
-          오늘 읽은 부분을 기록해보세요.
-          <textarea
-            placeholder="나의 느낀점을 자유롭게 작성해보세요"
-            className={styles.textarea}
-            value={newDiaryData.content}
-            onChange={(e) =>
-              setNewDiaryData({ ...newDiaryData, content: e.target.value })
-            }
-          ></textarea>
-        </label>
-
+        <InputField
+          label={"오늘의 독서 제목을 적어주세요."}
+          value={newDiaryData.title}
+          name={"title"}
+          onChange={onChange}
+          placeholder={"오늘 작성된 감상평의 제목이 됩니다."}
+        />
+        <TextareaField
+          label={"오늘 읽은 부분을 기록해보세요."}
+          value={newDiaryData.content}
+          name={"content"}
+          onChange={onChange}
+          placeholder={"나의 느낀점을 자유롭게 작성해보세요."}
+        />
         <button type="submit" className={styles.submitButton}>
           글작성
         </button>

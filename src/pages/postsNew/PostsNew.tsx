@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { NewDiaryDataType, SelectedBookType, UserType } from "@/services/types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { InputField, TextareaField } from "@/components";
+import { validateForm } from "@/services/utils";
 
 export const PostsNew = () => {
   const navigate = useNavigate();
@@ -33,7 +34,6 @@ export const PostsNew = () => {
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    console.log([e.target.name], e.target.value);
     setDiaryData({ ...diaryData, [e.target.name]: e.target.value });
   };
   const onSelectBook = (book: SelectedBookType) => {
@@ -43,6 +43,13 @@ export const PostsNew = () => {
 
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const validation = validateForm(diaryData);
+
+    if (!validation.valid) {
+      alert(validation.message);
+      return;
+    }
+    
     const diaryId = uuidv4();
     const postId = uuidv4();
     try {
@@ -74,7 +81,7 @@ export const PostsNew = () => {
       }
     } catch (error) {
       console.error(error);
-      alert(error);
+      alert('포스팅 작성중 에러가 발생했습니다. 다시 시도해주세요요');
     }
   };
 
@@ -88,20 +95,16 @@ export const PostsNew = () => {
               setShowModal(!showModal);
             }}
           >
-            📓 BOOK{" "}
+            📓BOOK
           </button>
-          {showModal && (
-            <SearchModal
-              onClose={() => {
-                setShowModal(false);
-              }}
-              onSelect={onSelectBook}
-            />
-          )}
         </div>
 
         <div className={styles.bookInfo}>
-          <img src={selectedBook?.image ?? ""} className={styles.bookImage} />
+          <img
+            src={selectedBook?.image ?? ""}
+            alt="book-image"
+            className={styles.bookImage}
+          />
           <div className={styles.bookDetails}>
             <strong>{selectedBook?.title ?? ""}</strong>
             <p>{selectedBook?.author ?? ""}</p>
@@ -135,6 +138,15 @@ export const PostsNew = () => {
           글작성
         </button>
       </form>
+
+      {showModal && (
+        <SearchModal
+          onClose={() => {
+            setShowModal(false);
+          }}
+          onSelect={onSelectBook}
+        />
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { createNewDiaryPost } from "@/services/apis";
 import { NewDiaryDataType, SelectedBookType, UserType } from "@/services/types";
-import { validateForm } from "@/services/utils";
+import { validatePostsNewForm } from "@/services/utils";
 import { NavigateFunction } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
@@ -12,7 +12,7 @@ export const handleSubmitForm = async (
   navigate: NavigateFunction
 ) => {
   e.preventDefault();
-  const validation = validateForm(diaryData);
+  const validation = validatePostsNewForm(diaryData);
 
   if (!validation.valid) {
     alert(validation.message);

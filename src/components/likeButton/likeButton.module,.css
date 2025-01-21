@@ -1,0 +1,23 @@
+button {
+  border: none;
+  background-color: none;
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+button:hover {
+  animation: heartbeat 0.6s infinite; /* 애니메이션 적용 */
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1); /* 원래 크기 */
+  }
+  50% {
+    transform: scale(1.2); /* 살짝 커짐 */
+  }
+  100% {
+    transform: scale(1); /* 원래 크기로 돌아옴 */
+  }
+}

@@ -15,12 +15,14 @@ export const getDataFromFirebase = async (
     const dataRef = ref(database, tableName);
     const snapshot = await get(dataRef);
 
-    if (!snapshot.exists()) {
+    if (snapshot.exists()) {
+      const data = await snapshot.val();
+      return returnAsArray ? Object.values(data) : data;
+    } else {
       console.error(`No ${tableName} found.`);
       return returnAsArray ? [] : null;
     }
-    const data = snapshot.val();
-    return returnAsArray ? Object.values(data) : data;
+    
   } catch (error) {
     console.error(`${tableName} 가져오기 에러`, error);
     return returnAsArray ? [] : null;
@@ -57,7 +59,10 @@ export const validatePostsForm = (
 ): { valid: boolean; message: string } => {
   console.log(data);
   if (!data.diaryId) {
-    return { valid: false, message: "포스트를 작성할 다이어리를 선택해주세요." };
+    return {
+      valid: false,
+      message: "포스트를 작성할 다이어리를 선택해주세요."
+    };
   }
   if (!data.title || data.title.length < 5) {
     return { valid: false, message: "포스트 제목은 5자 이상이어야 합니다." };

@@ -10,7 +10,7 @@ import {
 import { getDataFromFirebase, shuffleArray } from "./utils";
 import { DetailDataType } from "@/pages/detail/Detail";
 
-// PostNew 다이어리 처음 생성
+// PostNew NEW 다이어리리 생성
 export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
   try {
     const { books, diaries, posts, user } = newDiaryData;
@@ -37,40 +37,59 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
     }
 
     // 다이어리 저장 (내가 저장한 id경로로 바로 저장)
-    const diaryRef = ref(database, `diaries/${user.userId}/${diaries.diaryId}`);
+    const diaryRef = ref(database, `diary/${diaries.diaryId}`);
     await set(diaryRef, {
       bookId: books.isbn,
       bookImage: books.image,
       bookTitle: books.title,
+      createdAt: diaries.createdAt,
       diaryId: diaries.diaryId,
       diaryTitle: diaries.diaryTitle,
-      createdAt: diaries.createdAt
+      userId: user.userId,
+      postId: { [posts.id]: true }
     });
 
     // 포스트 저장
-    const postsRef = ref(database, `posts/${diaries.diaryId}/${posts.id}`);
+    const postsRef = ref(database, `posts-/${posts.id}`);
     await set(postsRef, {
-      title: posts.title,
+      diaryId: diaries.diaryId,
       content: posts.content,
-      createdAt: posts.createdAt
+      createdAt: posts.createdAt,
+      title: posts.title
     });
+
+    // user정보에 diaryId 함께 저장
+    const userRef = ref(database, `users/${user.userId}/diaries`);
+    await update(userRef, { [diaries.diaryId]: true });
+
     return "포스트가 정상적으로 업로드 되었습니다";
   } catch (error) {
-    console.error("uploadDiaryPosting 에러 --", error);
+    console.error("createNewDiaryPost 에러 --", error);
   }
 };
 
 // Post 다이어리의 리스트 가져오기
 export const getDiaryList = async (userId: string) => {
   try {
-    const diaryRef = ref(database, `diaries/${userId}`);
-    const diarySnapshot = await get(diaryRef);
-    if (!diarySnapshot.exists()) {
+    // users > diaries
+    const userDiaryRef = ref(database, `users/${userId}/diaries`);
+    const userDiarySnapshot = await get(userDiaryRef);
+
+    // diary가져오기
+    if (userDiarySnapshot.exists()) {
+      const diaryIds = Object.keys(userDiarySnapshot.val());
+      const diaryPromise = diaryIds.map(async (diaryId) => {
+        const diaryRef = ref(database, `diary/${diaryId}`);
+        const diarySnapshot = await get(diaryRef);
+        return diarySnapshot.exists() ? diarySnapshot.val() : null;
+      });
+
+      const diaries = await Promise.all(diaryPromise);
+      return diaries.filter((diary) => diary !== null);
+    } else {
       console.error("No diaries found.");
       return [];
     }
-    const diaryData = Object.values(diarySnapshot.val());
-    return diaryData as DiariesType[];
   } catch (error) {
     console.error("getDiaryList 에러 --", error);
     return [];
@@ -82,14 +101,22 @@ type NewPostData = {
   diaryId: string;
   post: PostsType;
 };
+
+// 다이어리 포스트 생성
 export const createDiaryPost = async (newPostData: NewPostData) => {
   try {
     const { diaryId, post } = newPostData;
-    const postsRef = ref(database, `posts/${diaryId}/${post.id}`);
+    // diary에 postId저장
+    const diaryRef = ref(database, `diary/${diaryId}/postId`);
+    await update(diaryRef, { [post.id]: true });
+
+    // post저장
+    const postsRef = ref(database, `posts-/${post.id}`);
     await set(postsRef, {
-      title: post.title,
       content: post.content,
-      createdAt: post.createdAt
+      createdAt: post.createdAt,
+      diaryId: diaryId,
+      title: post.title
     });
     return "포스트가 정상적으로 업로드 되었습니다";
   } catch (error) {
@@ -100,27 +127,33 @@ export const createDiaryPost = async (newPostData: NewPostData) => {
 // HOME 모든 다이어리 가져오기
 export const getAllBookDiaries = async () => {
   try {
-    // 유저를 제외, 모든 다이어리 가져오기
+    // 모든 다이어리 가져오기
     const diaryData = (await getDataFromFirebase(
-      "diaries",
+      "diary",
       true
     )) as DiariesType[];
-    const allDiaries: DiariesType[] = diaryData.flatMap((userDiaries) =>
-      Object.values(userDiaries as DiariesType)
-    );
+    console.log(diaryData);
 
     // 포스트 데이터 가져오기
-    const postsData = await getDataFromFirebase("posts", false);
+    const postsData = await Promise.all(
+      diaryData.map(async (diary) => {
+        if (diary.postId) {
+          const postIds = Object.keys(diary.postId);
+          const post = await getDataFromFirebase(`posts-/${postIds[0]}`, false);
+          return post;
+        }
+        return null;
+      })
+    );
 
     // 다이어리와 포스트트 데이터 결합
-    const diariesWithPosts = allDiaries.map((diary): DiariesWithPostsType => {
-      const diaryPosts = postsData[String(diary.diaryId)] || {};
+    const diariesWithPosts = diaryData.map((diary): DiariesWithPostsType => {
       return {
         diaryId: diary.diaryId,
         diaryTitle: diary.diaryTitle,
         bookImage: diary.bookImage as string,
         bookTitle: diary.bookTitle as string,
-        posts: Object.values(diaryPosts) as PostsType[]
+        posts: postsData
       };
     });
     return diariesWithPosts;
@@ -129,8 +162,8 @@ export const getAllBookDiaries = async () => {
     return [];
   }
 };
+// HOME 모든 다이어리 가져오기
 
-export const diariesWithPosts = async () => {};
 
 // 다이어리 포스트 가져오기
 export const getDiaryPosts = async (diaryId: string) => {

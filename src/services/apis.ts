@@ -101,8 +101,6 @@ type NewPostData = {
   diaryId: string;
   post: PostsType;
 };
-
-// 다이어리 포스트 생성
 export const createDiaryPost = async (newPostData: NewPostData) => {
   try {
     const { diaryId, post } = newPostData;
@@ -162,23 +160,22 @@ export const getAllBookDiaries = async () => {
     return [];
   }
 };
-// HOME 모든 다이어리 가져오기
 
-
-// 다이어리 포스트 가져오기
+// Diary 다이어리 포스트 가져오기
 export const getDiaryPosts = async (diaryId: string) => {
   try {
-    const postsData = await getDataFromFirebase(`posts/${diaryId}`, true);
-    const diaries = await getDataFromFirebase(`diaries`, false);
+    const diaryData = await getDataFromFirebase(`diary/${diaryId}`, false);
+    const postsId = Object.keys(diaryData.postId);
 
-    // 자신이 쓴 다이어리가 아니더라도 볼 수 있도록 다이어리 검색
-    let diaryData: DiariesType | null = null;
-    for (const userId in diaries) {
-      const userDiaries = diaries[userId];
-      if (userDiaries[diaryId]) {
-        diaryData = userDiaries[diaryId] as DiariesType;
-      }
-    }
+    const postsData = await Promise.all(
+      postsId.map(async (postId) => {
+        if (postId) {
+          const post = await getDataFromFirebase(`posts-/${postId}`, false);
+          return post;
+        }
+        return null;
+      })
+    );
     return { postsData, diaryData };
   } catch (error) {
     console.error("포스트 가져오기 에러", error);

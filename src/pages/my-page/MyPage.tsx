@@ -35,7 +35,7 @@ export const MyPage = () => {
           <span className={styles.value}>{email}</span>
         </div>
       </div>
-      <button className={styles.editButtonLarge}>수정하기</button>
+      <button>수정하기</button>
     </div>
   );
 };

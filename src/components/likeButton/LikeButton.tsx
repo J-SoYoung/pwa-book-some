@@ -1,9 +1,10 @@
-import { GoHeartFill } from "react-icons/go";
-import "./likeButton.module,.css";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { GoHeartFill } from "react-icons/go";
+
+import "./likeButton.module.css";
 import { likeSubscribe, updateDiaryLikeState } from "@/services/apis";
 import { userState } from "@/recoil/atoms";
-import { useRecoilValue } from "recoil";
 
 export const LikeButton = ({ diaryId }: { diaryId: string }) => {
   const user = useRecoilValue(userState);

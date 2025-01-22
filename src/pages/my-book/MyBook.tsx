@@ -31,9 +31,14 @@ export const MyBook = () => {
 
   return (
     <div className={styles.container}>
-      <p>{user?.username}님 총 ()권의 책을 읽으셨네요!</p>
+      <p>{user?.username}님 총 {readingBookDiaries.length}권의 책을 읽으셨네요!</p>
       <section className={styles.section}>
-        <h3>읽고 싶은 책</h3>
+        <h3>읽고 있는 책</h3>
+        <BookItems items={readingBookDiaries} types="diaries" />
+      </section>
+
+      <section className={styles.section}>
+        <h3>좋아요 한 다이어리리</h3>
         <div className={styles.example}>
           {[...Array(4)].map((_, index) => (
             <div key={index} className={styles.exampleDiv}></div>
@@ -41,10 +46,7 @@ export const MyBook = () => {
         </div>
       </section>
       
-      <section className={styles.section}>
-        <h3>읽고 있는 책</h3>
-        <BookItems items={readingBookDiaries} types="diaries" />
-      </section>
+      
     </div>
   );
 };

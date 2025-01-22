@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { GoHeartFill } from "react-icons/go";
 
-import "./likeButton.module.css";
+import styles from "./likeButton.module.css";
 import { likeSubscribe, updateDiaryLikeState } from "@/services/apis";
 import { userState } from "@/recoil/atoms";
 
@@ -35,7 +35,7 @@ export const LikeButton = ({ diaryId }: { diaryId: string }) => {
   };
 
   return (
-    <button onClick={handleToggleLike}>
+    <button onClick={handleToggleLike} className={styles.likeButton}>
       <GoHeartFill color={isLike ? "#f03e3e" : "#495057"} size={22} />
     </button>
   );

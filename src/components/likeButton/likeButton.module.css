@@ -1,4 +1,4 @@
-button {
+.likeButton {
   border: none;
   background-color: none;
   cursor: pointer;
@@ -6,7 +6,7 @@ button {
   transition: transform 0.2s ease-in-out;
 }
 
-button:hover {
+.likeButton:hover {
   animation: heartbeat 0.6s infinite; /* 애니메이션 적용 */
 }
 

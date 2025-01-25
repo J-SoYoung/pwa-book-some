@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from './bookSearchModal.module.css'
+import styles from "./bookSearchModal.module.css";
 import { searchBooks } from "@/bookApis/book";
 import { SelectedBookType } from "@/services/types";
 
@@ -27,6 +27,9 @@ export const BookSearchModal = ({
           placeholder="도서를 검색해주세요"
           value={bookQuery}
           onChange={(e) => setBookQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") onClickSearchBook();
+          }}
         />
         <button className={styles.searchIcon} onClick={onClickSearchBook}>
           🔍

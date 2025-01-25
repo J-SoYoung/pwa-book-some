@@ -13,7 +13,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <h1>
-        <Link to={"/"}>BOOKSOME</Link>
+        <Link to={"/home"}>BOOKSOME</Link>
       </h1>
       <div>
         <span>{user?.username}님</span>

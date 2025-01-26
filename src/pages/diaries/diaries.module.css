@@ -1,30 +1,46 @@
-.diaries {
+.diariesContainer {
   width: 100%;
   padding: 16px;
   box-sizing: border-box;
 }
-.featured {
+.diaries {
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  position: relative;
 }
 
-.featured > img {
+.diaries > img {
   width: 130px;
   margin-right: 8px;
 }
 
-.featured > .featuredText {
+.diaries > .diariesdText {
   width: 100%;
   word-break: break-word;
 }
-.featured > .featuredText > h3 {
+.diaries > .diariesdText > div {
   margin-bottom: 8px;
+}
+.diaries > .diariesdText > div > p {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.diaries > .diariesdText .label {
+  font-weight: 700;
+  color: #666;
+  font-size: 12px;
+}
+.diaries > .buttonBox {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 /* PostsItems */
 .postsItems {
-  padding: 8px ;
+  padding: 8px;
   box-sizing: border-box;
   margin-bottom: 16px;
   display: flex;

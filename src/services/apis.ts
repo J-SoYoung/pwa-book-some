@@ -44,6 +44,7 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
       createdAt: diaries.createdAt,
       diaryId: diaries.diaryId,
       diaryTitle: diaries.diaryTitle,
+      diaryImage: "/",
       userId: user.userId,
       postId: { [posts.id]: true }
     });
@@ -189,6 +190,7 @@ export const getMyBookData = async (userId: string): Promise<DiariesType[]> => {
       false
     );
     const diaryIdsArray = Object.keys(diaryIds);
+    console.log(diaryIdsArray);
     const diaryList = await Promise.all(
       diaryIdsArray.map(async (diaryId) => {
         return await getDataFromFirebase(`diary/${diaryId}`, false);
@@ -332,5 +334,23 @@ export const getLikeDiaries = async (userId: string) => {
       return await getDataFromFirebase(`diary/${diaryId}`, false);
     })
   );
-  return likeDiaries
+  return likeDiaries;
+};
+
+export const updateDiary = async ({
+  diaryId,
+  newTitle
+}: {
+  diaryId: string;
+  newTitle: string;
+}) => {
+  try {
+    const diaryRef = ref(database, `diary/${diaryId}`);
+    const updates = { diaryTitle: newTitle };
+    update(diaryRef, updates);
+    return { diaryId, diaryTitle: newTitle };
+  } catch (error) {
+    console.error(error, "다이어리 제목 수정 에러");
+    return {};
+  }
 };

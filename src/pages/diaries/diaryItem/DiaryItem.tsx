@@ -71,7 +71,10 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
       {isAuthor && (
         <div className={styles.buttonBox}>
           {isDiaryEdit ? (
+            <>
             <button onClick={handleDiarySave}>저장</button>
+            <button onClick={handleDiaryEdit}>취소</button>
+            </>
           ) : (
             <button onClick={handleDiaryEdit}>수정</button>
           )}

@@ -2,7 +2,7 @@ import styles from "./inputField.module.css";
 
 interface InputFieldProps {
   label: string;
-  type?: "text"; // Optional, defaults to "text"
+  type?: "text" | "file"; 
   value: string;
   name: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,11 +18,10 @@ interface TextareaFieldProps {
   className?: string;
 }
 
-
 export const InputField = ({
   label,
   type = "text",
-  value,
+  value = '/',
   name,
   onChange,
   placeholder,

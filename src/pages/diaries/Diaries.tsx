@@ -5,6 +5,9 @@ import { getDiaryPosts } from "@/services/apis";
 import { useParams } from "react-router-dom";
 import { DiariesType, PostsType } from "@/services/types";
 import { PostItems } from "./postItems/PostItems";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/recoil/atoms";
+import { DiaryItem } from "./diaryItem/DiaryItem";
 
 type FetchResultType = {
   postsData: PostsType[];
@@ -14,8 +17,11 @@ type FetchResultType = {
 export const Diaries = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
 
+  const users = useRecoilValue(userState);
   const [posts, setPosts] = useState<PostsType[]>([]);
   const [diary, setDiary] = useState<DiariesType | null>(null);
+  const [isAuthor, setIsAuthor] = useState(false);
+
 
   useEffect(() => {
     const fetchPosts = async (diaryId: string) => {
@@ -27,22 +33,21 @@ export const Diaries = () => {
         console.error("다이어리 가져오기 에러", error);
       }
     };
+    if (diary?.userId === users?.userId) setIsAuthor(true);
 
     fetchPosts(diaryId as string);
-  }, [diaryId]);
+  }, [diaryId, users?.userId, diary?.userId]);
+
 
   return (
-    <main className={styles.diaries}>
+    <main className={styles.diariesContainer}>
       <h2>Diaries</h2>
-      <div className={styles.featured}>
-        <img src={diary?.bookImage} />
-        <div className={styles.featuredText}>
-          <h3 className={styles.featuredDescription}>{diary?.diaryTitle}</h3>
-          <span>책 제목</span>
-          <p className={styles.featuredTitle}>{diary?.bookTitle}</p>
-        </div>
-      </div>
-      <PostItems posts={posts} />
+      <DiaryItem
+        diary={diary}
+        setDiary={setDiary}
+        isAuthor={isAuthor}
+      />
+      <PostItems posts={posts} isAuthor={isAuthor} />
     </main>
   );
 };

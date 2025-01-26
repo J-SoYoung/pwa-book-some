@@ -36,11 +36,14 @@ export interface BookDiaryType {
 
 export interface DiariesType {
   bookId?: string;
-  bookImage?: string;
+  bookImage: string;
   bookTitle?: string;
-  diaryId: string;
-  diaryTitle: string;
   createdAt: string;
+  diaryId: string;
+  diaryImage: string;
+  diaryTitle: string;
+  postId: { [key: string]: string };
+  userId: string;
 }
 
 export interface DiariesWithPostsType {

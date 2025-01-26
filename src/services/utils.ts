@@ -22,7 +22,6 @@ export const getDataFromFirebase = async (
       console.error(`No ${tableName} found.`);
       return returnAsArray ? [] : null;
     }
-    
   } catch (error) {
     console.error(`${tableName} 가져오기 에러`, error);
     return returnAsArray ? [] : null;
@@ -71,4 +70,12 @@ export const validatePostsForm = (
     return { valid: false, message: "포스트 내용은 20자 이상이어야 합니다." };
   }
   return { valid: true, message: "" };
+};
+
+export const validateValue = (data: string) => {
+  if (!data || data.length < 5) {
+    return { valid: false, message: "포스트 제목은 5자 이상이어야 합니다." };
+  } else {
+    return { valid: true, message: "" };
+  }
 };

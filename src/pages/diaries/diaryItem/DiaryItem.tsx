@@ -13,13 +13,11 @@ interface DiaryPropsType {
 }
 
 export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
-  console.log(diary);
-
-  const [isDiaryEdit, setIsDiaryEdit] = useState(false);
+  const [isEditDiary, setIsEditDiary] = useState(false);
   const [editDiaryTItle, setEditDiaryTitle] = useState("");
 
   const handleDiaryEdit = () => {
-    setIsDiaryEdit(!isDiaryEdit);
+    setIsEditDiary(!isEditDiary);
   };
 
   const handleDiarySave = async () => {
@@ -37,7 +35,7 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
         diaryTitle: response.diaryTitle as string
       }));
 
-      setIsDiaryEdit(false); // 수정 모드 종료
+      setIsEditDiary(false); // 수정 모드 종료
     } catch (error) {
       console.error(error, "다이어리 제목 수정 에러");
     }
@@ -49,13 +47,13 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
       <div className={styles.diariesdText}>
         <div>
           <span className={styles.label}>다이어리</span>
-          {isDiaryEdit ? (
+          {isEditDiary ? (
             <InputField
-              label={""}
+              label=""
               value={editDiaryTItle}
-              name={"title"}
+              name="title"
               onChange={(e) => setEditDiaryTitle(e.target.value)}
-              placeholder={"수정할 다이어리 제목을 적어주세요"}
+              placeholder="수정할 다이어리 제목을 적어주세요"
             />
           ) : (
             <p className={styles.featuredDescription}>{diary?.diaryTitle}</p>
@@ -70,10 +68,10 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
 
       {isAuthor && (
         <div className={styles.buttonBox}>
-          {isDiaryEdit ? (
+          {isEditDiary ? (
             <>
-            <button onClick={handleDiarySave}>저장</button>
-            <button onClick={handleDiaryEdit}>취소</button>
+              <button onClick={handleDiarySave}>저장</button>
+              <button onClick={handleDiaryEdit}>취소</button>
             </>
           ) : (
             <button onClick={handleDiaryEdit}>수정</button>

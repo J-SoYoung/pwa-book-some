@@ -2,12 +2,21 @@ import styles from "./inputField.module.css";
 
 interface InputFieldProps {
   label: string;
-  type?: "text" | "file"; 
+  type?: "text" | "file";
   value: string;
   name: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   className?: string;
+}
+interface InputEditFieldProps {
+  type?: "text";
+  inputType: "input" | "textarea";
+  defaultValue: string;
+  name: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 interface TextareaFieldProps {
   label: string;
@@ -21,7 +30,7 @@ interface TextareaFieldProps {
 export const InputField = ({
   label,
   type = "text",
-  value = '/',
+  value = "/",
   name,
   onChange,
   placeholder,
@@ -41,7 +50,32 @@ export const InputField = ({
     </label>
   );
 };
-
+export const InputEditField = ({
+  defaultValue,
+  name,
+  onChange,
+  inputType
+}: InputEditFieldProps) => {
+  return (
+    <label className={styles.label}>
+      {inputType === "input" ? (
+        <input
+          defaultValue={defaultValue}
+          name={name}
+          onChange={onChange}
+          className={styles.input}
+        />
+      ) : (
+        <textarea
+          defaultValue={defaultValue}
+          name={name}
+          onChange={onChange}
+          className={styles.textarea}
+        ></textarea>
+      )}
+    </label>
+  );
+};
 export const TextareaField = ({
   label,
   value,
@@ -49,15 +83,17 @@ export const TextareaField = ({
   onChange,
   placeholder,
   className
-}: TextareaFieldProps) => (
-  <label className={styles.label}>
-    {label}
-    <textarea
-      value={value}
-      name={name}
-      onChange={onChange}
-      placeholder={placeholder}
-      className={className || styles.textarea}
-    ></textarea>
-  </label>
-);
+}: TextareaFieldProps) => {
+  return (
+    <label className={styles.label}>
+      {label}
+      <textarea
+        value={value}
+        name={name}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={className || styles.textarea}
+      ></textarea>
+    </label>
+  );
+};

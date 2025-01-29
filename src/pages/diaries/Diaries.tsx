@@ -22,7 +22,6 @@ export const Diaries = () => {
   const [diary, setDiary] = useState<DiariesType | null>(null);
   const [isAuthor, setIsAuthor] = useState(false);
 
-
   useEffect(() => {
     const fetchPosts = async (diaryId: string) => {
       try {
@@ -38,16 +37,22 @@ export const Diaries = () => {
     fetchPosts(diaryId as string);
   }, [diaryId, users?.userId, diary?.userId]);
 
-
   return (
     <main className={styles.diariesContainer}>
       <h2>Diaries</h2>
-      <DiaryItem
-        diary={diary}
-        setDiary={setDiary}
-        isAuthor={isAuthor}
-      />
-      <PostItems posts={posts} isAuthor={isAuthor} />
+      <DiaryItem diary={diary} setDiary={setDiary} isAuthor={isAuthor} />
+
+      {posts.map((post) => {
+        console.log(post)
+        return (
+          <PostItems
+            key={post.postId}
+            post={post}
+            setPosts={setPosts}
+            isAuthor={isAuthor}
+          />
+        );
+      })}
     </main>
   );
 };

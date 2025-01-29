@@ -55,10 +55,12 @@ export interface DiariesWithPostsType {
 }
 
 export interface PostsType {
-  id: string;
-  title: string;
   content: string;
   createdAt: string;
+  diaryId: string;
+  postId: string;
+  title: string;
+  updatedAt?: string;
 }
 
 export interface UserType {
@@ -70,7 +72,12 @@ export interface UserType {
 
 export interface NewDiaryDataType {
   books: SelectedBookType;
-  diaries: DiariesType;
+  diaries: {
+    diaryId: string;
+    diaryTitle: string;
+    diaryImage: string;
+    createdAt: string;
+  };
   posts: PostsType;
   user: UserType;
 }

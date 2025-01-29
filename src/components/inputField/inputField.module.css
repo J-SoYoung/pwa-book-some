@@ -21,4 +21,9 @@
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-family: inherit; /* 글꼴 유지 */
+  line-height: 1.5; /* 줄 간격 조정 */
+  white-space: pre-wrap; /* 여러 줄 입력 가능하게 설정 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-y: auto; /* 스크롤 가능하도록 설정 */
 }

@@ -6,14 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 export const handleSubmitForm = async (
   e: React.FormEvent<HTMLFormElement>,
   newDiaryData: { diaryId: string; title: string; content: string },
-  navigate: NavigateFunction,
+  navigate: NavigateFunction
 ) => {
   e.preventDefault();
   const validation = validatePostsForm(newDiaryData);
 
-  if(!validation.valid){
+  if (!validation.valid) {
     alert(validation.message);
-    return 
+    return;
   }
 
   const postId = uuidv4();
@@ -22,10 +22,11 @@ export const handleSubmitForm = async (
       const newPostData = {
         diaryId: newDiaryData.diaryId,
         post: {
-          id: postId,
-          title: newDiaryData.title,
+          createdAt: new Date().toISOString(),
           content: newDiaryData.content,
-          createdAt: new Date().toISOString()
+          diaryId: newDiaryData.diaryId,
+          postId: postId,
+          title: newDiaryData.title,
         }
       };
       const result = await createDiaryPost(newPostData);

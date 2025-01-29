@@ -6,7 +6,12 @@ import { v4 as uuidv4 } from "uuid";
 
 export const handleSubmitForm = async (
   e: React.FormEvent<HTMLFormElement>,
-  diaryData: { diaryTitle: string; todayTitle: string; content: string },
+  diaryData: {
+    diaryTitle: string;
+    todayTitle: string;
+    content: string;
+    diaryImage: string;
+  },
   selectedBook: SelectedBookType,
   user: UserType,
   navigate: NavigateFunction
@@ -35,13 +40,15 @@ export const handleSubmitForm = async (
         diaries: {
           diaryId: diaryId,
           diaryTitle: diaryData.diaryTitle,
+          diaryImage: "/",
           createdAt: new Date().toISOString()
         },
         posts: {
-          id: postId,
-          title: diaryData.todayTitle,
           content: diaryData.content,
-          createdAt: new Date().toISOString()
+          createdAt: new Date().toISOString(),
+          diaryId: diaryId,
+          postId: postId,
+          title: diaryData.todayTitle,
         },
         user: user as UserType
       };

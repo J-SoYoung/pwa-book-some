@@ -5,7 +5,7 @@ import { useRecoilValue } from "recoil";
 import styles from "./postNew.module.css";
 import { userState } from "@/recoil/atoms";
 import { SelectedBookType, UserType } from "@/services/types";
-import { InputField, TextareaField,BookSearchModal } from "@/components";
+import { InputField, TextareaField, BookSearchModal } from "@/components";
 import { handleSubmitForm } from "./handleSubmitForm";
 
 export const PostsNew = () => {
@@ -18,6 +18,7 @@ export const PostsNew = () => {
   const [diaryData, setDiaryData] = useState({
     diaryTitle: "",
     todayTitle: "",
+    diaryImage:"/",
     content: ""
   });
 
@@ -75,6 +76,14 @@ export const PostsNew = () => {
       </div>
 
       <form className={styles.form} onSubmit={onSubmitForm}>
+        <InputField
+          label={"다이어리 이미지를 추가해주세요"}
+          value={'/'}
+          type={'file'}
+          name={"diaryImage"}
+          onChange={onChange}
+          placeholder={"다이어리 이미지가가 됩니다"}
+        />
         <InputField
           label={"나만의 다이어리리 제목을 적어주세요."}
           value={diaryData.diaryTitle}

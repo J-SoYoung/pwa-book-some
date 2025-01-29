@@ -8,6 +8,7 @@ import {
   PostsType
 } from "@/services/types";
 import { getDataFromFirebase, shuffleArray } from "./utils";
+import { newPostType } from "@/pages/diaries/postItems/PostItems";
 
 // PostNew NEW 다이어리리 생성
 export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
@@ -46,11 +47,11 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
       diaryTitle: diaries.diaryTitle,
       diaryImage: "/",
       userId: user.userId,
-      postId: { [posts.id]: true }
+      postId: { [posts.postId]: true }
     });
 
     // 포스트 저장
-    const postsRef = ref(database, `posts/${posts.id}`);
+    const postsRef = ref(database, `posts/${posts.postId}`);
     await set(postsRef, {
       diaryId: diaries.diaryId,
       content: posts.content,
@@ -106,14 +107,15 @@ export const createDiaryPost = async (newPostData: NewPostData) => {
     const { diaryId, post } = newPostData;
     // diary에 postId저장
     const diaryRef = ref(database, `diary/${diaryId}/postId`);
-    await update(diaryRef, { [post.id]: true });
+    await update(diaryRef, { [post.postId]: true });
 
     // post저장
-    const postsRef = ref(database, `posts/${post.id}`);
+    const postsRef = ref(database, `posts/${post.postId}`);
     await set(postsRef, {
       content: post.content,
       createdAt: post.createdAt,
       diaryId: diaryId,
+      postId: post.postId,
       title: post.title
     });
     return "포스트가 정상적으로 업로드 되었습니다";
@@ -324,8 +326,13 @@ export const likeSubscribe = (
 
 // my-book 좋아요 한 다이어리 가져오기기
 export const getLikeDiaries = async (userId: string) => {
-  const likesData: string = await getDataFromFirebase("likes", false);
-  const likesDiaryIds = Object.keys(likesData).filter((diaryId: string) => {
+  const likesData: Record<
+    string,
+    Record<string, boolean>
+  > = await getDataFromFirebase("likes", false);
+
+  const likesDiaryIds = Object.keys(likesData);
+  likesDiaryIds.filter((diaryId: string) => {
     return likesData[diaryId][userId] === true;
   });
 
@@ -337,6 +344,7 @@ export const getLikeDiaries = async (userId: string) => {
   return likeDiaries;
 };
 
+// 다이어리 수정
 export const updateDiary = async ({
   diaryId,
   newTitle
@@ -352,5 +360,23 @@ export const updateDiary = async ({
   } catch (error) {
     console.error(error, "다이어리 제목 수정 에러");
     return {};
+  }
+};
+
+// 포스트 수정
+interface updatePostsType {
+  editPost: newPostType;
+  postId: string;
+}
+export const updatePosts = async ({ editPost, postId }: updatePostsType) => {
+  try {
+    const { title, content, updatedAt } = editPost;
+    const postRef = ref(database, `posts/${postId}`);
+    const updates = { content, title, updatedAt };
+    update(postRef, updates);
+    return { postId, title, content };
+  } catch (error) {
+    console.error(error, "포스트 수정 에러");
+    return null;
   }
 };

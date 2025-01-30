@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
-import styles from "./mybook.module.css";
 
-import { BookItems } from "@/components";
+import styles from "./mybook.module.css";
+import { ItemLists } from "./ItemLists";
 
 import { userState } from "@/recoil/atoms";
 import { getLikeDiaries, getMyBookData } from "@/services/apis";
@@ -39,17 +39,16 @@ export const MyBook = () => {
       <p>
         {user?.username}님 총 {readingBookDiaries.length}권의 책을 읽으셨네요!
       </p>
-      <section className={styles.section}>
-        <h3>읽고 있는 책</h3>
-        <BookItems items={readingBookDiaries} types="diaries" />
-      </section>
-
-      <section className={styles.section}>
-        <h3>좋아요 한 다이어리리</h3>
-        <div className={styles.example}>
-          <BookItems items={likeDiaries} types="diaries" />
-        </div>
-      </section>
+      <ItemLists
+        sectionTitle="읽고 있는 책"
+        diaries={readingBookDiaries}
+        noDataText="읽을 책을 추가해주세요!"
+      />
+      <ItemLists
+        sectionTitle="좋아요 한 다이어리리"
+        diaries={likeDiaries}
+        noDataText="마음에 드는 다이어리에 하트를 눌러주세요!"
+      />
     </div>
   );
 };

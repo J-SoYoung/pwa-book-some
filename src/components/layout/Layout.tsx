@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 
+import styles from "./layout.module.css";
 import { BottomNav, ScrollTopButton } from "../navigation";
 import { SearchBar, Header } from "./index";
 
@@ -24,7 +25,9 @@ export const Layout = () => {
       {/* <DesktopNavbar /> */}
       <Header />
       <SearchBar />
-      <Outlet /> {/* 현재 라우트의 자식 컴포넌트 렌더링 */}
+      <div className={styles.AppConatiner}>
+        <Outlet /> {/* 현재 라우트의 자식 컴포넌트 렌더링 */}
+      </div>
       <BottomNav />
     </>
   );

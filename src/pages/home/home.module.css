@@ -1,13 +1,17 @@
-.home {
-  padding: 16px;
+.section {
+  margin: 16px 0 32px;
 }
-
-.home > h2 {
+.section h3 {
   margin-bottom: 8px;
 }
 
-.recommendations {
-  width: 100%;
-  padding-bottom: 16px;
+.itemListBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 16px 0;
   box-sizing: border-box;
 }
+

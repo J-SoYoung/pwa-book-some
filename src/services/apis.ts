@@ -45,7 +45,7 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
       createdAt: diaries.createdAt,
       diaryId: diaries.diaryId,
       diaryTitle: diaries.diaryTitle,
-      diaryImage: "/",
+      diaryImage: diaries.diaryImage,
       userId: user.userId,
       postId: { [posts.postId]: true }
     });

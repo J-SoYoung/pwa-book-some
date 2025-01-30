@@ -1,15 +1,15 @@
-import { BookItems } from "./bookltems/BookItems";
 import {
   InputField,
   TextareaField,
   InputEditField
 } from "./inputField/InputField";
 import { BookSearchModal } from "./modal/BookSearchModal";
+import { Items } from "./items/Items";
 
 export {
-  BookItems,
   InputField,
   TextareaField,
   InputEditField,
-  BookSearchModal
+  BookSearchModal,
+  Items
 };

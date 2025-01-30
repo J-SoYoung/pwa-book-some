@@ -50,9 +50,17 @@
 .cardContent > p {
   color: #666;
 }
-
 .cardContent .subTitle {
   font-size: 12px;
   font-weight: 700;
 }
 
+.cardContent .content {
+  display: -webkit-box; 
+  white-space: normal; 
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}

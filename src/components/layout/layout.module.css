@@ -5,9 +5,3 @@
   padding: 16px;
   background-color: #f5f5f5;
 }
-/* 데스크탑 전용*/
-@media (min-width: 768px) {
-  .header {
-    display: none; 
-  }
-}

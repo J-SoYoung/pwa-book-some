@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 
-import { BottomNav, DesktopNavbar, ScrollTopButton } from "../navigation";
+import { BottomNav, ScrollTopButton } from "../navigation";
 import { SearchBar, Header } from "./index";
 
 export const Layout = () => {
@@ -21,7 +21,7 @@ export const Layout = () => {
   return (
     <>
       <ScrollTopButton />
-      <DesktopNavbar />
+      {/* <DesktopNavbar /> */}
       <Header />
       <SearchBar />
       <Outlet /> {/* 현재 라우트의 자식 컴포넌트 렌더링 */}

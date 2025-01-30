@@ -62,19 +62,3 @@
   bottom: 10px;
   cursor: pointer;
 }
-
-@media (min-width: 768px) {
-  .userBooks > div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  .bookCard {
-    min-width: 48%;
-    margin-bottom: 2rem;
-  }
-  .bookImage {
-    object-fit: cover;
-  }
-}

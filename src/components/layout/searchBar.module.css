@@ -32,12 +32,3 @@
   color: #666;
   cursor: pointer;
 }
-
-
-/* 데스크탑 전용*/
-@media (min-width: 768px) {
-  .searchBar {
-    max-width: 500px;
-    margin: 2rem 0 0;
-  }
-}

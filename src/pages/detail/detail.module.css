@@ -51,10 +51,3 @@
   overflow: visible; /* 모든 텍스트 표시 */
   margin-bottom: 16px;
 }
-/* 데스크탑 전용*/
-@media (min-width: 768px) {
-  .bookSection {
-    width: 500px;
-    margin: 20px auto;
-  }
-}

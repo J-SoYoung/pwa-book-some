@@ -76,18 +76,3 @@
 .scrollToTop:hover {
   background-color: #0056b3;
 }
-
-/* 모바일 전용 */
-@media (max-width: 768px) {
-  .desktopNavbar
-  {
-    display: none;
-  }
-}
-
-/* 데스크탑 전용*/
-@media (min-width: 768px) {
-  .bottomNav {
-    display: none;
-  }
-}

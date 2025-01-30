@@ -56,9 +56,3 @@
   font-weight: 700;
 }
 
-/* 데스크탑 전용*/
-@media (min-width: 768px) {
-  .recommendationSection {
-    margin: 20px 0;
-  }
-}

@@ -20,7 +20,6 @@ export const Detail = () => {
   useEffect(() => {
     const fetchBookData = async () => {
       const response = await getBookAndDiaries(bookId as string);
-      console.log(response);
       if (response) {
         const { bookData, diaryWidthPosts }: DetailDataType = response;
         setBook(bookData);

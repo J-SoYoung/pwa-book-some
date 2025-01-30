@@ -43,7 +43,6 @@ export const Diaries = () => {
       <DiaryItem diary={diary} setDiary={setDiary} isAuthor={isAuthor} />
 
       {posts.map((post) => {
-        console.log(post)
         return (
           <PostItems
             key={post.postId}

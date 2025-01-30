@@ -184,26 +184,7 @@ export const getDiaryPosts = async (diaryId: string) => {
   }
 };
 
-// MyBook 읽고 있는 책 데이터 가져오기
-export const getMyBookData = async (userId: string): Promise<DiariesType[]> => {
-  try {
-    const diaryIds = await getDataFromFirebase(
-      `users/${userId}/diaries`,
-      false
-    );
-    const diaryIdsArray = Object.keys(diaryIds);
-    console.log(diaryIdsArray);
-    const diaryList = await Promise.all(
-      diaryIdsArray.map(async (diaryId) => {
-        return await getDataFromFirebase(`diary/${diaryId}`, false);
-      })
-    );
-    return diaryList as DiariesType[];
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
+
 
 // Home 랜덤 책 데이터 가져오기
 export const getRecommendBooks = async () => {
@@ -241,7 +222,7 @@ export const getBookAndDiaries = async (bookId: string) => {
       return null;
     }
 
-    // 다리어리 내부 포스트 가져오기 ( 첫번째 데이터만 )
+    // 다리어리 내부 첫번째 포스트 / 유저데이터 가져오기
     const diaryWidthPosts = await Promise.all(
       diaries.map(async (diary) => {
         const postFirstId = Object.keys(diary.postId);
@@ -249,6 +230,7 @@ export const getBookAndDiaries = async (bookId: string) => {
           `posts/${postFirstId[0]}`,
           false
         );
+        const user = await getDataFromFirebase(`users/${diary.userId}`, false);
 
         const results = {
           diaryId: diary.diaryId,
@@ -256,6 +238,8 @@ export const getBookAndDiaries = async (bookId: string) => {
           diaryTitle: diary.diaryTitle,
           diaryImage: diary.diaryImage,
           userId: diary.userId,
+          username: user.username,
+          userAvatar: user.avatar,
           postContent: post.content,
           postCreatedAt: post.createdAt,
           postTitle: post.title
@@ -324,24 +308,57 @@ export const likeSubscribe = (
   return unsubscribe;
 };
 
+// MyBook 읽고 있는 책 다이어리 가져오기
+export const getMyBookData = async (userId: string): Promise<DiariesType[]> => {
+  try {
+    const diaryIds = await getDataFromFirebase(
+      `users/${userId}/diaries`,
+      false
+    );
+    if (diaryIds) {
+      const diaryIdsArray = Object.keys(diaryIds);
+      const diaryList = await Promise.all(
+        diaryIdsArray.map(async (diaryId) => {
+          return await getDataFromFirebase(`diary/${diaryId}`, false);
+        })
+      );
+      return diaryList as DiariesType[];
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 // my-book 좋아요 한 다이어리 가져오기기
 export const getLikeDiaries = async (userId: string) => {
-  const likesData: Record<
-    string,
-    Record<string, boolean>
-  > = await getDataFromFirebase("likes", false);
+  try {
+    const likesData: Record<
+      string,
+      Record<string, boolean>
+    > = await getDataFromFirebase("likes", false);
 
-  const likesDiaryIds = Object.keys(likesData);
-  likesDiaryIds.filter((diaryId: string) => {
-    return likesData[diaryId][userId] === true;
-  });
+    const likesDiaryIds = Object.keys(likesData);
+    const likesDiariesData = likesDiaryIds.filter((diaryId: string) => {
+      return likesData[diaryId][userId] === true;
+    });
 
-  const likeDiaries = await Promise.all(
-    likesDiaryIds.map(async (diaryId) => {
-      return await getDataFromFirebase(`diary/${diaryId}`, false);
-    })
-  );
-  return likeDiaries;
+    if (likesDiariesData.length > 0) {
+      const likeDiaries = await Promise.all(
+        likesDiariesData.map(async (diaryId) => {
+          return await getDataFromFirebase(`diary/${diaryId}`, false);
+        })
+      );
+      return likeDiaries;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error(error, "좋아요 한 다이어리 가져오기 에러");
+    return [];
+  }
 };
 
 // 다이어리 수정

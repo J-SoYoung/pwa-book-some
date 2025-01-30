@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import styles from "./detail.module.css";
 import { DiarySection } from "./diarySection/DiarySection";
-import { Link, useParams } from "react-router-dom";
-import { BookType } from "@/services/types";
+
+import { BookType, DiaryWidthPostsType } from "@/services/types";
 import { getBookAndDiaries } from "@/services/apis";
 
-export type DiaryWidthPostsType = {
-  diaryId: string;
-  diaryCreatedAt: Date;
-  diaryTitle: string;
-  diaryImage: string;
-  userId: string;
-  postContent: string;
-  postCreatedAt: Date;
-  postTitle: string;
-};
 export interface DetailDataType {
   bookData: BookType;
   diaryWidthPosts: DiaryWidthPostsType[];

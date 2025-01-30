@@ -1,6 +1,7 @@
 import { get, ref } from "firebase/database";
 import { database } from "./firebase";
 import { newPostType } from "@/pages/diaries/postItems/PostItems";
+import { diaryDataType } from "@/pages/postsNew/handleSubmitForm";
 
 // 배열을 랜덤하게 섞어주는 함수
 export const shuffleArray = <T>(array: T[]): T[] => {
@@ -29,13 +30,8 @@ export const getDataFromFirebase = async (
   }
 };
 
-interface validatePostsNewFormType {
-  diaryTitle: string;
-  todayTitle: string;
-  content: string;
-}
 export const validatePostsNewForm = (
-  data: validatePostsNewFormType
+  data: diaryDataType
 ): { valid: boolean; message: string } => {
   if (!data.diaryTitle || data.diaryTitle.length < 5) {
     return { valid: false, message: "다이어리 제목은 5자 이상이어야 합니다." };

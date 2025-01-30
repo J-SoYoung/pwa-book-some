@@ -3,7 +3,7 @@ import styles from "../diaries.module.css";
 
 import { DiariesType } from "@/services/types";
 import { updateDiary } from "@/services/apis";
-import { InputField } from "@/components";
+import { InputEditField } from "@/components";
 import { validateValue } from "@/services/utils";
 
 interface DiaryPropsType {
@@ -42,42 +42,49 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
   };
 
   return (
-    <div className={styles.diaries}>
-      <img src={diary?.bookImage} />
-      <div className={styles.diariesdText}>
-        <div>
-          <span className={styles.label}>다이어리</span>
-          {isEditDiary ? (
-            <InputField
-              label=""
-              value={editDiaryTItle}
-              name="title"
-              onChange={(e) => setEditDiaryTitle(e.target.value)}
-              placeholder="수정할 다이어리 제목을 적어주세요"
-            />
-          ) : (
-            <p className={styles.featuredDescription}>{diary?.diaryTitle}</p>
-          )}
-        </div>
-
-        <div>
-          <span className={styles.label}>책</span>
-          <p className={styles.featuredTitle}>{diary?.bookTitle}</p>
-        </div>
+    <>
+      <div>
+        <span className={styles.label}>다이어리</span>
+        {isEditDiary ? (
+          <InputEditField
+            defaultValue={diary?.diaryTitle as string}
+            name={"title"}
+            onChange={(e) => setEditDiaryTitle(e.target.value)}
+            inputType={"input"}
+          />
+        ) : (
+          <p className={styles.featuredDescription}>{diary?.diaryTitle}</p>
+        )}
       </div>
 
-      {isAuthor && (
-        <div className={styles.buttonBox}>
-          {isEditDiary ? (
-            <>
-              <button onClick={handleDiarySave}>저장</button>
-              <button onClick={handleDiaryEdit}>취소</button>
-            </>
-          ) : (
-            <button onClick={handleDiaryEdit}>수정</button>
-          )}
+      <img src={diary?.diaryImage} className={styles.bgDiaryImage} />
+
+      <div className={styles.diaries}>
+          <img
+            src={diary?.bookImage}
+            className={styles.bookImage}
+            alt="책 표지"
+          />
+        <div className={styles.diariesText}>
+          <div>
+            <span className={styles.label}>책</span>
+            <p className={styles.featuredTitle}>{diary?.bookTitle}</p>
+          </div>
         </div>
-      )}
-    </div>
+
+        {isAuthor && (
+          <div className={styles.buttonBox}>
+            {isEditDiary ? (
+              <>
+                <button onClick={handleDiarySave}>저장</button>
+                <button onClick={handleDiaryEdit}>취소</button>
+              </>
+            ) : (
+              <button onClick={handleDiaryEdit}>수정</button>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 };

@@ -1,12 +1,16 @@
-import { useLocation } from "react-router-dom";
-import styles from "./searchResults.module.css";
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import styles from "./searchResults.module.css";
+
+import { Items } from "@/components";
 import { getSearchResults } from "@/services/apis";
-import { BookItems } from "@/components";
+import { BookType } from "@/services/types";
 import { searchBooks } from "@/bookApis/book";
 
 export const SearchResults = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const queryParams = new URLSearchParams(location.search);
   const query = queryParams.get("query");
 
@@ -33,16 +37,21 @@ export const SearchResults = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <section className={styles.section}>
       <h3 className={styles.title}>검색결과</h3>
-      <div className={styles.searchResultsContent}>
-        <p>
-          다른 유저들이 읽은 <br />
-          <b>'{query}'</b>의 검색결과는 <b>{searchResults.length}</b>건 입니다.
-        </p>
-        <div>
-          <BookItems items={searchResults} types="books" />
-        </div>
+      <p className={styles.totalText}>
+        다른 유저들이 읽은 <br />
+        <b>'{query}'</b>의 검색결과는 <b>{searchResults.length}</b>건 입니다.
+      </p>
+      <div className={styles.itemListBox}>
+        {searchResults.map((book: BookType) => {
+          const data = {
+            url: `/detail/${book.id}`,
+            imageUrl: book.image,
+            title: book.title
+          };
+          return <Items data={data} key={book.id} />;
+        })}
       </div>
 
       <div className={styles.searchMoreResults}>
@@ -52,8 +61,22 @@ export const SearchResults = () => {
         {moreBookSearchData.length !== 0 && (
           <p>도서를 클릭하면 독서 다이어리를 생성할 수 있습니다 </p>
         )}
-        <BookItems items={moreBookSearchData} types="searchResult" />
+        <div className={styles.bookCardBox}>
+          {moreBookSearchData.map((item) => {
+            const book = item as BookType;
+            return (
+              <div
+                key={book.id}
+                className={styles.bookItem}
+                onClick={() => navigate("/postsNew", { state: { book } })}
+              >
+                <img src={book.image} alt="book" />
+                <h3>{book.title}</h3>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };

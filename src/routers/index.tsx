@@ -9,7 +9,7 @@ import Detail from "@/pages/detail";
 import Landing from "@/pages/Landing";
 import Layout from "@/components/layout/Layout";
 import SearchResults from "@/pages/searchResults";
-import {PostsNew} from "@/pages/postsNew";
+import { PostsNew } from "@/pages/postsNew";
 import PWABadge from "@/components/layout/PWABadge";
 import Diaries from "@/pages/diaries";
 import { MyPage } from "@/pages/my-page";
@@ -18,14 +18,6 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
-  },
-  {
-    path: "/posts",
-    element: <Posts />
-  },
-  {
-    path: "/postsNew",
-    element: <PostsNew />
   },
   {
     path: "/",
@@ -58,6 +50,14 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <SearchResults />
+      },
+      {
+        path: "/posts",
+        element: <Posts />
+      },
+      {
+        path: "/postsNew",
+        element: <PostsNew />
       }
     ]
   }

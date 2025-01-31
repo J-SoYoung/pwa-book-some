@@ -4,6 +4,7 @@ import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import styles from "./layout.module.css";
 import { BottomNav, ScrollTopButton } from "../navigation";
 import { SearchBar, Header } from "./index";
+import { ScrollReset } from "./ScrollReset";
 
 export const Layout = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export const Layout = () => {
 
   return (
     <>
+      <ScrollReset />
       <ScrollTopButton />
       {showHeader && <Header />}
       {showSearchBar && <SearchBar />}

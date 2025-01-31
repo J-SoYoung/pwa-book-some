@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 
 import styles from "./layout.module.css";
 import { BottomNav, ScrollTopButton } from "../navigation";
@@ -7,9 +7,11 @@ import { SearchBar, Header } from "./index";
 
 export const Layout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
 
-  // app install check, home으로 이동
   useEffect(() => {
+    // app install check, home으로 이동
     const isStandalone = window.matchMedia(
       "(display-mode: standalone)"
     ).matches;
@@ -19,16 +21,26 @@ export const Layout = () => {
     }
   }, [navigate]);
 
+  const showHeader = ["/postsNew", "/posts"].some((p) => !path.startsWith(p));
+  const showSearchBar =
+    path === "/" ||
+    ["/home", "/detail", "/mybook", "/diaries"].some((p) => path.startsWith(p));
+
+  const showBottomNav =
+    path === "/" ||
+    ["/home", "/mypage", "/mybook", "/postsNew", "/posts", "/diaries"].some(
+      (p) => path.startsWith(p)
+    );
+
   return (
     <>
       <ScrollTopButton />
-      {/* <DesktopNavbar /> */}
-      <Header />
-      <SearchBar />
+      {showHeader && <Header />}
+      {showSearchBar && <SearchBar />}
       <div className={styles.AppConatiner}>
-        <Outlet /> {/* 현재 라우트의 자식 컴포넌트 렌더링 */}
+        <Outlet />
       </div>
-      <BottomNav />
+      {showBottomNav && <BottomNav />}
     </>
   );
 };

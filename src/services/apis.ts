@@ -3,7 +3,6 @@ import { database } from "./firebase";
 import {
   BookType,
   DiariesType,
-  DiariesWithPostsType,
   NewDiaryDataType,
   PostsType
 } from "@/services/types";
@@ -125,7 +124,7 @@ export const createDiaryPost = async (newPostData: NewPostData) => {
 };
 
 // HOME 모든 다이어리 가져오기
-export const getAllBookDiaries = async () => {
+export const getAllkDiaries = async () => {
   try {
     // 모든 다이어리 가져오기
     const diaryData = (await getDataFromFirebase(
@@ -134,28 +133,28 @@ export const getAllBookDiaries = async () => {
     )) as DiariesType[];
 
     // 포스트 데이터 가져오기
-    const postsData = await Promise.all(
+    const postWithUserData = await Promise.all(
       diaryData.map(async (diary) => {
+        const { bookImage, bookTitle, diaryImage, diaryTitle, diaryId } =
+          diary;
         if (diary.postId) {
-          const postIds = Object.keys(diary.postId);
-          const post = await getDataFromFirebase(`posts/${postIds[0]}`, false);
-          return post;
+          const postId = Object.keys(diary.postId)[0];
+          const postData = await getDataFromFirebase(`posts/${postId}`, false);
+          const { content, title } = postData;
+
+          const userId = diary.userId;
+          const userData = await getDataFromFirebase(`users/${userId}`);
+          const { username, avatar } = userData;
+          return {
+            post: { content, title, postId },
+            user: { username, avatar, userId },
+            diary: { bookImage, bookTitle, diaryImage, diaryTitle, diaryId }
+          };
         }
         return null;
       })
     );
-
-    // 다이어리와 포스트트 데이터 결합
-    const diariesWithPosts = diaryData.map((diary): DiariesWithPostsType => {
-      return {
-        diaryId: diary.diaryId,
-        diaryTitle: diary.diaryTitle,
-        bookImage: diary.bookImage as string,
-        bookTitle: diary.bookTitle as string,
-        posts: postsData
-      };
-    });
-    return diariesWithPosts;
+    return postWithUserData;
   } catch (error) {
     console.error("다이어리 가져오기 에러", error);
     return [];
@@ -184,9 +183,7 @@ export const getDiaryPosts = async (diaryId: string) => {
   }
 };
 
-
-
-// Home 랜덤 책 데이터 가져오기
+// Home 랜덤 책 데이터 가져오기 ( 캐러셀 구현 )
 export const getRecommendBooks = async () => {
   try {
     const booksData = await getDataFromFirebase("books", true);

@@ -19,14 +19,23 @@
   border-radius: 8px;
   margin-bottom: 1rem;
 }
-
+.imageBox {
+  position: relative;
+}
 .bookImage {
   width: 84px;
   height: 120px;
   background-color: #ddd;
   border-radius: 4px;
 }
-
+.userAvatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 4px;
+  right: -4px;
+}
 .bookInfo {
   width: 72%;
   height: 120px;
@@ -61,4 +70,6 @@
   right: 16px;
   bottom: 10px;
   cursor: pointer;
+}
+.userAvatar {
 }

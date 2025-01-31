@@ -2,47 +2,56 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./userBooks.module.css";
 
-import { getAllBookDiaries } from "@/services/apis";
-import { DiariesWithPostsType } from "@/services/types";
+import { getAllkDiaries } from "@/services/apis";
+import { AllDiariesType } from "@/services/types";
 import { LikeButton } from "@/components/likeButton/LikeButton";
 
 function UserBooks() {
   const navigate = useNavigate();
-  const [bookDiaries, setBookDiaries] = useState<DiariesWithPostsType[]>([]);
+  const [allDiaries, setAllDiaries] = useState<AllDiariesType[]>([]);
 
   useEffect(() => {
     const fetchBookDiaries = async () => {
-      const diary = await getAllBookDiaries();
-      setBookDiaries(diary);
+      const allDiaryData = await getAllkDiaries();
+      setAllDiaries(allDiaryData as AllDiariesType[]);
     };
     fetchBookDiaries();
   }, []);
 
   return (
     <section className={styles.userBooks}>
-      <div>
-        {bookDiaries.map((diary) => {
-          return (
-            <div className={styles.bookCard} key={diary.diaryId}>
-              <img src={diary.bookImage} className={styles.bookImage} />
-              <div className={styles.likeBox}>
-                <LikeButton diaryId={diary.diaryId} />
-              </div>
-
-              <div
-                className={styles.bookInfo}
-                onClick={() => {
-                  navigate(`/diaries/${diary.diaryId}`);
-                }}
-              >
-                <h3>{diary.diaryTitle}</h3>
-                <p>{diary.bookTitle}</p>
-                <p>{diary.posts[0].content}</p>
-              </div>
+      {allDiaries.map((diary) => {
+        return (
+          <div className={styles.bookCard} key={diary.diary.diaryId}>
+            <div className={styles.imageBox}>
+              <img
+                className={styles.bookImage}
+                src={diary.diary.bookImage}
+                alt={diary.diary.bookTitle}
+              />
+              <img
+                className={styles.userAvatar}
+                src={diary.user.avatar}
+                alt={`${diary.user.username}의 다이어리`}
+              />
             </div>
-          );
-        })}
-      </div>
+            <div className={styles.likeBox}>
+              <LikeButton diaryId={diary.diary.diaryId} />
+            </div>
+
+            <div
+              className={styles.bookInfo}
+              onClick={() => {
+                navigate(`/diaries/${diary.diary.diaryId}`);
+              }}
+            >
+              <h3>{diary.diary.diaryTitle}</h3>
+              <p>{diary.diary.bookTitle}</p>
+              <p>{diary.post.content}</p>
+            </div>
+          </div>
+        );
+      })}
     </section>
   );
 }

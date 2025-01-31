@@ -1,6 +1,6 @@
 import { get, ref } from "firebase/database";
 import { database } from "./firebase";
-import { newPostType } from "@/pages/diaries/postItems/PostItems";
+import { newPostType } from "@/pages/diaries/components/PostItems";
 import { diaryDataType } from "@/pages/postsNew/handleSubmitForm";
 
 // 배열을 랜덤하게 섞어주는 함수

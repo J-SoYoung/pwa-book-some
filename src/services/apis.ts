@@ -7,7 +7,7 @@ import {
   PostsType
 } from "@/services/types";
 import { getDataFromFirebase, shuffleArray } from "./utils";
-import { newPostType } from "@/pages/diaries/postItems/PostItems";
+import { newPostType } from "@/pages/diaries/components/PostItems";
 
 // PostNew NEW 다이어리리 생성
 export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
@@ -135,8 +135,7 @@ export const getAllkDiaries = async () => {
     // 포스트 데이터 가져오기
     const postWithUserData = await Promise.all(
       diaryData.map(async (diary) => {
-        const { bookImage, bookTitle, diaryImage, diaryTitle, diaryId } =
-          diary;
+        const { bookImage, bookTitle, diaryImage, diaryTitle, diaryId } = diary;
         if (diary.postId) {
           const postId = Object.keys(diary.postId)[0];
           const postData = await getDataFromFirebase(`posts/${postId}`, false);

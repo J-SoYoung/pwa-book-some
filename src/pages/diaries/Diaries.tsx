@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styles from "./diaries.module.css";
 
+import { PostItems } from "./components/PostItems";
+import { DiaryItem } from "./components/DiaryItem";
+
 import { getDiaryPosts } from "@/services/apis";
-import { useParams } from "react-router-dom";
 import { DiariesType, PostsType } from "@/services/types";
-import { PostItems } from "./postItems/PostItems";
-import { useRecoilValue } from "recoil";
 import { userState } from "@/recoil/atoms";
-import { DiaryItem } from "./diaryItem/DiaryItem";
 
 type FetchResultType = {
   postsData: PostsType[];
@@ -34,6 +35,7 @@ export const Diaries = () => {
     };
     if (diary?.userId === users?.userId) setIsAuthor(true);
 
+    console.log(diary);
     fetchPosts(diaryId as string);
   }, [diaryId, users?.userId, diary?.userId]);
 

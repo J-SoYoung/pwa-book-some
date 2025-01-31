@@ -46,13 +46,24 @@ export interface DiariesType {
   userId: string;
 }
 
-// ✅타입 정리하기 둘이 합치든지 나누든지....... home diaries 
-export interface DiariesWithPostsType {
-  diaryId: string;
-  diaryTitle: string;
-  bookImage: string;
-  bookTitle: string;
-  posts: PostsType[];
+export interface AllDiariesType {
+  diary: {
+    bookImage: string;
+    bookTitle: string;
+    diaryId: string;
+    diaryImage: string;
+    diaryTitle: string;
+  };
+  post: {
+    content: string;
+    postId: string;
+    title: string;
+  };
+  user: {
+    avatar: string;
+    userId: string;
+    username: string;
+  };
 }
 
 export type DiaryWidthPostsType = {

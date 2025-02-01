@@ -1,22 +1,46 @@
+.diaryContainer {
+  position: relative;
+  height: 400px;
+  margin-bottom: 32px;
+}
+.titleBox{
+  margin: 16px auto;
+  display: flex;
+  justify-content: space-between
+}
+.diaryContainer h3 {
+  font-size: 18px;
+}
+
+.bgDiaryImage {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
 
 .diaries {
+  width: 80%;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+  backdrop-filter: blur(8px); /* 블러 효과 */
+  padding: 10px 8px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
 }
 
 .diaries > .bookImage {
-  width: 80px;
-  height: 120px;
+  width: 100px;
+  height: 130px;
   object-fit: cover;
-  border: 1px solid #eee;
-}
-
-.bgDiaryImage{
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 8px;
 }
 
 .diaries > .diariesText {
@@ -26,10 +50,7 @@
 .diaries > .diariesText > div {
   margin-bottom: 8px;
 }
-.diaries > .diariesText > div > p {
-  font-size: 16px;
-  font-weight: 700;
-}
+
 
 .diaries > .diariesText .label {
   font-weight: 700;

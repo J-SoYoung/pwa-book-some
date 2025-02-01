@@ -42,9 +42,8 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
   };
 
   return (
-    <>
+    <div className={styles.diaryContainer}>
       <div>
-        <span className={styles.label}>다이어리</span>
         {isEditDiary ? (
           <InputEditField
             defaultValue={diary?.diaryTitle as string}
@@ -53,38 +52,39 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
             inputType={"input"}
           />
         ) : (
-          <p className={styles.featuredDescription}>{diary?.diaryTitle}</p>
+          <div className={styles.titleBox}>
+            <h3>{diary?.diaryTitle}</h3>
+            {isAuthor && (
+              <div className={styles.buttonBox}>
+                {isEditDiary ? (
+                  <>
+                    <button onClick={handleDiarySave}>저장</button>
+                    <button onClick={handleDiaryEdit}>취소</button>
+                  </>
+                ) : (
+                  <button onClick={handleDiaryEdit}>수정</button>
+                )}
+              </div>
+            )}
+          </div>
         )}
       </div>
 
       <img src={diary?.diaryImage} className={styles.bgDiaryImage} />
 
       <div className={styles.diaries}>
-          <img
-            src={diary?.bookImage}
-            className={styles.bookImage}
-            alt="책 표지"
-          />
+        <img
+          src={diary?.bookImage}
+          className={styles.bookImage}
+          alt="책 표지"
+        />
         <div className={styles.diariesText}>
           <div>
             <span className={styles.label}>책</span>
             <p className={styles.featuredTitle}>{diary?.bookTitle}</p>
           </div>
         </div>
-
-        {isAuthor && (
-          <div className={styles.buttonBox}>
-            {isEditDiary ? (
-              <>
-                <button onClick={handleDiarySave}>저장</button>
-                <button onClick={handleDiaryEdit}>취소</button>
-              </>
-            ) : (
-              <button onClick={handleDiaryEdit}>수정</button>
-            )}
-          </div>
-        )}
       </div>
-    </>
+    </div>
   );
 };

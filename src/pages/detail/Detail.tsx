@@ -1,12 +1,5 @@
 import { DiarySection } from "./components/DiarySection";
-
-import { BookType, DiaryWidthPostsType } from "@/services/types";
 import { BookSection } from "./components/BookSection";
-
-export interface DetailDataType {
-  bookData: BookType;
-  diaryWidthPosts: DiaryWidthPostsType[];
-}
 
 export const Detail = () => {
   return (

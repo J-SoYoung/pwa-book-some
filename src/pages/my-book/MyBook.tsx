@@ -7,7 +7,7 @@ import { ItemLists } from "./ItemLists";
 
 import { userState } from "@/recoil/atoms";
 import { getLikeDiaries, getMyBookData } from "@/services/apis";
-import { DiariesType, UserType } from "@/services/types";
+import { DiariesType, UserType } from "@/services/types/dataTypes";
 
 export const MyBook = () => {
   const navigate = useNavigate();

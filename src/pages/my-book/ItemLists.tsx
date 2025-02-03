@@ -1,4 +1,4 @@
-import { DiariesType } from "@/services/types";
+import { DiariesType } from "@/services/types/dataTypes";
 import { Items } from "@/components/items/Items";
 import styles from "./mybook.module.css";
 

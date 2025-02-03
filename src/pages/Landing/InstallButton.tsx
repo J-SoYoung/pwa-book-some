@@ -1,4 +1,4 @@
-import { BeforeInstallPromptEvent } from "@/services/types";
+import { BeforeInstallPromptEvent } from "@/services/types/dataTypes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

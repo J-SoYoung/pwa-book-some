@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../diaries.module.css";
 
-import { DiariesType } from "@/services/types";
+import { DiariesType } from "@/services/types/dataTypes";
 import { updateDiary } from "@/services/apis";
 import { InputEditField } from "@/components";
 import { validateValue } from "@/services/utils";

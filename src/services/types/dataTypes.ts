@@ -106,3 +106,6 @@ export interface NewDiaryDataType {
   posts: PostsType;
   user: UserType;
 }
+
+
+// f

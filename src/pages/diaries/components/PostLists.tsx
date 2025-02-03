@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PostsType } from "@/services/types";
+import { PostsType } from "@/services/types/dataTypes";
 import { getPostsData } from "@/services/apis";
 import { PostItems } from "./PostItems";
 

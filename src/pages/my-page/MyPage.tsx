@@ -4,11 +4,11 @@ import { userState } from "@/recoil/atoms";
 
 import { MdArrowBackIosNew } from "react-icons/md";
 import { FaPen } from "react-icons/fa6";
-import { UserType } from "@/services/types";
+import { UserType } from "@/services/types/dataTypes";
 
 export const MyPage = () => {
   const [user] = useRecoilState(userState);
-  const { username, email} = user as UserType;
+  const { username, email } = user as UserType;
   return (
     <div className={styles.container}>
       <header className={styles.header}>

@@ -7,7 +7,7 @@ import { DiaryItem } from "./components/DiaryItem";
 import { PostLists } from "./components/PostLists";
 
 import { getDiaryData } from "@/services/apis";
-import { DiariesType } from "@/services/types";
+import { DiariesType } from "@/services/types/dataTypes";
 import { userState } from "@/recoil/atoms";
 
 export const Diaries = () => {
@@ -25,7 +25,7 @@ export const Diaries = () => {
         console.error("다이어리 가져오기 에러", error);
       }
     };
-    
+
     if (diary?.userId === users?.userId) setIsAuthor(true);
 
     fetchPosts(diaryId as string);

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./post.module.css";
 import { userState } from "@/recoil/atoms";
 import { getDiaryList } from "@/services/apis";
-import { DiariesType, UserType } from "@/services/types";
+import { DiariesType, UserType } from "@/services/types/dataTypes";
 import { InputField, TextareaField } from "@/components";
 import { handleSubmitForm } from "./handleSubmitForm";
 
@@ -38,7 +38,7 @@ export const Posts = () => {
   };
 
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-    handleSubmitForm(e,newDiaryData,navigate)
+    handleSubmitForm(e, newDiaryData, navigate);
   };
 
   return (

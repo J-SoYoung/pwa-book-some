@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 
 import styles from "./postNew.module.css";
 import { userState } from "@/recoil/atoms";
-import { SelectedBookType, UserType } from "@/services/types";
+import { SelectedBookType, UserType } from "@/services/types/dataTypes";
 import { InputField, TextareaField, BookSearchModal } from "@/components";
 import { handleSubmitForm } from "./handleSubmitForm";
 import { uploadCloudImage } from "@/services/cloudinayImage";

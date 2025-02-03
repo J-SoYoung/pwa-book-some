@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./bookSearchModal.module.css";
 import { searchBooks } from "@/bookApis/book";
-import { SelectedBookType } from "@/services/types";
+import { SelectedBookType } from "@/services/types/dataTypes";
 
 export const BookSearchModal = ({
   onClose,

@@ -6,7 +6,7 @@ import {
   DiaryWithPostsType,
   NewDiaryDataType,
   PostsType
-} from "@/services/types";
+} from "@/services/types/dataTypes";
 import {
   getDataFromFirebase,
   getKeysFromFirebase,

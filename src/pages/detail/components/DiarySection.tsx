@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import styles from "./diarySection.module.css";
-import { DiaryWithPostsType } from "@/services/types";
+import { DiaryWithPostsType } from "@/services/types/dataTypes";
 import { getBookWithDiaryPost } from "@/services/apis";
 
 export const DiarySection = () => {

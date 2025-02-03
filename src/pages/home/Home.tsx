@@ -4,7 +4,7 @@ import styles from "./home.module.css";
 import UserBooks from "./userBooks/UserBooks";
 
 import { getRecommendBooks } from "@/services/apis";
-import { BookType } from "@/services/types";
+import { BookType } from "@/services/types/dataTypes";
 import { Items } from "@/components/items/Items";
 
 export const Home = () => {

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import styles from "./bookSection.module.css";
 import { getBookData } from "@/services/apis";
-import { BookType } from "@/services/types";
+import { BookType } from "@/services/types/dataTypes";
 
 export const BookSection = () => {
   const { bookId } = useParams<{ bookId: string }>();

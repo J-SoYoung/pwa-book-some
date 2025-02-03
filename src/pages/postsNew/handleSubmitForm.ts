@@ -1,5 +1,9 @@
 import { createNewDiaryPost } from "@/services/apis";
-import { NewDiaryDataType, SelectedBookType, UserType } from "@/services/types";
+import {
+  NewDiaryDataType,
+  SelectedBookType,
+  UserType
+} from "@/services/types/dataTypes";
 import { validatePostsNewForm } from "@/services/utils";
 import { NavigateFunction } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";

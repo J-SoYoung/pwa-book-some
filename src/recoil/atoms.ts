@@ -1,4 +1,4 @@
-import { UserType } from "@/services/types";
+import { UserType } from "@/services/types/dataTypes";
 import { atom } from "recoil";
 
 export const userState = atom<UserType | null>({

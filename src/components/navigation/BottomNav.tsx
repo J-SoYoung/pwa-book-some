@@ -3,7 +3,7 @@ import PopupButton from "../popupButton/PopupButton";
 import styles from "./navigation.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { UserType } from "@/services/types";
+import { UserType } from "@/services/types/dataTypes";
 import { userState } from "@/recoil/atoms";
 
 export const BottomNav = () => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "../diaries.module.css";
-import { PostsType } from "@/services/types";
+import { PostsType } from "@/services/types/dataTypes";
 import { validateEditPost } from "@/services/utils";
 import { updatePosts } from "@/services/apis";
 import { InputEditField } from "@/components";

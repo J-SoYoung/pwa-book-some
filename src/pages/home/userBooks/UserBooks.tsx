@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./userBooks.module.css";
 
 import { getAllkDiaries } from "@/services/apis";
-import { AllDiariesType } from "@/services/types";
+import { AllDiariesType } from "@/services/types/dataTypes";
 import { LikeButton } from "@/components/likeButton/LikeButton";
 
 function UserBooks() {

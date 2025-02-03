@@ -4,7 +4,7 @@ import styles from "./searchResults.module.css";
 
 import { Items } from "@/components";
 import { getSearchResults } from "@/services/apis";
-import { BookType } from "@/services/types";
+import { BookType } from "@/services/types/dataTypes";
 import { searchBooks } from "@/bookApis/book";
 
 export const SearchResults = () => {

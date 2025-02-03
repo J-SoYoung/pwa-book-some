@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import styles from "./header.module.css";
 import { FiSettings } from "react-icons/fi";
 
-import { UserType } from "@/services/types";
+import { UserType } from "@/services/types/dataTypes";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Header = () => {

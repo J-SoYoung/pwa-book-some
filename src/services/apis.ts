@@ -165,28 +165,6 @@ export const getAllkDiaries = async () => {
   }
 };
 
-// Diary 다이어리 포스트 가져오기
-export const getDiaryPosts = async (diaryId: string) => {
-  try {
-    const diaryData = await getDataFromFirebase(`diary/${diaryId}`, false);
-    const postsId = Object.keys(diaryData.postId);
-
-    const postsData = await Promise.all(
-      postsId.map(async (postId) => {
-        if (postId) {
-          const post = await getDataFromFirebase(`posts/${postId}`, false);
-          return post;
-        }
-        return null;
-      })
-    );
-    return { postsData, diaryData };
-  } catch (error) {
-    console.error("포스트 가져오기 에러", error);
-    return { postsData: [], diaryData: null };
-  }
-};
-
 // Home 랜덤 책 데이터 가져오기 ( 캐러셀 구현 )
 export const getRecommendBooks = async () => {
   try {
@@ -202,22 +180,54 @@ export const getRecommendBooks = async () => {
 export const getBookData = async (bookId: string): Promise<BookType | null> => {
   try {
     const bookData = await getDataFromFirebase(`books/${bookId}`, false);
-
-    if (!bookData) {
-      console.error(
-        `상세페이지 책 데이터 가져오기 에러, ${bookId}를 찾을 수 없습니다다`
-      );
+    if (bookData) {
+      return bookData;
+    } else {
+      console.error(`getBookData에러, ${bookId}를 찾을 수 없습니다`);
       return null;
     }
-
-    return bookData;
   } catch (error) {
     console.error("Book정보 가져오기 에러", error);
     return null;
   }
 };
 
-export const getBookWithDiaryPost = async (bookId: string):Promise<DiaryWithPostsType[] | []> => {
+export const getDiaryData = async (
+  diaryId: string
+): Promise<DiariesType | null> => {
+  try {
+    return await getDataFromFirebase(`diary/${diaryId}`, false);
+  } catch (error) {
+    console.log("getDiaryData 에러", error);
+    return null;
+  }
+};
+
+export const getPostsData = async (
+  diaryId: string
+): Promise<PostsType[] | []> => {
+  try {
+    const diary = await getDiaryData(diaryId);
+    if (diary === null) {
+      return [];
+    } else {
+      const postIds = Object.keys(diary.postId);
+      const posts = await Promise.all(
+        postIds.map(async (id) => {
+          return await getDataFromFirebase(`posts/${id}`);
+        })
+      );
+      return posts;
+    }
+  } catch (error) {
+    console.error("getPostsData 에러", error);
+    return [];
+  }
+};
+
+export const getBookWithDiaryPost = async (
+  bookId: string
+): Promise<DiaryWithPostsType[] | []> => {
   try {
     const diaryIds = await getKeysFromFirebase(`books/${bookId}/diaries`);
     const diaryWithPosts = await Promise.all(

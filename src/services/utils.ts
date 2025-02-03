@@ -30,6 +30,20 @@ export const getDataFromFirebase = async (
   }
 };
 
+export const getKeysFromFirebase = async (tableName: string) => {
+  try {
+    const dataRef = ref(database, tableName);
+    const snapshot = await get(dataRef);
+    if (snapshot.exists()) {
+      const data = await snapshot.val();
+      return Object.keys(data);
+    } else return [];
+  } catch (error) {
+    console.error(`${tableName}key 가져오기 에러`, error);
+    return [];
+  }
+};
+
 export const validatePostsNewForm = (
   data: diaryDataType
 ): { valid: boolean; message: string } => {

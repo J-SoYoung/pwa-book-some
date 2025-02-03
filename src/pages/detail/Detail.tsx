@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import styles from "./detail.module.css";
-import { DiarySection } from "./diarySection/DiarySection";
+import { DiarySection } from "./components/DiarySection";
 
 import { BookType, DiaryWidthPostsType } from "@/services/types";
-import { getBookAndDiaries } from "@/services/apis";
+import { BookSection } from "./components/BookSection";
 
 export interface DetailDataType {
   bookData: BookType;
@@ -12,57 +9,13 @@ export interface DetailDataType {
 }
 
 export const Detail = () => {
-  const { bookId } = useParams<{ bookId: string }>();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [book, setBook] = useState<BookType | null>(null);
-  const [diaries, setDiaries] = useState<DiaryWidthPostsType[] | []>([]);
-
-  useEffect(() => {
-    const fetchBookData = async () => {
-      const response = await getBookAndDiaries(bookId as string);
-      if (response) {
-        const { bookData, diaryWidthPosts }: DetailDataType = response;
-        setBook(bookData);
-        setDiaries(diaryWidthPosts);
-      }
-    };
-    fetchBookData();
-  }, [bookId]);
-
-  const handleToggle = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.bookSection}>
-          <div className={styles.title}>
-            <p>{book?.title}</p>
-            <Link
-              to={book?.link as string}
-              className={styles.bookLink}
-              target="_blank" // 새 탭에서 열기
-              rel="noopener noreferrer" // 보안 및 성능 향상을 위해 추가
-            >
-              구매하러가기
-            </Link>
-          </div>
-          <img src={book?.image} alt={book?.title} className={styles.image} />
-          <p className={styles.author}>{book?.author} </p>
-          <p
-            className={
-              isExpanded ? `${styles.expanded}` : `${styles.description}`
-            }
-          >
-            {book?.description}
-          </p>
-          <button onClick={handleToggle}>
-            {isExpanded ? "접기" : "더보기"}
-          </button>
-        </div>
-        <DiarySection diaries={diaries} />
-      </div>
+      <BookSection />
+      <section>
+        <h2>같은 책을 읽으신 분들의 책장이에요!</h2>
+        <DiarySection />
+      </section>
     </>
   );
 };

@@ -1,8 +1,8 @@
-import { Link, useParams } from "react-router-dom";
-import styles from "./bookSection.module.css";
 import { useEffect, useState } from "react";
-import { getBookAndDiaries } from "@/services/apis";
-import { DetailDataType } from "../Detail";
+import { Link, useParams } from "react-router-dom";
+
+import styles from "./bookSection.module.css";
+import { getBookData } from "@/services/apis";
 import { BookType } from "@/services/types";
 
 export const BookSection = () => {
@@ -16,14 +16,14 @@ export const BookSection = () => {
 
   useEffect(() => {
     const fetchBookData = async () => {
-      const response = await getBookAndDiaries(bookId as string);
-      if (response) {
-        const { bookData }: DetailDataType = response;
+      const bookData = await getBookData(bookId as string);
+      if (bookData) {
         setBook(bookData);
       }
     };
     fetchBookData();
   }, [bookId]);
+
   return (
     <div className={styles.bookSection}>
       <div className={styles.title}>

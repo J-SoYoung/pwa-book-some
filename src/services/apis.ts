@@ -3,10 +3,15 @@ import { database } from "./firebase";
 import {
   BookType,
   DiariesType,
+  DiaryWithPostsType,
   NewDiaryDataType,
   PostsType
 } from "@/services/types";
-import { getDataFromFirebase, shuffleArray } from "./utils";
+import {
+  getDataFromFirebase,
+  getKeysFromFirebase,
+  shuffleArray
+} from "./utils";
 import { newPostType } from "@/pages/diaries/components/PostItems";
 
 // PostNew NEW 다이어리리 생성
@@ -194,11 +199,10 @@ export const getRecommendBooks = async () => {
   }
 };
 
-// Detail페이지 데이터 가져오기
-export const getBookAndDiaries = async (bookId: string) => {
+export const getBookData = async (bookId: string): Promise<BookType | null> => {
   try {
-    // 책 가져오기
     const bookData = await getDataFromFirebase(`books/${bookId}`, false);
+
     if (!bookData) {
       console.error(
         `상세페이지 책 데이터 가져오기 에러, ${bookId}를 찾을 수 없습니다다`
@@ -206,50 +210,40 @@ export const getBookAndDiaries = async (bookId: string) => {
       return null;
     }
 
-    // 다이어리 가져오기
-    const diaryIds = Object.keys(bookData.diaries); // diaryIDs 가져오기
-    const diaries = await Promise.all(
-      diaryIds.map(async (diaryId) => {
-        return await getDataFromFirebase(`diary/${diaryId}`, false);
-      })
-    );
-    if (!diaries) {
-      console.error(`상세페이지 다이어리 가져오기 에러`);
-      return null;
-    }
+    return bookData;
+  } catch (error) {
+    console.error("Book정보 가져오기 에러", error);
+    return null;
+  }
+};
 
-    // 다리어리 내부 첫번째 포스트 / 유저데이터 가져오기
-    const diaryWidthPosts = await Promise.all(
-      diaries.map(async (diary) => {
-        const postFirstId = Object.keys(diary.postId);
-        const post = await getDataFromFirebase(
-          `posts/${postFirstId[0]}`,
-          false
-        );
-        const user = await getDataFromFirebase(`users/${diary.userId}`, false);
-
-        const results = {
+export const getBookWithDiaryPost = async (bookId: string):Promise<DiaryWithPostsType[] | []> => {
+  try {
+    const diaryIds = await getKeysFromFirebase(`books/${bookId}/diaries`);
+    const diaryWithPosts = await Promise.all(
+      diaryIds.map(async (id) => {
+        const diary = await getDataFromFirebase(`diary/${id}`);
+        const postId = Object.keys(diary.postId)[0];
+        const firstPost = await getDataFromFirebase(`posts/${postId}`);
+        const user = await getDataFromFirebase(`users/${diary.userId}`);
+        return {
           diaryId: diary.diaryId,
           diaryCreatedAt: diary.createdAt,
           diaryTitle: diary.diaryTitle,
           diaryImage: diary.diaryImage,
-          userId: diary.userId,
+          postContent: firstPost.content,
+          postCreatedAt: firstPost.createdAt,
+          postTitle: firstPost.title,
+          userId: user.userId,
           username: user.username,
-          userAvatar: user.avatar,
-          postContent: post.content,
-          postCreatedAt: post.createdAt,
-          postTitle: post.title
+          userAvatar: user.avatar
         };
-        return results;
       })
     );
-    if (!diaryWidthPosts) {
-      console.error("상세페이지 다이어리 내부 포스트 가져오기 에러");
-      return null;
-    }
-    return { bookData, diaryWidthPosts: diaryWidthPosts };
+    return diaryWithPosts;
   } catch (error) {
-    console.error(error, "상세페이지 데이터 가져오기 에러");
+    console.error("Book 다이어리 포스트 가져오기 에러", error);
+    return [];
   }
 };
 

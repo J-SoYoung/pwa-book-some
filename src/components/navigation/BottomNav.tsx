@@ -17,7 +17,6 @@ export const BottomNav = () => {
     }
   };
   const togglePopup = () => {
-    console.log(user);
     if (user == null) {
       unKnownUser();
     } else {

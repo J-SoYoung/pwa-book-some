@@ -22,7 +22,6 @@ export const Layout = () => {
     }
   }, [navigate]);
 
-  const showHeader = ["/postsNew", "/posts"].some((p) => !path.startsWith(p));
   const showSearchBar =
     path === "/" ||
     ["/home", "/detail", "/mybook", "/diaries"].some((p) => path.startsWith(p));
@@ -37,7 +36,7 @@ export const Layout = () => {
     <>
       <ScrollReset />
       <ScrollTopButton />
-      {showHeader && <Header />}
+      <Header />
       {showSearchBar && <SearchBar />}
       <div className={styles.AppConatiner}>
         <Outlet />

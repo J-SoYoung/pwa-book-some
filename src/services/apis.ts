@@ -13,6 +13,11 @@ import {
   shuffleArray
 } from "./utils";
 import { newPostType } from "@/pages/diaries/components/PostItems";
+import {
+  GetBookDataType,
+  GetDiaryDataType,
+  GetPostsDataType
+} from "./types/functionTypes";
 
 // PostNew NEW 다이어리리 생성
 export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
@@ -177,7 +182,7 @@ export const getRecommendBooks = async () => {
   }
 };
 
-export const getBookData = async (bookId: string): Promise<BookType | null> => {
+export const getBookData: GetBookDataType = async (bookId) => {
   try {
     const bookData = await getDataFromFirebase(`books/${bookId}`, false);
     if (bookData) {
@@ -192,9 +197,7 @@ export const getBookData = async (bookId: string): Promise<BookType | null> => {
   }
 };
 
-export const getDiaryData = async (
-  diaryId: string
-): Promise<DiariesType | null> => {
+export const getDiaryData: GetDiaryDataType = async (diaryId) => {
   try {
     return await getDataFromFirebase(`diary/${diaryId}`, false);
   } catch (error) {
@@ -203,9 +206,7 @@ export const getDiaryData = async (
   }
 };
 
-export const getPostsData = async (
-  diaryId: string
-): Promise<PostsType[] | []> => {
+export const getPostsData: GetPostsDataType = async (diaryId) => {
   try {
     const diary = await getDiaryData(diaryId);
     if (diary === null) {

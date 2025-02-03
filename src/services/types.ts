@@ -66,7 +66,7 @@ export interface AllDiariesType {
   };
 }
 
-export type DiaryWidthPostsType = {
+export type DiaryWithPostsType = {
   diaryId: string;
   diaryCreatedAt: Date;
   diaryTitle: string;

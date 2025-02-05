@@ -16,62 +16,9 @@ export interface SelectedBookType {
   link: string;
 }
 
-export interface BookType extends SelectedBookType  {
+export interface BookType extends SelectedBookType {
   diaries: { [key: string]: boolean };
 }
-
-export interface BookDiaryType {
-  diaries?: { [key: string]: boolean };
-  id: string;
-  image: string;
-  title: string;
-  createdAt: string;
-}
-
-export interface DiariesType {
-  bookId?: string;
-  bookImage: string;
-  bookTitle?: string;
-  createdAt: string;
-  diaryId: string;
-  diaryImage: string;
-  diaryTitle: string;
-  postId: { [key: string]: string };
-  userId: string;
-}
-
-export interface AllDiariesType {
-  diary: {
-    bookImage: string;
-    bookTitle: string;
-    diaryId: string;
-    diaryImage: string;
-    diaryTitle: string;
-  };
-  post: {
-    content: string;
-    postId: string;
-    title: string;
-  };
-  user: {
-    avatar: string;
-    userId: string;
-    username: string;
-  };
-}
-
-export type DiaryWithPostsType = {
-  diaryId: string;
-  diaryCreatedAt: string;
-  diaryTitle: string;
-  diaryImage: string;
-  userId: string;
-  userAvatar: string;
-  username: string;
-  postContent: string;
-  postCreatedAt: Date;
-  postTitle: string;
-};
 
 export interface PostsType {
   content: string;
@@ -89,8 +36,46 @@ export interface UserType {
   username: string;
 }
 
+export interface DiariesType {
+  bookIsbn?: BookType["isbn"];
+  bookImage: BookType["image"];
+  bookTitle: BookType["title"];
+  createdAt: string;
+  diaryId: string;
+  diaryImage: string;
+  diaryTitle: string;
+  postId: { [key: string]: string };
+  userId: UserType["userId"];
+}
+
+type DiaryPickType = Pick<
+  DiariesType,
+  "bookImage" | "bookTitle" | "diaryTitle" | "diaryImage" | "diaryId"
+>;
+type PostsPickType = Pick<PostsType, "content" | "postId" | "title">;
+type UserPickType = Pick<UserType, "avatar" | "userId" | "username">;
+
+export interface AllDiariesType {
+  diary: DiaryPickType;
+  post: PostsPickType;
+  user: UserPickType;
+}
+
+export type DiaryWithPostsType = {
+  diaryId: string;
+  diaryCreatedAt: string;
+  diaryTitle: string;
+  diaryImage: string;
+  userId: string;
+  userAvatar: string;
+  username: string;
+  postContent: string;
+  postCreatedAt: Date;
+  postTitle: string;
+};
+
 export interface NewDiaryDataType {
-  books: SelectedBookType ;
+  books: SelectedBookType;
   diaries: {
     diaryId: string;
     diaryTitle: string;

@@ -7,16 +7,6 @@ export interface BeforeInstallPromptEvent extends Event {
   prompt: () => void;
 }
 
-export interface BookType {
-  author: string;
-  description: string;
-  diaries: { [key: string]: boolean };
-  id: string;
-  image: string;
-  title: string;
-  link: string;
-}
-
 export interface SelectedBookType {
   author: string;
   description: string;
@@ -24,6 +14,10 @@ export interface SelectedBookType {
   isbn: string;
   title: string;
   link: string;
+}
+
+export interface BookType extends SelectedBookType  {
+  diaries: { [key: string]: boolean };
 }
 
 export interface BookDiaryType {
@@ -96,7 +90,7 @@ export interface UserType {
 }
 
 export interface NewDiaryDataType {
-  books: SelectedBookType;
+  books: SelectedBookType ;
   diaries: {
     diaryId: string;
     diaryTitle: string;
@@ -106,7 +100,6 @@ export interface NewDiaryDataType {
   posts: PostsType;
   user: UserType;
 }
-
 
 export type DiaryWithUserType = {
   bookId: string;

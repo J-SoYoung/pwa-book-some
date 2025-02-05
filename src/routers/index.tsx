@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/detail/:bookId",
+        path: "/detail/:bookIsbn",
         element: <Detail />
       },
       {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         element: <Diaries />
       },
       {
-        path: `/mybook/:id`,
+        path: `/mybook/:userId`,
         element: <MyBook />
       },
       {

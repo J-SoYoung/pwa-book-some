@@ -25,11 +25,11 @@ export const Home = () => {
         <div className={styles.itemListBox}>
           {recommendBooks.map((book) => {
             const data = {
-              url: `/detail/${book.id}`,
+              url: `/detail/${book.isbn}`,
               imageUrl: book.image,
               title: book.title
             };
-            return <Items data={data} key={book.id} />;
+            return <Items data={data} key={book.isbn} />;
           })}
         </div>
       </section>

@@ -46,11 +46,11 @@ export const SearchResults = () => {
       <div className={styles.itemListBox}>
         {searchResults.map((book: BookType) => {
           const data = {
-            url: `/detail/${book.id}`,
+            url: `/detail/${book.isbn}`,
             imageUrl: book.image,
             title: book.title
           };
-          return <Items data={data} key={book.id} />;
+          return <Items data={data} key={book.isbn} />;
         })}
       </div>
 
@@ -66,7 +66,7 @@ export const SearchResults = () => {
             const book = item as BookType;
             return (
               <div
-                key={book.id}
+                key={book.isbn}
                 className={styles.bookItem}
                 onClick={() => navigate("/postsNew", { state: { book } })}
               >

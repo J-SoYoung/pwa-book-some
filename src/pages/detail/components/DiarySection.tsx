@@ -6,18 +6,18 @@ import { DiaryWithPostsType } from "@/services/types/dataTypes";
 import { getBookWithDiaryPost } from "@/services/apis";
 
 export const DiarySection = () => {
-  const { bookId } = useParams<{ bookId: string }>();
+  const { bookIsbn } = useParams<{ bookIsbn: string }>();
   const [diaries, setDiaries] = useState<DiaryWithPostsType[] | []>([]);
 
   useEffect(() => {
     const fetchBookData = async () => {
-      const diaryWidthPosts = await getBookWithDiaryPost(bookId as string);
+      const diaryWidthPosts = await getBookWithDiaryPost(bookIsbn as string);
       if (diaryWidthPosts) {
         setDiaries(diaryWidthPosts);
       }
     };
     fetchBookData();
-  }, [bookId]);
+  }, [bookIsbn]);
 
   return (
     <div className={styles.diaryList}>

@@ -6,7 +6,7 @@ import { getBookData } from "@/services/apis";
 import { BookType } from "@/services/types/dataTypes";
 
 export const BookSection = () => {
-  const { bookId } = useParams<{ bookId: string }>();
+  const { bookIsbn } = useParams<{ bookIsbn: string }>();
   const [isExpanded, setIsExpanded] = useState(false);
   const [book, setBook] = useState<BookType | null>(null);
 
@@ -16,13 +16,13 @@ export const BookSection = () => {
 
   useEffect(() => {
     const fetchBookData = async () => {
-      const bookData = await getBookData(bookId as string);
+      const bookData = await getBookData(bookIsbn as string);
       if (bookData) {
         setBook(bookData);
       }
     };
     fetchBookData();
-  }, [bookId]);
+  }, [bookIsbn]);
 
   return (
     <div className={styles.bookSection}>

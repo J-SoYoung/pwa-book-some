@@ -37,9 +37,7 @@ export interface UserType {
 }
 
 export interface DiariesType {
-  bookIsbn?: BookType["isbn"];
-  bookImage: BookType["image"];
-  bookTitle: BookType["title"];
+  book: Pick<BookType, "isbn" | "image" | "title">;
   createdAt: string;
   diaryId: string;
   diaryImage: string;
@@ -48,30 +46,24 @@ export interface DiariesType {
   userId: UserType["userId"];
 }
 
-type DiaryPickType = Pick<
-  DiariesType,
-  "bookImage" | "bookTitle" | "diaryTitle" | "diaryImage" | "diaryId"
->;
-type PostsPickType = Pick<PostsType, "content" | "postId" | "title">;
-type UserPickType = Pick<UserType, "avatar" | "userId" | "username">;
-
-export interface AllDiariesType {
-  diary: DiaryPickType;
-  post: PostsPickType;
-  user: UserPickType;
+export interface AllDiariesDataType {
+  book: Pick<BookType, "image" | "title">;
+  diary: Pick<DiariesType, "diaryTitle" | "diaryImage" | "diaryId">;
+  post: Pick<PostsType, "content" | "postId" | "title">;
+  user: Pick<UserType, "avatar" | "userId" | "username">;
 }
 
 export type DiaryWithPostsType = {
-  diaryId: string;
-  diaryCreatedAt: string;
-  diaryTitle: string;
-  diaryImage: string;
-  userId: string;
-  userAvatar: string;
-  username: string;
-  postContent: string;
-  postCreatedAt: Date;
-  postTitle: string;
+  diaryId: DiariesType["diaryId"];
+  diaryCreatedAt: DiariesType["createdAt"];
+  diaryTitle: DiariesType["diaryTitle"];
+  diaryImage: DiariesType["diaryImage"];
+  userId: UserType["userId"];
+  userAvatar: UserType["avatar"];
+  username: UserType["username"];
+  postContent: PostsType["content"];
+  postCreatedAt: PostsType["createdAt"];
+  postTitle: PostsType["title"];
 };
 
 export interface NewDiaryDataType {
@@ -87,14 +79,10 @@ export interface NewDiaryDataType {
 }
 
 export type DiaryWithUserType = {
-  bookId: string;
-  bookImage: string;
-  bookTitle: string;
+  book: Pick<BookType, "isbn" | "image" | "title">;
   diaryId: string;
   diaryImage: string;
   diaryTitle: string;
-  postId: string;
-  userId: string;
-  userAvatar: string;
-  username: string;
+  postId: { [key: string]: string };
+  user: Pick<UserType, "userId" | "avatar" | "username">;
 };

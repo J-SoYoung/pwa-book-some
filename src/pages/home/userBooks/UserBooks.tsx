@@ -3,51 +3,52 @@ import { useNavigate } from "react-router-dom";
 import styles from "./userBooks.module.css";
 
 import { getAllkDiaries } from "@/services/apis";
-import { AllDiariesType } from "@/services/types/dataTypes";
 import { LikeButton } from "@/components/likeButton/LikeButton";
+import { AllDiariesDataType } from "@/services/types/dataTypes";
 
 function UserBooks() {
   const navigate = useNavigate();
-  const [allDiaries, setAllDiaries] = useState<AllDiariesType[]>([]);
+  const [allDiaries, setAllDiaries] = useState<AllDiariesDataType[]>([]);
 
   useEffect(() => {
     const fetchBookDiaries = async () => {
       const allDiaryData = await getAllkDiaries();
-      setAllDiaries(allDiaryData as AllDiariesType[]);
+      setAllDiaries(allDiaryData);
     };
     fetchBookDiaries();
   }, []);
 
   return (
     <section className={styles.userBooks}>
-      {allDiaries.map((diary) => {
+      {allDiaries.map((diaryData) => {
+        const {book, diary, post, user} = diaryData
         return (
-          <div className={styles.bookCard} key={diary.diary.diaryId}>
+          <div className={styles.bookCard} key={diary.diaryId}>
             <div className={styles.imageBox}>
               <img
                 className={styles.bookImage}
-                src={diary.diary.bookImage}
-                alt={diary.diary.bookTitle}
+                src={book.image}
+                alt={book.title}
               />
               <img
                 className={styles.userAvatar}
-                src={diary.user.avatar}
-                alt={`${diary.user.username}의 다이어리`}
+                src={user.avatar}
+                alt={`${user.username}의 다이어리`}
               />
             </div>
             <div className={styles.likeBox}>
-              <LikeButton diaryId={diary.diary.diaryId} />
+              <LikeButton diaryId={diary.diaryId} />
             </div>
 
             <div
               className={styles.bookInfo}
               onClick={() => {
-                navigate(`/diaries/${diary.diary.diaryId}`);
+                navigate(`/diaries/${diary.diaryId}`);
               }}
             >
-              <h3>{diary.diary.diaryTitle}</h3>
-              <p>{diary.diary.bookTitle}</p>
-              <p>{diary.post.content}</p>
+              <h3>{diary.diaryTitle}</h3>
+              <p>{post.title}</p>
+              <p>{post.content}</p>
             </div>
           </div>
         );

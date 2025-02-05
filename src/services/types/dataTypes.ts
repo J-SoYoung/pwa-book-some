@@ -68,7 +68,7 @@ export interface AllDiariesType {
 
 export type DiaryWithPostsType = {
   diaryId: string;
-  diaryCreatedAt: Date;
+  diaryCreatedAt: string;
   diaryTitle: string;
   diaryImage: string;
   userId: string;
@@ -108,4 +108,15 @@ export interface NewDiaryDataType {
 }
 
 
-// f
+export type DiaryWithUserType = {
+  bookId: string;
+  bookImage: string;
+  bookTitle: string;
+  diaryId: string;
+  diaryImage: string;
+  diaryTitle: string;
+  postId: string;
+  userId: string;
+  userAvatar: string;
+  username: string;
+};

@@ -15,13 +15,81 @@ import {
 import { newPostType } from "@/pages/diaries/components/PostItems";
 import {
   GetAllDiariesType,
-  GetBookDataType,
+  GetOneBookDataType,
   getBookWithDiaryPostType,
   GetDiaryDataType,
   GetDiaryWithUserDataType,
-  GetPostsDataType,
+  GetAllPostsDataType,
   GetUserDataType
 } from "./types/functionTypes";
+
+
+// basic data - book
+export const getOneBookData: GetOneBookDataType = async (bookId) => {
+  try {
+    const bookData = await getDataFromFirebase(`books/${bookId}`, false);
+    if (bookData) {
+      return bookData;
+    } else {
+      console.error(`GetOneBookDataType에러, ${bookId}를 찾을 수 없습니다`);
+      return null;
+    }
+  } catch (error) {
+    console.error("Book정보 가져오기 에러", error);
+    return null;
+  }
+};
+// basic data - diary
+export const getDiaryData: GetDiaryDataType = async (diaryId) => {
+  try {
+    const diary = await getDataFromFirebase(`diary/${diaryId}`, false);
+    if (diary) {
+      return diary as DiariesType;
+    } else {
+      console.error("다이어리가 없습니다");
+      return null;
+    }
+  } catch (error) {
+    console.log("getDiaryData 에러", error);
+    return null;
+  }
+};
+// basic data - posts
+export const getAllPostsData: GetAllPostsDataType = async (diaryId) => {
+  try {
+    const diary = await getDiaryData(diaryId);
+    if (diary === null) {
+      return [];
+    } else {
+      const postIds = Object.keys(diary.postId);
+      const posts = await Promise.all(
+        postIds.map(async (id) => {
+          return await getDataFromFirebase(`posts/${id}`);
+        })
+      );
+      return posts;
+    }
+  } catch (error) {
+    console.error("getAllPostsData 에러", error);
+    return [];
+  }
+};
+// basic data - user
+export const getUserData: GetUserDataType = async (userId) => {
+  try {
+    const user = await getDataFromFirebase(`users/${userId}`, false);
+    if (user) {
+      return user;
+    } else {
+      console.error("유저 데이터가 없습니다");
+      return null;
+    }
+  } catch (error) {
+    console.error("getUserData 에러", error);
+    return null;
+  }
+};
+
 
 // PostNew NEW 다이어리리 생성
 export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
@@ -190,72 +258,6 @@ export const getRecommendBooks = async () => {
   }
 };
 
-// basic data - book
-export const getBookData: GetBookDataType = async (bookId) => {
-  try {
-    const bookData = await getDataFromFirebase(`books/${bookId}`, false);
-    if (bookData) {
-      return bookData;
-    } else {
-      console.error(`getBookData에러, ${bookId}를 찾을 수 없습니다`);
-      return null;
-    }
-  } catch (error) {
-    console.error("Book정보 가져오기 에러", error);
-    return null;
-  }
-};
-// basic data - diary
-export const getDiaryData: GetDiaryDataType = async (diaryId) => {
-  try {
-    const diary = await getDataFromFirebase(`diary/${diaryId}`, false);
-    if (diary) {
-      return diary as DiariesType;
-    } else {
-      console.error("다이어리가 없습니다");
-      return null;
-    }
-  } catch (error) {
-    console.log("getDiaryData 에러", error);
-    return null;
-  }
-};
-// basic data - posts
-export const getPostsData: GetPostsDataType = async (diaryId) => {
-  try {
-    const diary = await getDiaryData(diaryId);
-    if (diary === null) {
-      return [];
-    } else {
-      const postIds = Object.keys(diary.postId);
-      const posts = await Promise.all(
-        postIds.map(async (id) => {
-          return await getDataFromFirebase(`posts/${id}`);
-        })
-      );
-      return posts;
-    }
-  } catch (error) {
-    console.error("getPostsData 에러", error);
-    return [];
-  }
-};
-// basic data - user
-export const getUserData: GetUserDataType = async (userId) => {
-  try {
-    const user = await getDataFromFirebase(`users/${userId}`, false);
-    if (user) {
-      return user;
-    } else {
-      console.error("유저 데이터가 없습니다");
-      return null;
-    }
-  } catch (error) {
-    console.error("getUserData 에러", error);
-    return null;
-  }
-};
-
 export const getBookWithDiaryPost: getBookWithDiaryPostType = async (
   bookId
 ) => {
@@ -264,7 +266,7 @@ export const getBookWithDiaryPost: getBookWithDiaryPostType = async (
     const diaryWithPosts = await Promise.all(
       diaryIds.map(async (id) => {
         const diary = await getDiaryData(id) as DiariesType
-        const posts = await getPostsData(id);
+        const posts = await getAllPostsData(id);
         const firstPost = posts[0];
         const user = await getUserData(diary.userId) as UserType
 

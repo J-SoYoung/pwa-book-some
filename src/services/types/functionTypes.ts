@@ -8,11 +8,11 @@ import {
   UserType
 } from "./dataTypes";
 
-export type GetBookDataType = (bookIsbn: string) => Promise<BookType | null>;
+export type GetOneBookDataType = (bookIsbn: string) => Promise<BookType | null>;
 
 export type GetDiaryDataType = (diaryId: string) => Promise<DiariesType | null>;
 
-export type GetPostsDataType = (bookId: string) => Promise<PostsType[] | []>;
+export type GetAllPostsDataType = (bookId: string) => Promise<PostsType[] | []>;
 
 export type GetUserDataType = (userId: string) => Promise<UserType | null>;
 

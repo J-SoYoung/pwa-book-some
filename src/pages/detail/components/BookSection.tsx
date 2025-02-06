@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import styles from "./bookSection.module.css";
-import { getBookData } from "@/services/apis";
+import { getOneBookData } from "@/services/apis";
 import { BookType } from "@/services/types/dataTypes";
 
 export const BookSection = () => {
@@ -16,7 +16,7 @@ export const BookSection = () => {
 
   useEffect(() => {
     const fetchBookData = async () => {
-      const bookData = await getBookData(bookIsbn as string);
+      const bookData = await getOneBookData(bookIsbn as string);
       if (bookData) {
         setBook(bookData);
       }

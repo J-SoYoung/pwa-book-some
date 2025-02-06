@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PostsType } from "@/services/types/dataTypes";
-import { getPostsData } from "@/services/apis";
+import { getAllPostsData } from "@/services/apis";
 import { PostItems } from "./PostItems";
 
 interface PostListsProps {
@@ -13,7 +13,7 @@ export const PostLists = ({ diaryId, isAuthor }: PostListsProps) => {
   useEffect(() => {
     const fetchPosts = async (diaryId: string) => {
       try {
-        const postData = await getPostsData(diaryId as string);
+        const postData = await getAllPostsData(diaryId as string);
         setPosts(postData);
       } catch (error) {
         console.error("다이어리 가져오기 에러", error);

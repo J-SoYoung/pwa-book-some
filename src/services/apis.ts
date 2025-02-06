@@ -263,21 +263,28 @@ export const getBookWithDiaryPost: getBookWithDiaryPostType = async (
     const diaryIds = await getKeysFromFirebase(`books/${bookId}/diaries`);
     const diaryWithPosts = await Promise.all(
       diaryIds.map(async (id) => {
-        const diary = await getDataFromFirebase(`diary/${id}`);
-        const postId = Object.keys(diary.postId)[0];
-        const firstPost = await getDataFromFirebase(`posts/${postId}`);
-        const user = await getDataFromFirebase(`users/${diary.userId}`);
+        const diary = await getDiaryData(id) as DiariesType
+        const posts = await getPostsData(id);
+        const firstPost = posts[0];
+        const user = await getUserData(diary.userId) as UserType
+
         return {
-          diaryId: diary.diaryId,
-          diaryCreatedAt: diary.createdAt,
-          diaryTitle: diary.diaryTitle,
-          diaryImage: diary.diaryImage,
-          postContent: firstPost.content,
-          postCreatedAt: firstPost.createdAt,
-          postTitle: firstPost.title,
-          userId: user.userId,
-          username: user.username,
-          userAvatar: user.avatar
+          diary: {
+            diaryId: diary.diaryId,
+            createdAt: diary.createdAt,
+            diaryTitle: diary.diaryTitle,
+            diaryImage: diary.diaryImage
+          },
+          post: {
+            content: firstPost.content,
+            createdAt: firstPost.createdAt,
+            title: firstPost.title
+          },
+          user: {
+            userId: user.userId,
+            username: user.username,
+            avatar: user.avatar
+          }
         };
       })
     );

@@ -6,30 +6,30 @@ import styles from "./diaries.module.css";
 import { DiaryItem } from "./components/DiaryItem";
 import { PostLists } from "./components/PostLists";
 
-import { getDiaryData } from "@/services/apis";
-import { DiariesType } from "@/services/types/dataTypes";
 import { userState } from "@/recoil/atoms";
+import { getDiaryWithUserData } from "@/services/apis";
+import { DiaryWithUserType } from "@/services/types/dataTypes";
 
 export const Diaries = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
-  const users = useRecoilValue(userState);
+  const user = useRecoilValue(userState);
   const [isAuthor, setIsAuthor] = useState(false);
-  const [diary, setDiary] = useState<DiariesType | null>(null);
+  const [diary, setDiary] = useState<DiaryWithUserType | null>(null);
 
   useEffect(() => {
     const fetchPosts = async (diaryId: string) => {
       try {
-        const diaryData = await getDiaryData(diaryId);
-        setDiary(diaryData);
+        const diaryWithUserData = await getDiaryWithUserData(diaryId);
+        setDiary(diaryWithUserData);
       } catch (error) {
         console.error("다이어리 가져오기 에러", error);
       }
     };
 
-    if (diary?.userId === users?.userId) setIsAuthor(true);
+    if (diary?.user.userId === user?.userId) setIsAuthor(true);
 
     fetchPosts(diaryId as string);
-  }, [diaryId, users?.userId, diary?.userId]);
+  }, [diaryId, user?.userId, diary?.user.userId]);
 
   return (
     <main className={styles.diariesContainer}>

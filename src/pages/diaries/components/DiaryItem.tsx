@@ -1,21 +1,21 @@
 import { useState } from "react";
 import styles from "../diaries.module.css";
 
-import { DiariesType } from "@/services/types/dataTypes";
+import { DiaryWithUserType } from "@/services/types/dataTypes";
 import { updateDiary } from "@/services/apis";
 import { InputEditField } from "@/components";
 import { validateValue } from "@/services/utils";
 
 interface DiaryPropsType {
-  diary: DiariesType | null;
+  diary: DiaryWithUserType | null;
   isAuthor: boolean;
-  setDiary: React.Dispatch<React.SetStateAction<DiariesType | null>>;
+  setDiary: React.Dispatch<React.SetStateAction<DiaryWithUserType | null>>;
 }
 
-export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
+export const DiaryItem = ({ diary, isAuthor, setDiary }: DiaryPropsType) => {
+
   const [isEditDiary, setIsEditDiary] = useState(false);
   const [editDiaryTItle, setEditDiaryTitle] = useState("");
-
   const handleDiaryEdit = () => {
     setIsEditDiary(!isEditDiary);
   };
@@ -31,7 +31,7 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
       });
 
       setDiary((prevDiary) => ({
-        ...(prevDiary as DiariesType),
+        ...(prevDiary as DiaryWithUserType),
         diaryTitle: response.diaryTitle as string
       }));
 
@@ -74,14 +74,15 @@ export const DiaryItem = ({ diary, setDiary, isAuthor }: DiaryPropsType) => {
 
       <div className={styles.diaries}>
         <img
-          src={diary?.bookImage}
+          src={diary?.book.image}
           className={styles.bookImage}
           alt="책 표지"
         />
+        <div className={styles.userImage}></div>
         <div className={styles.diariesText}>
           <div>
             <span className={styles.label}>책</span>
-            <p className={styles.featuredTitle}>{diary?.bookTitle}</p>
+            <p className={styles.featuredTitle}>{diary?.book.title}</p>
           </div>
         </div>
       </div>

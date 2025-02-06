@@ -54,16 +54,12 @@ export interface AllDiariesDataType {
 }
 
 export type DiaryWithPostsType = {
-  diaryId: DiariesType["diaryId"];
-  diaryCreatedAt: DiariesType["createdAt"];
-  diaryTitle: DiariesType["diaryTitle"];
-  diaryImage: DiariesType["diaryImage"];
-  userId: UserType["userId"];
-  userAvatar: UserType["avatar"];
-  username: UserType["username"];
-  postContent: PostsType["content"];
-  postCreatedAt: PostsType["createdAt"];
-  postTitle: PostsType["title"];
+  diary: Pick<
+    DiariesType,
+    "diaryTitle" | "diaryImage" | "diaryId" | "createdAt"
+  >;
+  post: Pick<PostsType, "content" | "createdAt" | "title">;
+  user: Pick<UserType, "avatar" | "userId" | "username">;
 };
 
 export interface NewDiaryDataType {

@@ -3,9 +3,9 @@ import { database } from "./firebase";
 import {
   BookType,
   DiariesType,
-  DiaryWithPostsType,
   NewDiaryDataType,
-  PostsType
+  PostsType,
+  UserType
 } from "@/services/types/dataTypes";
 import {
   getDataFromFirebase,
@@ -14,9 +14,13 @@ import {
 } from "./utils";
 import { newPostType } from "@/pages/diaries/components/PostItems";
 import {
+  GetAllDiariesType,
   GetBookDataType,
+  getBookWithDiaryPostType,
   GetDiaryDataType,
-  GetPostsDataType
+  GetDiaryWithUserDataType,
+  GetPostsDataType,
+  GetUserDataType
 } from "./types/functionTypes";
 
 // PostNew NEW 다이어리리 생성
@@ -48,9 +52,11 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
     // 다이어리 저장 (내가 저장한 id경로로 바로 저장)
     const diaryRef = ref(database, `diary/${diaries.diaryId}`);
     await set(diaryRef, {
-      bookId: books.isbn,
-      bookImage: books.image,
-      bookTitle: books.title,
+      book: {
+        isbn: books.isbn,
+        image: books.image,
+        title: books.title
+      },
       createdAt: diaries.createdAt,
       diaryId: diaries.diaryId,
       diaryTitle: diaries.diaryTitle,
@@ -65,7 +71,8 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
       diaryId: diaries.diaryId,
       content: posts.content,
       createdAt: posts.createdAt,
-      title: posts.title
+      title: posts.title,
+      postId: posts.postId
     });
 
     // user정보에 diaryId 함께 저장
@@ -134,7 +141,7 @@ export const createDiaryPost = async (newPostData: NewPostData) => {
 };
 
 // HOME 모든 다이어리 가져오기
-export const getAllkDiaries = async () => {
+export const getAllkDiaries: GetAllDiariesType = async () => {
   try {
     // 모든 다이어리 가져오기
     const diaryData = (await getDataFromFirebase(
@@ -145,22 +152,23 @@ export const getAllkDiaries = async () => {
     // 포스트 데이터 가져오기
     const postWithUserData = await Promise.all(
       diaryData.map(async (diary) => {
-        const { bookImage, bookTitle, diaryImage, diaryTitle, diaryId } = diary;
-        if (diary.postId) {
-          const postId = Object.keys(diary.postId)[0];
-          const postData = await getDataFromFirebase(`posts/${postId}`, false);
-          const { content, title } = postData;
+        const { book, diaryImage, diaryTitle, diaryId } = diary as DiariesType;
+        if (!diary.postId) return null;
 
-          const userId = diary.userId;
-          const userData = await getDataFromFirebase(`users/${userId}`);
-          const { username, avatar } = userData;
-          return {
-            post: { content, title, postId },
-            user: { username, avatar, userId },
-            diary: { bookImage, bookTitle, diaryImage, diaryTitle, diaryId }
-          };
-        }
-        return null;
+        const postId = Object.keys(diary.postId)[0];
+        const postData = await getDataFromFirebase(`posts/${postId}`, false);
+        const { content, title } = postData as PostsType;
+
+        const userId = diary.userId;
+        const userData = await getDataFromFirebase(`users/${userId}`);
+        const { username, avatar } = userData as UserType;
+
+        return {
+          book: { image: book.image, title: book.title },
+          diary: { diaryTitle, diaryImage, diaryId },
+          post: { content, title, postId },
+          user: { username, avatar, userId }
+        };
       })
     );
     return postWithUserData;
@@ -182,6 +190,7 @@ export const getRecommendBooks = async () => {
   }
 };
 
+// basic data - book
 export const getBookData: GetBookDataType = async (bookId) => {
   try {
     const bookData = await getDataFromFirebase(`books/${bookId}`, false);
@@ -196,16 +205,22 @@ export const getBookData: GetBookDataType = async (bookId) => {
     return null;
   }
 };
-
+// basic data - diary
 export const getDiaryData: GetDiaryDataType = async (diaryId) => {
   try {
-    return await getDataFromFirebase(`diary/${diaryId}`, false);
+    const diary = await getDataFromFirebase(`diary/${diaryId}`, false);
+    if (diary) {
+      return diary as DiariesType;
+    } else {
+      console.error("다이어리가 없습니다");
+      return null;
+    }
   } catch (error) {
     console.log("getDiaryData 에러", error);
     return null;
   }
 };
-
+// basic data - posts
 export const getPostsData: GetPostsDataType = async (diaryId) => {
   try {
     const diary = await getDiaryData(diaryId);
@@ -225,10 +240,25 @@ export const getPostsData: GetPostsDataType = async (diaryId) => {
     return [];
   }
 };
+// basic data - user
+export const getUserData: GetUserDataType = async (userId) => {
+  try {
+    const user = await getDataFromFirebase(`users/${userId}`, false);
+    if (user) {
+      return user;
+    } else {
+      console.error("유저 데이터가 없습니다");
+      return null;
+    }
+  } catch (error) {
+    console.error("getUserData 에러", error);
+    return null;
+  }
+};
 
-export const getBookWithDiaryPost = async (
-  bookId: string
-): Promise<DiaryWithPostsType[] | []> => {
+export const getBookWithDiaryPost: getBookWithDiaryPostType = async (
+  bookId
+) => {
   try {
     const diaryIds = await getKeysFromFirebase(`books/${bookId}/diaries`);
     const diaryWithPosts = await Promise.all(
@@ -255,6 +285,37 @@ export const getBookWithDiaryPost = async (
   } catch (error) {
     console.error("Book 다이어리 포스트 가져오기 에러", error);
     return [];
+  }
+};
+
+export const getDiaryWithUserData: GetDiaryWithUserDataType = async (
+  diaryId
+) => {
+  try {
+    const diaryData = await getDiaryData(diaryId);
+    if (diaryData) {
+      const userData = await getUserData(diaryData.userId);
+      const diaryWithUserData = {
+        book: {
+          isbn: diaryData.book.isbn ?? "",
+          image: diaryData.book.image ?? "",
+          title: diaryData.book.title ?? ""
+        },
+        diaryId: diaryData.diaryId,
+        diaryImage: diaryData.diaryImage ?? "",
+        diaryTitle: diaryData.diaryTitle ?? "",
+        postId: diaryData.postId ?? {},
+        user: {
+          userId: userData?.userId ?? "",
+          avatar: userData?.avatar ?? "",
+          username: userData?.username ?? ""
+        }
+      };
+      return diaryWithUserData;
+    } else return null;
+  } catch (error) {
+    console.error("getDiaryWidthUserData 에러", error);
+    return null;
   }
 };
 

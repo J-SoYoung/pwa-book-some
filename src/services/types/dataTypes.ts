@@ -64,12 +64,10 @@ export type DiaryWithPostsType = {
 
 export interface NewDiaryDataType {
   books: SelectedBookType;
-  diaries: {
-    diaryId: string;
-    diaryTitle: string;
-    diaryImage: string;
-    createdAt: string;
-  };
+  diaries: Pick<
+    DiariesType,
+    "diaryTitle" | "diaryImage" | "diaryId" | "createdAt"
+  >;
   posts: PostsType;
   user: UserType;
 }

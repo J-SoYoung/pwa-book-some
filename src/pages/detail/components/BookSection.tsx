@@ -1,28 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
-
 import styles from "./bookSection.module.css";
+
 import { getOneBookData } from "@/services/apis";
-import { BookType } from "@/services/types/dataTypes";
 
 export const BookSection = () => {
   const { bookIsbn } = useParams<{ bookIsbn: string }>();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [book, setBook] = useState<BookType | null>(null);
-
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
   };
 
-  useEffect(() => {
-    const fetchBookData = async () => {
-      const bookData = await getOneBookData(bookIsbn as string);
-      if (bookData) {
-        setBook(bookData);
-      }
-    };
-    fetchBookData();
-  }, [bookIsbn]);
+  const { data: book } = useQuery({
+    queryKey: ["book", bookIsbn],
+    queryFn: async () => {
+      const data = await getOneBookData(bookIsbn as string);
+      return data;
+    }
+  });
 
   return (
     <div className={styles.bookSection}>

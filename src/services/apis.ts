@@ -1,6 +1,7 @@
 import { get, onValue, ref, remove, set, update } from "firebase/database";
 import { database } from "./firebase";
 import {
+  AllDiariesDataType,
   BookType,
   DiariesType,
   NewDiaryDataType,
@@ -211,15 +212,12 @@ export const createDiaryPost = async (newPostData: NewPostData) => {
 export const getAllkDiaries: GetAllDiariesType = async () => {
   try {
     // 모든 다이어리 가져오기
-    const diaryData = (await getDataFromFirebase(
-      "diary",
-      true
-    )) as DiariesType[];
+    const diaryData: DiariesType[] = await getDataFromFirebase("diary", true);
 
     // 포스트 데이터 가져오기
     const postWithUserData = await Promise.all(
       diaryData.map(async (diary) => {
-        const { book, diaryImage, diaryTitle, diaryId } = diary as DiariesType;
+        const { book, diaryImage, diaryTitle, diaryId } = diary;
         if (!diary.postId) return null;
 
         const postId = Object.keys(diary.postId)[0];
@@ -238,7 +236,9 @@ export const getAllkDiaries: GetAllDiariesType = async () => {
         };
       })
     );
-    return postWithUserData;
+    return postWithUserData.filter(
+      (item): item is AllDiariesDataType => item !== null
+    );
   } catch (error) {
     console.error("다이어리 가져오기 에러", error);
     return [];

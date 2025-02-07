@@ -1,27 +1,22 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import styles from "./userBooks.module.css";
 
 import { getAllkDiaries } from "@/services/apis";
 import { LikeButton } from "@/components/likeButton/LikeButton";
-import { AllDiariesDataType } from "@/services/types/dataTypes";
 
 function UserBooks() {
   const navigate = useNavigate();
-  const [allDiaries, setAllDiaries] = useState<AllDiariesDataType[]>([]);
 
-  useEffect(() => {
-    const fetchBookDiaries = async () => {
-      const allDiaryData = await getAllkDiaries();
-      setAllDiaries(allDiaryData);
-    };
-    fetchBookDiaries();
-  }, []);
+  const { data: allDiaries } = useQuery({
+    queryKey: ["allDiaries"],
+    queryFn: getAllkDiaries
+  });
 
   return (
     <section className={styles.userBooks}>
-      {allDiaries.map((diaryData) => {
-        const {book, diary, post, user} = diaryData
+      {allDiaries?.map((diaryData) => {
+        const { book, diary, post, user } = diaryData;
         return (
           <div className={styles.bookCard} key={diary.diaryId}>
             <div className={styles.imageBox}>

@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./bookSection.module.css";
 
 import { getOneBookData } from "@/services/apis";
 
-export const BookSection = () => {
-  const { bookIsbn } = useParams<{ bookIsbn: string }>();
+export const BookSection = ({ bookIsbn }: { bookIsbn: string }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleToggle = () => {
     setIsExpanded(!isExpanded);

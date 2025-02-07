@@ -20,9 +20,9 @@ import {
   GetDiaryDataType,
   GetDiaryWithUserDataType,
   GetAllPostsDataType,
-  GetUserDataType
+  GetUserDataType,
+  GetRecommendBooksType
 } from "./types/functionTypes";
-
 
 // basic data - book
 export const getOneBookData: GetOneBookDataType = async (bookId) => {
@@ -89,7 +89,6 @@ export const getUserData: GetUserDataType = async (userId) => {
     return null;
   }
 };
-
 
 // PostNew NEW 다이어리리 생성
 export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
@@ -247,11 +246,11 @@ export const getAllkDiaries: GetAllDiariesType = async () => {
 };
 
 // Home 랜덤 책 데이터 가져오기 ( 캐러셀 구현 )
-export const getRecommendBooks = async () => {
+export const getRecommendBooks: GetRecommendBooksType = async () => {
   try {
-    const booksData = await getDataFromFirebase("books", true);
+    const booksData: BookType[] = await getDataFromFirebase("books", true);
     const randomBookData = shuffleArray(booksData).slice(0, 3);
-    return randomBookData as BookType[];
+    return randomBookData;
   } catch (error) {
     console.error("랜덤 책 가져오기 에러", error);
     return [];
@@ -265,10 +264,10 @@ export const getBookWithDiaryPost: getBookWithDiaryPostType = async (
     const diaryIds = await getKeysFromFirebase(`books/${bookId}/diaries`);
     const diaryWithPosts = await Promise.all(
       diaryIds.map(async (id) => {
-        const diary = await getDiaryData(id) as DiariesType
+        const diary = (await getDiaryData(id)) as DiariesType;
         const posts = await getAllPostsData(id);
         const firstPost = posts[0];
-        const user = await getUserData(diary.userId) as UserType
+        const user = (await getUserData(diary.userId)) as UserType;
 
         return {
           diary: {

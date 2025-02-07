@@ -1,26 +1,21 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import styles from "./diarySection.module.css";
-import { DiaryWithPostsType } from "@/services/types/dataTypes";
+
 import { getBookWithDiaryPost } from "@/services/apis";
 
-export const DiarySection = () => {
-  const { bookIsbn } = useParams<{ bookIsbn: string }>();
-  const [diaries, setDiaries] = useState<DiaryWithPostsType[] | []>([]);
+export const DiarySection = ({ bookIsbn }: { bookIsbn: string }) => {
+  const { data: diaries } = useQuery({
+    queryKey: ["diaries", bookIsbn],
+    queryFn: async () => {
+      const data = await getBookWithDiaryPost(bookIsbn as string);
+      return data;
+    }
+  });
 
-  useEffect(() => {
-    const fetchBookData = async () => {
-      const diaryWidthPosts = await getBookWithDiaryPost(bookIsbn as string);
-      if (diaryWidthPosts) {
-        setDiaries(diaryWidthPosts);
-      }
-    };
-    fetchBookData();
-  }, [bookIsbn]);
   return (
     <div className={styles.diaryList}>
-      {diaries.map((diaryData) => {
+      {diaries?.map((diaryData) => {
         const { diary, post, user } = diaryData;
         return (
           <div key={diary.diaryId} className={styles.diary}>

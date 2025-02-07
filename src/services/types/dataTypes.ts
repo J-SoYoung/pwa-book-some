@@ -49,8 +49,8 @@ export interface DiariesType {
 export interface AllDiariesDataType {
   book: Pick<BookType, "image" | "title">;
   diary: Pick<DiariesType, "diaryTitle" | "diaryImage" | "diaryId">;
-  post: Pick<PostsType, "content" | "postId" | "title">;
-  user: Pick<UserType, "avatar" | "userId" | "username">;
+  post: Pick<PostsType, "content" | "title" | "postId">;
+  user: Pick<UserType, "username"|"avatar" | "userId" >;
 }
 
 export type DiaryWithPostsType = {

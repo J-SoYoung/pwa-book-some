@@ -1,39 +1,38 @@
-import { useEffect, useState } from "react";
-import { PostsType } from "@/services/types/dataTypes";
-import { getAllPostsData } from "@/services/apis";
+import { useQuery } from "@tanstack/react-query";
+
 import { PostItems } from "./PostItems";
+import { getAllPostsData } from "@/services/apis";
 
 interface PostListsProps {
   diaryId: string;
   isAuthor: boolean;
 }
 export const PostLists = ({ diaryId, isAuthor }: PostListsProps) => {
-  const [posts, setPosts] = useState<PostsType[]>([]);
+  const {
+    data: posts,
+    isLoading,
+    error
+  } = useQuery({
+    queryKey: ["posts", diaryId],
+    queryFn: () => getAllPostsData(diaryId as string),
+    enabled: !!diaryId // diaryId가 존재할 때만 실행
+  });
 
-  useEffect(() => {
-    const fetchPosts = async (diaryId: string) => {
-      try {
-        const postData = await getAllPostsData(diaryId as string);
-        setPosts(postData);
-      } catch (error) {
-        console.error("다이어리 가져오기 에러", error);
-      }
-    };
-    fetchPosts(diaryId as string);
-  }, [diaryId]);
+  if (isLoading) return <div>로딩 중...</div>;
+  if (error) return <div>에러 발생</div>;
 
   return (
     <>
-      {posts.map((post) => {
-        return (
-          <PostItems
-            key={post.postId}
-            post={post}
-            setPosts={setPosts}
-            isAuthor={isAuthor}
-          />
-        );
-      })}
+      {posts &&
+        posts.map((post) => {
+          return (
+            <PostItems
+              key={post.postId}
+              post={post}
+              isAuthor={isAuthor}
+            />
+          );
+        })}
     </>
   );
 };

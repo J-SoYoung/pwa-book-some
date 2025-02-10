@@ -4,11 +4,11 @@ import { PostsType } from "@/services/types/dataTypes";
 import { validateEditPost } from "@/services/utils";
 import { updatePosts } from "@/services/apis";
 import { InputEditField } from "@/components";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface PostsPropsType {
   post: PostsType;
   isAuthor: boolean;
-  setPosts: React.Dispatch<React.SetStateAction<PostsType[] | []>>;
 }
 export interface newPostType {
   title: string;
@@ -16,12 +16,25 @@ export interface newPostType {
   updatedAt: string;
 }
 
-export const PostItems = ({ post, setPosts, isAuthor }: PostsPropsType) => {
+export const PostItems = ({ post, isAuthor }: PostsPropsType) => {
   const [isEditPost, setIsEditPost] = useState(false);
   const [editPost, setEditPost] = useState({
     title: post.title,
     content: post.content,
     updatedAt: new Date().toISOString()
+  });
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: updatePosts,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts", post.diaryId] }); 
+      setIsEditPost(false);
+    },
+    onError: (error) => {
+      console.error("다이어리 수정 오류:", error);
+      alert("다이어리 수정 중 오류가 발생했습니다.");
+    }
   });
 
   const handleChangePosts = (
@@ -40,27 +53,10 @@ export const PostItems = ({ post, setPosts, isAuthor }: PostsPropsType) => {
     const validate = validateEditPost(editPost);
     if (!validate.valid) return alert(validate.message);
 
-    try {
-      const response = await updatePosts({
-        editPost: editPost as newPostType,
-        postId: post.postId as string
-      });
-      console.log("response--", response);
-
-      if (response) {
-        setPosts((prevPost) =>
-          prevPost.map((p) =>
-            p.postId === post.postId
-              ? { ...p, title: response.title, content: response.content }
-              : p
-          )
-        );
-
-        setIsEditPost(false);
-      }
-    } catch (error) {
-      console.error(error, "포스트 수정 에러");
-    }
+    mutation.mutate({
+      editPost: editPost as newPostType,
+      postId: post.postId as string
+    });
   };
 
   return (

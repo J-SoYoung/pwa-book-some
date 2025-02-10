@@ -25,7 +25,7 @@ export const Login = () => {
       try {
         await signOutFromGoogle();
         setUserData(null);
-        navigate("/home");
+        navigate("/login");
       } catch (error) {
         console.error("로그아웃 실패:", error);
       }

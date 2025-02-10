@@ -22,7 +22,7 @@ export const ItemLists = ({
             {diaries.map((diary) => {
               const data = {
                 url: `/diaries/${diary.diaryId}`,
-                imageUrl: diary.bookImage,
+                imageUrl: diary.book.image,
                 title: diary.diaryTitle
               };
               return <Items data={data} key={diary.diaryId} />;

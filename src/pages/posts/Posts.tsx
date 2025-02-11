@@ -60,7 +60,7 @@ export const Posts = () => {
               </option>
               {diaryList.map((diary, idx) => (
                 <option key={diary.diaryId} value={diary.diaryId}>
-                  {`[${idx + 1}] ${diary.diaryTitle} - ${diary.bookTitle?.slice(
+                  {`[${idx + 1}] ${diary.diaryTitle} - ${diary.book.title.slice(
                     0,
                     10
                   )}..`}

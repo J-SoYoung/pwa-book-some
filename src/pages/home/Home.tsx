@@ -4,13 +4,25 @@ import UserBooks from "./components/UserBooks";
 
 import { Items } from "@/components/items/Items";
 import { getRecommendBooks } from "@/services/apis";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/recoil/atoms";
+import { UserType } from "@/services/types/dataTypes";
 
 export const Home = () => {
-  const { data:recommendBooks} = useQuery({
+  const user = useRecoilValue(userState) as UserType;
+  useEffect(() => {
+    if (user.userId === "") {
+      alert("로그인이 필요합니다.");
+      window.location.href = "/login";
+    }
+  });
+
+  const { data: recommendBooks } = useQuery({
     queryKey: ["recommendedBooks"],
     queryFn: getRecommendBooks
   });
-  
+
   return (
     <main className={styles.home}>
       <section className={styles.section}>

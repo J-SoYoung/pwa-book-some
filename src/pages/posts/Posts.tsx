@@ -1,33 +1,37 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./post.module.css";
 import { userState } from "@/recoil/atoms";
 import { getDiaryList } from "@/services/apis";
-import { DiariesType, UserType } from "@/services/types/dataTypes";
+import { UserType } from "@/services/types/dataTypes";
 import { InputField, TextareaField } from "@/components";
 import { handleSubmitForm } from "./handleSubmitForm";
+import { useQuery } from "@tanstack/react-query";
 
 export const Posts = () => {
   const navigate = useNavigate();
   const user = useRecoilValue(userState) as UserType;
-  const [diaryList, setDiaryList] = useState<DiariesType[]>([]);
-
   const [newDiaryData, setNewDiaryData] = useState({
     diaryId: "",
     title: "",
     content: ""
   });
 
-  useEffect(() => {
-    const fetchDiaryList = async () => {
-      const diaryData = await getDiaryList(user.userId);
-      setDiaryList(diaryData);
-    };
+  const {
+    data: diaryList,
+    isLoading,
+    error
+  } = useQuery({
+    queryKey: ["diaryList", user.userId],
+    queryFn: async () => {
+      return await getDiaryList(user.userId as string);
+    }
+  });
 
-    fetchDiaryList();
-  }, [user.userId]);
+  if (isLoading) return <div>로딩중...</div>;
+  if (error) return <div>에러가 발생했습니다.</div>;
 
   const onChange = (
     e: React.ChangeEvent<
@@ -58,7 +62,7 @@ export const Posts = () => {
               <option value="" disabled>
                 다이어리를 선택해주세요
               </option>
-              {diaryList.map((diary, idx) => (
+              {diaryList?.map((diary, idx) => (
                 <option key={diary.diaryId} value={diary.diaryId}>
                   {`[${idx + 1}] ${diary.diaryTitle} - ${diary.book.title.slice(
                     0,

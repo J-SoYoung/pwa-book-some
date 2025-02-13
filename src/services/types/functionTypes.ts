@@ -27,3 +27,5 @@ export type GetDiaryWithUserDataType = (
 export type GetAllDiariesType = () => Promise<AllDiariesDataType[] | []>;
 
 export type GetRecommendBooksType = () => Promise<BookType[]|[]>;
+
+export type GetDiaryListType = (userId: string) => Promise<DiariesType[] | []>;

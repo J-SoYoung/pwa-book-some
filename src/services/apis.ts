@@ -22,7 +22,8 @@ import {
   GetDiaryWithUserDataType,
   GetAllPostsDataType,
   GetUserDataType,
-  GetRecommendBooksType
+  GetRecommendBooksType,
+  GetDiaryListType
 } from "./types/functionTypes";
 
 // basic data - book
@@ -154,29 +155,21 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
 };
 
 // Post 다이어리의 리스트 가져오기
-export const getDiaryList = async (userId: string) => {
+export const getDiaryList: GetDiaryListType = async (userId) => {
   try {
-    // users > diaries
-    const userDiaryRef = ref(database, `users/${userId}/diaries`);
-    const userDiarySnapshot = await get(userDiaryRef);
-
-    // diary가져오기
-    if (userDiarySnapshot.exists()) {
-      const diaryIds = Object.keys(userDiarySnapshot.val());
-      const diaryPromise = diaryIds.map(async (diaryId) => {
-        const diaryRef = ref(database, `diary/${diaryId}`);
-        const diarySnapshot = await get(diaryRef);
-        return diarySnapshot.exists() ? diarySnapshot.val() : null;
-      });
-
-      const diaries = await Promise.all(diaryPromise);
-      return diaries.filter((diary) => diary !== null);
-    } else {
+    const userDiaryIds = await getKeysFromFirebase(`users/${userId}/diaries`);
+    if (userDiaryIds.length === 0) {
       console.error("No diaries found.");
       return [];
     }
+    const diaryData = await Promise.all(
+      userDiaryIds.map(async (diaryId) => {
+        return await getDiaryData(diaryId);
+      })
+    );
+    return diaryData as DiariesType[];
   } catch (error) {
-    console.error("getDiaryList 에러 --", error);
+    console.error("getDiaryList 에러", error);
     return [];
   }
 };
@@ -305,7 +298,7 @@ export const getDiaryWithUserData: GetDiaryWithUserDataType = async (
 
     const userData = await getUserData(diaryData.userId);
     if (!userData) return null;
-    
+
     const diaryWithUserData = {
       book: {
         isbn: diaryData.book.isbn ?? "",

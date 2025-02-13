@@ -23,11 +23,11 @@ export const Layout = () => {
   }, [navigate]);
 
   // 글작성 페이지, 내정보를 제외하고 검색바를 보여줌
-  const hideSearchBarPaths = ["/postsNew", "/posts", "/mypage"];
+  const hideSearchBarPaths = ["/postsNew", "/posts", "/mypage", "/landing"];
   const showSearchBar = !hideSearchBarPaths.some((p) => path.startsWith(p));
 
   // 로그인, 랜딩 페이지를 제외하고 하단 네비게이션을 보여줌
-  const hideBottomNavPaths = ["/login", "/Landing"];
+  const hideBottomNavPaths = ["/login", "/landing"];
   const showBottomNav = !hideBottomNavPaths.some((p) => path.startsWith(p));
 
   return (

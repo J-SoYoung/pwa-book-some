@@ -8,7 +8,7 @@ import { userState } from "@/recoil/atoms";
 import { BookType, UserType } from "@/services/types/dataTypes";
 import { ItemSkeleton } from "@/components/items/ItemSkeleton";
 import UserBooks from "./components/UserBooks";
-import { useCustomQueryhook } from "./useCustomQueryhook";
+import { useCustomQueryhook } from "./useCustomQueryHooks";
 
 export const Home = () => {
   const user = useRecoilValue(userState) as UserType;
@@ -29,7 +29,7 @@ export const Home = () => {
     SkeletonComponent: <ItemSkeleton />,
     errorMessage: "추천 도서를 불러오는데 실패했습니다."
   });
-  
+
   return (
     <main className={styles.home}>
       <section className={styles.section}>

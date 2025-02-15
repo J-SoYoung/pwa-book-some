@@ -5,7 +5,7 @@ import { UserBookSkeleton } from "./UserBookSkeleton";
 
 import { getAllkDiaries } from "@/services/apis";
 import { LikeButton } from "@/components/likeButton/LikeButton";
-import { useCustomQueryhook } from "../useCustomQueryhook";
+import { useCustomQueryhook } from "../useCustomQueryHooks";
 
 function UserBooks() {
   const navigate = useNavigate();

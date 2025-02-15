@@ -129,3 +129,10 @@
     background-position: -200% 0;
   }
 }
+
+.errorText {
+  margin: 8px 0;
+  color: red;
+  font-size: 14px;
+  font-weight: 700;
+}

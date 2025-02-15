@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./userBooks.module.css";
@@ -6,19 +5,28 @@ import { UserBookSkeleton } from "./UserBookSkeleton";
 
 import { getAllkDiaries } from "@/services/apis";
 import { LikeButton } from "@/components/likeButton/LikeButton";
+import { useCustomQueryhook } from "../useCustomQueryhook";
 
 function UserBooks() {
   const navigate = useNavigate();
 
-  const { data: allDiaries, isLoading } = useQuery({
+  const {
+    data: allDiaries,
+    SkeletonUI,
+    errorMessage
+  } = useCustomQueryhook({
     queryKey: ["allDiaries"],
-    queryFn: getAllkDiaries
+    queryFn: getAllkDiaries,
+    SkeletonComponent: <UserBookSkeleton />,
+    errorMessage: "유저 다이어리를 가져오는데 실패하였습니다."
   });
 
   return (
     <section className={styles.userBooks}>
-      {isLoading ? (
-        <UserBookSkeleton />
+      {SkeletonUI ? (
+        SkeletonUI
+      ) : errorMessage ? (
+        <p className={styles.errorText}>{errorMessage}</p>
       ) : (
         allDiaries?.map((diaryData) => {
           const { book, diary, post, user } = diaryData;

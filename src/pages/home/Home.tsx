@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import styles from "./home.module.css";
 
 import { Items } from "@/components/items/Items";
@@ -9,6 +8,7 @@ import { userState } from "@/recoil/atoms";
 import { BookType, UserType } from "@/services/types/dataTypes";
 import { ItemSkeleton } from "@/components/items/ItemSkeleton";
 import UserBooks from "./components/UserBooks";
+import { useCustomQueryhook } from "./useCustomQueryhook";
 
 export const Home = () => {
   const user = useRecoilValue(userState) as UserType;
@@ -21,30 +21,24 @@ export const Home = () => {
 
   const {
     data: recommendBooks,
-    isLoading,
-  } = useQuery({
+    SkeletonUI,
+    errorMessage
+  } = useCustomQueryhook({
     queryKey: ["recommendedBooks"],
-    queryFn: getRecommendBooks
+    queryFn: getRecommendBooks,
+    SkeletonComponent: <ItemSkeleton />,
+    errorMessage: "추천 도서를 불러오는데 실패했습니다."
   });
-
-  // const {
-  //   data: recommendBooks,
-  //   isError,
-  //   errorMessage,
-  //   SkeletonUI
-  // } = useCustomQuery(
-  //   ["recommendedBooks"],
-  //   () => getRecommendBooks(),
-  //   <ItemSkeleton />
-  // );
-
+  
   return (
     <main className={styles.home}>
       <section className={styles.section}>
         <h3>이 책을 추천합니다</h3>
         <div className={styles.itemListBox}>
-          {isLoading ? (
-            <ItemSkeleton />
+          {SkeletonUI ? (
+            SkeletonUI
+          ) : errorMessage ? (
+            <p className={styles.errorText}>{errorMessage}</p>
           ) : (
             recommendBooks?.map((book: BookType) => {
               const data = {

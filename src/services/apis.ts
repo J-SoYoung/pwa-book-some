@@ -229,12 +229,13 @@ export const getAllkDiaries: GetAllDiariesType = async () => {
         };
       })
     );
+    // postId가 없는 null 데이터를 제거 후 반환
     return postWithUserData.filter(
       (item): item is AllDiariesDataType => item !== null
     );
   } catch (error) {
     console.error("다이어리 가져오기 에러", error);
-    return [];
+    throw error;
   }
 };
 
@@ -243,10 +244,11 @@ export const getRecommendBooks: GetRecommendBooksType = async () => {
   try {
     const booksData: BookType[] = await getDataFromFirebase("books", true);
     const randomBookData = shuffleArray(booksData).slice(0, 3);
+    if (!randomBookData) throw Error("추천 책 데이터가 없습니다");
     return randomBookData;
   } catch (error) {
-    console.error("랜덤 책 가져오기 에러", error);
-    return [];
+    console.error("추천 책 가져오기 에러", error);
+    throw error;
   }
 };
 
@@ -285,7 +287,7 @@ export const getBookWithDiaryPost: getBookWithDiaryPostType = async (
     return diaryWithPosts;
   } catch (error) {
     console.error("Book 다이어리 포스트 가져오기 에러", error);
-    return [];
+    throw error;
   }
 };
 

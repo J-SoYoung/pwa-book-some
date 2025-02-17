@@ -9,7 +9,7 @@ export const Detail = () => {
     <>
       <BookSection bookIsbn={bookIsbn as string} />
       <section>
-        <h2>같은 책을 읽으신 분들의 책장이에요!</h2>
+        <h3>같은 책을 읽으신 분들의 책장이에요!</h3>
         <DiarySection bookIsbn={bookIsbn as string} />
       </section>
     </>

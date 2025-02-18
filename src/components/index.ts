@@ -6,6 +6,7 @@ import {
 import { BookSearchModal } from "./modal/BookSearchModal";
 import { Items } from "./items/Items";
 import { QueryResultHandler } from "./QueryResultHandler";
+import { ErrorFallback } from "./ErrorFallback";
 
 export {
   InputField,
@@ -13,5 +14,6 @@ export {
   InputEditField,
   BookSearchModal,
   Items,
-  QueryResultHandler
+  QueryResultHandler,
+  ErrorFallback
 };

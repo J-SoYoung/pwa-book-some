@@ -5,11 +5,13 @@ import {
 } from "./inputField/InputField";
 import { BookSearchModal } from "./modal/BookSearchModal";
 import { Items } from "./items/Items";
+import { QueryResultHandler } from "./QueryResultHandler";
 
 export {
   InputField,
   TextareaField,
   InputEditField,
   BookSearchModal,
-  Items
+  Items,
+  QueryResultHandler
 };

@@ -28,19 +28,13 @@ import {
 
 // basic data - book
 export const getOneBookData: GetOneBookDataType = async (bookId) => {
-  try {
-    const bookData = await getDataFromFirebase(`books/${bookId}`, false);
-    if (bookData) {
-      return bookData;
-    } else {
-      console.error(`GetOneBookDataType에러, ${bookId}를 찾을 수 없습니다`);
-      return null;
-    }
-  } catch (error) {
-    console.error("Book정보 가져오기 에러", error);
-    return null;
+  const bookData = await getDataFromFirebase(`books/${bookId}`, false);
+  if (!bookData) {
+    throw new Error(`getOneBookData에러, ${bookId}를 찾을 수 없습니다`);
   }
+  return bookData;
 };
+
 // basic data - diary
 export const getDiaryData: GetDiaryDataType = async (diaryId) => {
   try {
@@ -52,8 +46,8 @@ export const getDiaryData: GetDiaryDataType = async (diaryId) => {
       return null;
     }
   } catch (error) {
-    console.log("getDiaryData 에러", error);
-    return null;
+    console.error("getDiaryData 에러", error);
+    throw error;
   }
 };
 // basic data - posts
@@ -73,7 +67,7 @@ export const getAllPostsData: GetAllPostsDataType = async (diaryId) => {
     }
   } catch (error) {
     console.error("getAllPostsData 에러", error);
-    return [];
+    throw error;
   }
 };
 // basic data - user
@@ -255,40 +249,38 @@ export const getRecommendBooks: GetRecommendBooksType = async () => {
 export const getBookWithDiaryPost: getBookWithDiaryPostType = async (
   bookId
 ) => {
-  try {
-    const diaryIds = await getKeysFromFirebase(`books/${bookId}/diaries`);
-    const diaryWithPosts = await Promise.all(
-      diaryIds.map(async (id) => {
-        const diary = (await getDiaryData(id)) as DiariesType;
-        const posts = await getAllPostsData(id);
-        const firstPost = posts[0];
-        const user = (await getUserData(diary.userId)) as UserType;
+  const diaryIds = await getKeysFromFirebase(`books/${bookId}/diaries`);
+  const diaryWithPosts = await Promise.all(
+    diaryIds.map(async (id) => {
+      const diary = (await getDiaryData(id)) as DiariesType;
+      const posts = await getAllPostsData(id);
+      const firstPost = posts[0];
+      const user = (await getUserData(diary.userId)) as UserType;
 
-        return {
-          diary: {
-            diaryId: diary.diaryId,
-            createdAt: diary.createdAt,
-            diaryTitle: diary.diaryTitle,
-            diaryImage: diary.diaryImage
-          },
-          post: {
-            content: firstPost.content,
-            createdAt: firstPost.createdAt,
-            title: firstPost.title
-          },
-          user: {
-            userId: user.userId,
-            username: user.username,
-            avatar: user.avatar
-          }
-        };
-      })
-    );
-    return diaryWithPosts;
-  } catch (error) {
-    console.error("Book 다이어리 포스트 가져오기 에러", error);
-    throw error;
+      return {
+        diary: {
+          diaryId: diary.diaryId,
+          createdAt: diary.createdAt,
+          diaryTitle: diary.diaryTitle,
+          diaryImage: diary.diaryImage
+        },
+        post: {
+          content: firstPost.content,
+          createdAt: firstPost.createdAt,
+          title: firstPost.title
+        },
+        user: {
+          userId: user.userId,
+          username: user.username,
+          avatar: user.avatar
+        }
+      };
+    })
+  );
+  if (diaryWithPosts.length === 0) {
+    throw new Error(`getBookWithDiaryPost, 작성된 다이어리가 없습니다`);
   }
+  return diaryWithPosts;
 };
 
 export const getDiaryWithUserData: GetDiaryWithUserDataType = async (

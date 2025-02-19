@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import styles from "./_diarySection.module.css";
-import { DiaryWithPostsType } from "@/services/types/dataTypes";
+import { getBookWithDiaryPost } from "@/services/apis";
 
-export const DiaryContent = ({
-  diaries
-}: {
-  diaries: DiaryWithPostsType[];
-}) => {
+export const DiaryContent = ({ bookIsbn }: { bookIsbn: string }) => {
+  const { data: diaries } = useSuspenseQuery({
+    queryKey: ["diaries", bookIsbn],
+    queryFn: async () => {
+      const data = await getBookWithDiaryPost(bookIsbn as string);
+      return data;
+    }
+  });
   return (
     <>
       <div className={styles.diaryList}>

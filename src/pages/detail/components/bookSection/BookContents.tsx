@@ -2,13 +2,22 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./_bookSection.module.css";
-import { BookType } from "@/services/types/dataTypes";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getOneBookData } from "@/services/apis";
 
-export const BookContent = ({ book }: { book: BookType }) => {
+export const BookContent = ({ bookIsbn }: { bookIsbn: string }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const { data: book } = useSuspenseQuery({
+    queryKey: ["book", bookIsbn],
+    queryFn: async () => {
+      const data = await getOneBookData(bookIsbn as string);
+      return data;
+    }
+  });
 
   return (
     <div className={styles.bookSection}>

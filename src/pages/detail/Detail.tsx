@@ -1,6 +1,5 @@
-import { DiarySection } from "./components/DiarySection";
-import { BookSection } from "./components/BookSection";
 import { useParams } from "react-router-dom";
+import { DiarySection, BookSection } from "./components";
 
 export const Detail = () => {
   const { bookIsbn } = useParams<{ bookIsbn: string }>();

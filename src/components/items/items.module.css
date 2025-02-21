@@ -26,6 +26,7 @@
 
 /* ItemSkeleton */
 .skeletonContainer {
+  margin-bottom: 32px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;

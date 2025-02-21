@@ -1,0 +1,48 @@
+.bookSection {
+  padding: 16px 8px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-color: #eee;
+  border-radius: 8px;
+}
+.bookSection > .title > p {
+  font-size: 18px;
+  font-weight: 600;
+}
+.bookSection > .title > a {
+  display: block;
+  text-align: right;
+  font-size: 14px;
+}
+.bookSection > .image {
+  width: 140px;
+  height: 200px;
+  margin: 20px;
+}
+
+.bookSection > .author {
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.bookSection > .description {
+  display: -webkit-box;
+  white-space: normal;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 16px;
+}
+.bookSection > .expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  max-height: none;
+  overflow: visible;
+  margin-bottom: 16px;
+}

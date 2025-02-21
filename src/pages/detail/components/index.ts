@@ -1,4 +1,4 @@
-import { BookSection } from "./bookSection/BookSection";
-import { DiarySection } from "./diarySection/DiarySection";
+import { BookContents } from "./BookContents";
+import { DiaryContents } from "./DiaryContents";
 
-export { BookSection, DiarySection };
+export { BookContents, DiaryContents };

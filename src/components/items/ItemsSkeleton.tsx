@@ -1,6 +1,6 @@
 import styles from "./items.module.css";
 
-export const ItemSkeleton = () => {
+export const ItemsSkeleton = () => {
   return (
     <div className={styles.skeletonContainer}>
       {[1, 2, 3].map((_, index) => (

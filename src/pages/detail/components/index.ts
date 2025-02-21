@@ -1,4 +1,4 @@
 import { BookContents } from "./BookContents";
-import { DiaryContents } from "./DiaryContents";
+import { DiaryLists } from "./DiaryLists";
 
-export { BookContents, DiaryContents };
+export { BookContents, DiaryLists };

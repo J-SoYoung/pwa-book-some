@@ -1,4 +1,4 @@
-import styles from "./skeleton.module.css";
+import styles from "./diaryItemSkeleton.module.css";
 
 export const DiaryItemSkeleton = () => {
   return (
@@ -22,7 +22,7 @@ export const PostListsSkeleton = () => {
     </div>
   );
 };
-export const Skeleton = () => {
+export const DiaryPageSkeleton = () => {
   return (
     <>
       <DiaryItemSkeleton />

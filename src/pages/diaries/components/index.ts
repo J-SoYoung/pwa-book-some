@@ -1,5 +1,5 @@
 import { DiaryItem } from "./DiaryItem";
 import { PostLists } from "./PostLists";
-import { Skeleton } from "./Skeleton";
+import { DiaryPageSkeleton,PostListsSkeleton } from "./DiaryItemSkeleton";
 
-export { DiaryItem, PostLists, Skeleton };
+export { DiaryItem, PostLists, DiaryPageSkeleton,PostListsSkeleton };

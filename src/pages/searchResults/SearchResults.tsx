@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./searchResults.module.css";
 
-import { Items } from "@/components";
+import { ErrorFallback, Items } from "@/components";
 import { getSearchResults } from "@/services/apis";
 import { BookType } from "@/services/types/dataTypes";
 import { searchBooks } from "@/bookApis/book";
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQueryErrorResetBoundary,
+  useSuspenseQuery
+} from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-export const SearchResults = () => {
+export const SearchResultsContents = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,11 +22,7 @@ export const SearchResults = () => {
 
   const [moreBookSearchData, setMoreBookSearchData] = useState([]);
 
-  const {
-    data: searchResults,
-    isLoading,
-    error
-  } = useQuery({
+  const { data: searchResults } = useSuspenseQuery({
     queryKey: ["searchResults", query],
     queryFn: () => getSearchResults(query as string)
   });
@@ -35,12 +36,8 @@ export const SearchResults = () => {
     }
   };
 
-  if (isLoading) return <div>로딩중</div>;
-  if (error) return <div>에러발생</div>;
-
   return (
     <section className={styles.section}>
-      <h3 className={styles.title}>검색결과</h3>
       <p className={styles.totalText}>
         다른 유저들이 읽은 <br />
         <b>'{query}'</b>의 검색결과는 <b>{searchResults.length}</b>건 입니다.
@@ -57,7 +54,10 @@ export const SearchResults = () => {
       </div>
 
       <div className={styles.searchMoreResults}>
-        <button className={styles.moreClickbutton} onClick={onClickMoreBooksSearch}>
+        <button
+          className={styles.moreClickbutton}
+          onClick={onClickMoreBooksSearch}
+        >
           더 많은 도서 검색 결과를 원하시면 클릭하세요
         </button>
         {moreBookSearchData.length !== 0 && (
@@ -80,5 +80,26 @@ export const SearchResults = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+export const Skeleton = () => {
+  return (
+    <div className={styles.loadingSpinner}>
+      <AiOutlineLoading3Quarters />
+    </div>
+  );
+};
+
+export const SearchResults = () => {
+  const { reset } = useQueryErrorResetBoundary();
+
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
+      <h3 className={styles.title}>도서 검색결과</h3>
+      <Suspense fallback={<Skeleton />}>
+        <SearchResultsContents />
+      </Suspense>
+    </ErrorBoundary>
   );
 };

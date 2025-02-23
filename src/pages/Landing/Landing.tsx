@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InstallButton } from "./InstallButton";
 
 export const Landing = () => {
@@ -20,6 +20,7 @@ export const Landing = () => {
     <>
       <h1>BOOK-SOME landing</h1>
       <InstallButton />
+      <Link to='/home'>BOOK-SOME둘러보기</Link>
     </>
   );
 };

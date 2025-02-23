@@ -27,7 +27,7 @@ export const Layout = () => {
   const showSearchBar = !hideSearchBarPaths.some((p) => path.startsWith(p));
 
   // 로그인, 랜딩 페이지를 제외하고 하단 네비게이션을 보여줌
-  const hideBottomNavPaths = ["/login", "/landing"];
+  const hideBottomNavPaths = ["/login"];
   const showBottomNav = !hideBottomNavPaths.some((p) => path.startsWith(p));
 
   return (

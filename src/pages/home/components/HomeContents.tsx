@@ -1,22 +1,11 @@
-import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
 import { useSuspenseQuery } from "@tanstack/react-query";
-
 import styles from "./homeContents.module.css";
+
 import { Items } from "@/components";
-import { userState } from "@/recoil/atoms";
-import { BookType, UserType } from "@/services/types/dataTypes";
+import { BookType } from "@/services/types/dataTypes";
 import { getRecommendBooks } from "@/services/apis";
 
 export const HomeContents = () => {
-  const user = useRecoilValue(userState) as UserType;
-  useEffect(() => {
-    if (user.userId === "") {
-      alert("로그인이 필요합니다.");
-      window.location.href = "/login";
-    }
-  });
-
   const { data: recommendBooks } = useSuspenseQuery({
     queryKey: ["recommendedBooks"],
     queryFn: getRecommendBooks

@@ -16,14 +16,16 @@ export const Header = () => {
         <Link to={"/home"}>BOOKSOME</Link>
       </h1>
       <div>
-        <span>{user?.username}님</span>
-        <FiSettings
-          size={15}
-          onClick={() => {
-            navigate(`/mypage/${user?.userId}`);
-          }}
-          className={styles.icon_setting}
-        />
+        <span>{user ? `${user.username}님` : "환영합니다"}</span>
+        {user && (
+          <FiSettings
+            size={15}
+            onClick={() => {
+              navigate(`/mypage/${user?.userId}`);
+            }}
+            className={styles.icon_setting}
+          />
+        )}
       </div>
     </header>
   );

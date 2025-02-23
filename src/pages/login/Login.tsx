@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { FcGoogle } from "react-icons/fc";
 
@@ -49,6 +49,7 @@ export const Login = () => {
           <span>Sign In</span>
         </div>
       )}
+      <Link to="/home" className={styles.moveHomeText}>Home 둘러보기</Link>
     </div>
   );
 };

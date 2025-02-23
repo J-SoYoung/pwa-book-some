@@ -1,15 +1,16 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+
 import PopupButton from "../popupButton/PopupButton";
 import styles from "./navigation.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { UserType } from "@/services/types/dataTypes";
 import { userState } from "@/recoil/atoms";
+import { signInFormGoogle, signOutFromGoogle } from "@/services/auth";
 
 export const BottomNav = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
-  const user = useRecoilValue(userState) as UserType;
+  const [userData, setUserData] = useRecoilState(userState);
 
   const unKnownUser = () => {
     if (confirm("로그인이 필요합니다. 페이지를 이동하시겠습니까?")) {
@@ -17,15 +18,37 @@ export const BottomNav = () => {
     }
   };
   const togglePopup = () => {
-    if (user === null) {
+    if (userData === null) {
       unKnownUser();
     } else {
       setShowPopup(!showPopup);
     }
   };
   const moveMyBook = () => {
-    if (user === null) unKnownUser();
-    else navigate(`/mybook/${user.userId}`);
+    if (userData === null) unKnownUser();
+    else navigate(`/mybook/${userData.userId}`);
+  };
+
+  const onClickLogout = async () => {
+    if (confirm("로그아웃 하시겠습니까?")) {
+      try {
+        await signOutFromGoogle();
+        setUserData(null);
+        navigate("/login");
+      } catch (error) {
+        console.error("로그아웃 실패:", error);
+      }
+    }
+  };
+
+  const onClickLogin = async () => {
+    try {
+      const signInUser = await signInFormGoogle();
+      setUserData(signInUser);
+      navigate("/home");
+    } catch (error) {
+      console.error("로그인 실패:", error);
+    }
   };
 
   return (
@@ -41,9 +64,11 @@ export const BottomNav = () => {
           내 서재
         </button>
 
-        <Link to="/login" className={styles.bottomNavItems}>
-          {user ? "로그아웃" : "로그인"}
-        </Link>
+        {userData ? (
+          <button onClick={onClickLogout}>로그아웃</button>
+        ) : (
+          <button onClick={onClickLogin}>로그인</button>
+        )}
       </nav>
       {showPopup && <PopupButton onClose={togglePopup} />}
     </>

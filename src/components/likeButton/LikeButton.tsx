@@ -35,8 +35,12 @@ export const LikeButton = ({ diaryId }: { diaryId: string }) => {
   };
 
   return (
-    <button onClick={handleToggleLike} className={styles.likeButton}>
-      <GoHeartFill color={isLike ? "#f03e3e" : "#495057"} size={22} />
-    </button>
+    <>
+      {user && (
+        <button onClick={handleToggleLike} className={styles.likeButton}>
+          <GoHeartFill color={isLike ? "#f03e3e" : "#495057"} size={22} />
+        </button>
+      )}
+    </>
   );
 };

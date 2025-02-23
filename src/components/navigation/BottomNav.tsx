@@ -17,14 +17,14 @@ export const BottomNav = () => {
     }
   };
   const togglePopup = () => {
-    if (user == null) {
+    if (user === null) {
       unKnownUser();
     } else {
       setShowPopup(!showPopup);
     }
   };
   const moveMyBook = () => {
-    if (user == null) unKnownUser();
+    if (user === null) unKnownUser();
     else navigate(`/mybook/${user.userId}`);
   };
 
@@ -42,7 +42,7 @@ export const BottomNav = () => {
         </button>
 
         <Link to="/login" className={styles.bottomNavItems}>
-          {user.userId ? "로그아웃" : "로그인"}
+          {user ? "로그아웃" : "로그인"}
         </Link>
       </nav>
       {showPopup && <PopupButton onClose={togglePopup} />}

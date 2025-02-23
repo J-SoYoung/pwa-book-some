@@ -1,14 +1,13 @@
 import { useParams } from "react-router-dom";
-import { DiaryItem } from "./DiaryItem";
-import { PostLists } from "./PostLists";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/recoil/atoms";
 
 import styles from "../diaries.module.css";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { DiaryItem, PostLists, PostListsSkeleton } from "./index";
+
+import { WrapperSuspense } from "@/components/WrapperSuspense";
 import { getDiaryWithUserData } from "@/services/apis";
-import { Suspense } from "react";
-import { DiaryItemSkeleton, PostListsSkeleton } from "./Skeleton";
 
 export const DiaryContents = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
@@ -26,13 +25,10 @@ export const DiaryContents = () => {
 
   return (
     <main className={styles.diariesContainer}>
-      <h2>Diaries</h2>
-      <Suspense fallback={<DiaryItemSkeleton />}>
-        {diary && <DiaryItem diary={diary} isAuthor={isAuthor} />}
-      </Suspense>
-      <Suspense fallback={<PostListsSkeleton />}>
+      {diary && <DiaryItem diary={diary} isAuthor={isAuthor} />}
+      <WrapperSuspense fallback={<PostListsSkeleton />}>
         <PostLists diaryId={diaryId as string} isAuthor={isAuthor} />
-      </Suspense>
+      </WrapperSuspense>
     </main>
   );
 };

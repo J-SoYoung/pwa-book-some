@@ -1,6 +1,6 @@
-import styles from "./skeleton.module.css";
+import styles from "./detailPageSkeleton.module.css";
 
-export const Skeleton = () => {
+export const DetailPageSkeleton = () => {
   return (
     <>
       <div className={styles.bookSkeleton}>

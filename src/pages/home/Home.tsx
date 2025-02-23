@@ -1,24 +1,19 @@
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { useQueryErrorResetBoundary } from "@tanstack/react-query";
-
 import { UserBookSkeleton, UserBooks, HomeContents } from "./components";
 import { ItemsSkeleton } from "@/components/items";
-import { ErrorFallback } from "@/components";
+import { WrapperSuspense } from "@/components/WrapperSuspense";
 
 export const Home = () => {
-  const { reset } = useQueryErrorResetBoundary();
-
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
-      <h3>이 책을 추천합니다</h3>
-      <Suspense fallback={<ItemsSkeleton />}>
+    <>
+      <WrapperSuspense title="이 책을 추천합니다" fallback={<ItemsSkeleton />}>
         <HomeContents />
-      </Suspense>
-      <h3>다른 유저들은 이런 책을 읽고 있어요!</h3>
-      <Suspense fallback={<UserBookSkeleton />}>
+      </WrapperSuspense>
+      <WrapperSuspense
+        title="다른 유저들은 이런 책을 읽고 있어요!"
+        fallback={<UserBookSkeleton />}
+      >
         <UserBooks />
-      </Suspense>
-    </ErrorBoundary>
+      </WrapperSuspense>
+    </>
   );
 };

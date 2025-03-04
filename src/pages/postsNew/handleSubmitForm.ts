@@ -4,7 +4,6 @@ import {
   SelectedBookType,
   UserType
 } from "@/services/types/dataTypes";
-import { validatePostsNewForm } from "@/services/utils";
 import { NavigateFunction } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,25 +14,12 @@ export interface diaryDataType {
 }
 
 export const handleSubmitForm = async (
-  e: React.FormEvent<HTMLFormElement>,
-  diaryData: {
-    diaryTitle: string;
-    todayTitle: string;
-    content: string;
-  },
-  image: string,
   selectedBook: SelectedBookType,
+  image: string,
+  diaryData: diaryDataType,
   user: UserType,
   navigate: NavigateFunction
 ) => {
-  e.preventDefault();
-  const validation = validatePostsNewForm(diaryData);
-
-  if (!validation.valid) {
-    alert(validation.message);
-    return;
-  }
-
   const diaryId = uuidv4();
   const postId = uuidv4();
   try {

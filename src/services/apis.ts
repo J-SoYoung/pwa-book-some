@@ -96,7 +96,7 @@ export const createNewDiaryPost = async (newDiaryData: NewDiaryDataType) => {
     const bookSnapshot = await get(bookRef);
     if (!bookSnapshot.exists()) {
       await set(bookRef, {
-        id: books.isbn,
+        isbn: books.isbn,
         title: books.title,
         image: books.image,
         author: books.author,

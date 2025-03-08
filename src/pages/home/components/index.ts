@@ -1,5 +1,5 @@
 import { UserBookSkeleton } from "./UserBookSkeleton";
 import { UserBooks } from "./UserBooks";
-import { HomeContents } from "./HomeContents";
+import { RecommededBooks } from "./RecommededBooks";
 
-export { UserBookSkeleton, UserBooks, HomeContents };
+export { UserBookSkeleton, UserBooks, RecommededBooks };

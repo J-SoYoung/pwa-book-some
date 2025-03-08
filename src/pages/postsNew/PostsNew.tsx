@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import styles from "./postNew.module.css";
 import { userState } from "@/recoil/atoms";
 import { SelectedBookType, UserType } from "@/services/types/dataTypes";
-import { InputField, TextareaField, BookSearchModal } from "@/components";
+import { BookSearchModal } from "@/components";
 import { handleSubmitForm } from "./handleSubmitForm";
 import { uploadCloudImage } from "@/services/cloudinayImage";
+import { InputImage } from "./InputImage";
 
 export const PostsNew = () => {
   const navigate = useNavigate();
@@ -16,13 +18,14 @@ export const PostsNew = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState<SelectedBookType>();
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [diaryData, setDiaryData] = useState({
-    diaryTitle: "",
-    todayTitle: "",
-    content: ""
-  });
+
+  interface DiaryFormDataType {
+    diaryTitle: string;
+    todayTitle: string;
+    content: string;
+    uploadImageFile: File;
+  }
 
   useEffect(() => {
     if (state) {
@@ -31,38 +34,24 @@ export const PostsNew = () => {
     }
   }, [state]);
 
-  const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setDiaryData({ ...diaryData, [e.target.name]: e.target.value });
-  };
-
-  const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors }
+  } = useForm<DiaryFormDataType>();
 
   const onSelectBook = (book: SelectedBookType) => {
     setSelectedBook(book);
     setShowModal(false);
   };
 
-  const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const image = await uploadCloudImage(imageFile as File);
-    if (image !== null) {
+  const onSubmit: SubmitHandler<DiaryFormDataType> = async (data) => {
+    if (imageFile) {
+      const uploadCloudinaryImage = await uploadCloudImage(imageFile);
       handleSubmitForm(
-        e,
-        diaryData,
-        image,
         selectedBook as SelectedBookType,
+        uploadCloudinaryImage as string,
+        data,
         user as UserType,
         navigate
       );
@@ -82,7 +71,6 @@ export const PostsNew = () => {
             책검색
           </button>
         </div>
-
         <div className={styles.bookInfo}>
           <img
             src={selectedBook?.image ?? ""}
@@ -95,62 +83,87 @@ export const PostsNew = () => {
           </div>
         </div>
       </div>
-
-      <form className={styles.form} onSubmit={onSubmitForm}>
-        <label className={styles.label}>
-          다이어리 이미지를 넣어주세요
+      <InputImage setImageFile={setImageFile} />
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.postForm}>
+        <div className={styles.formContents}>
+          <label className={styles.formLabel} htmlFor="diaryTitle">
+            다이어리 제목을 적어주세요
+          </label>
           <input
-            type="file"
-            className={styles.input}
-            accept="image/*"
-            onChange={onChangeImage}
+            id="diaryTitle"
+            type="text"
+            placeholder="오늘의 다이어리"
+            {...register("diaryTitle", {
+              required: "다이어리 제목은 필수입니다.",
+              minLength: {
+                value: 5,
+                message: "제목은 5자리 이상으로 작성해주세요."
+              }
+            })}
           />
-        </label>
+          {errors?.diaryTitle && (
+            <small className={styles.errorMessage}>
+              {errors.diaryTitle.message}
+            </small>
+          )}
+        </div>
+        <div className={styles.formContents}>
+          <label className={styles.formLabel} htmlFor="todayTitle">
+            오늘의 독서 포스팅 제목을 적어주세요
+          </label>
+          <input
+            id="todayTitle"
+            type="text"
+            placeholder="오늘 작성할 포스팅 제목은"
+            {...register("todayTitle", {
+              required: "독서 포스팅 제목은 필수입니다.",
+              minLength: {
+                value: 5,
+                message: "제목은 5자리 이상으로 작성해주세요."
+              }
+            })}
+          />
+          {errors.todayTitle && (
+            <small className={styles.errorMessage}>
+              {errors.todayTitle.message}
+            </small>
+          )}
+        </div>
+        <div className={styles.formContents}>
+          <label className={styles.formLabel} htmlFor="content">
+            책을 읽고 느낀점을 적어보세요.
+          </label>
+          <textarea
+            id="content"
+            placeholder="오늘 독서 후 느낀점은은"
+            {...register("content", {
+              required: "독서 포스팅 내용용은 필수입니다.",
+              minLength: {
+                value: 30,
+                message: "포스팅 내용은 30자리 이상으로 작성해주세요."
+              }
+            })}
+          />
+          {errors.content && (
+            <small className={styles.errorMessage}>
+              {errors.content.message}
+            </small>
+          )}
+        </div>
 
-        {imagePreview && (
-          <div className={styles.imagePreview}>
-            <img
-              src={imagePreview}
-              alt="미리보기 이미지"
-              className={styles.previewImage}
-            />
-          </div>
-        )}
-
-        <InputField
-          label={"나만의 다이어리리 제목을 적어주세요."}
-          value={diaryData.diaryTitle}
-          name={"diaryTitle"}
-          onChange={onChange}
-          placeholder={"다이어리 제목이 됩니다"}
-        />
-        <InputField
-          label={"나만의 서평 제목을 적어주세요."}
-          value={diaryData.todayTitle}
-          onChange={onChange}
-          name={"todayTitle"}
-          placeholder={"포스팅 제목이 됩니다"}
-        />
-        <TextareaField
-          label={"나의 느낀점을 자유롭게 작성해보세요."}
-          value={diaryData.content}
-          onChange={onChange}
-          name={"content"}
-          placeholder={"포스팅 내용이 됩니다"}
-        />
-        <button type="submit" className={styles.submitButton}>
+        <button type="submit" disabled={isSubmitting}>
           글작성
         </button>
-      </form>
 
-      {showModal && (
-        <BookSearchModal
-          onClose={() => {
-            setShowModal(false);
-          }}
-          onSelect={onSelectBook}
-        />
-      )}
+        {showModal && (
+          <BookSearchModal
+            onClose={() => {
+              setShowModal(false);
+            }}
+            onSelect={onSelectBook}
+          />
+        )}
+      </form>
     </div>
   );
 };

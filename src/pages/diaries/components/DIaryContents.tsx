@@ -6,7 +6,7 @@ import { userState } from "@/recoil/atoms";
 import styles from "../diaries.module.css";
 import { DiaryItem, PostLists, PostListsSkeleton } from "./index";
 
-import { WrapperSuspense } from "@/components/WrapperSuspense";
+import { WrapperSuspense } from "@/components/ErrorComp/WrapperSuspense";
 import { getDiaryWithUserData } from "@/services/apis";
 
 export const DiaryContents = () => {

@@ -5,7 +5,7 @@ import { LikeDiariesContents, ReadingBookContents } from "./components";
 import { userState } from "@/recoil/atoms";
 import { UserType } from "@/services/types/dataTypes";
 import { ItemsSkeleton } from "@/components/items";
-import { WrapperSuspense } from "@/components/WrapperSuspense";
+import { WrapperSuspense } from "@/components/ErrorComp/WrapperSuspense";
 
 export const MyBook = () => {
   const navigate = useNavigate();

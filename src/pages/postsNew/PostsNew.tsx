@@ -9,6 +9,7 @@ import { SelectedBookType, UserType } from "@/services/types/dataTypes";
 import { BookSearchModal } from "@/components";
 import { handleSubmitForm } from "./handleSubmitForm";
 import { uploadCloudImage } from "@/services/cloudinayImage";
+import { InputImage } from "./InputImage";
 
 export const PostsNew = () => {
   const navigate = useNavigate();
@@ -36,22 +37,8 @@ export const PostsNew = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { isSubmitting, errors }
   } = useForm<DiaryFormDataType>();
-
-  const watchImageFileList = watch("uploadImageFile");
-
-  useEffect(() => {
-    // watch 메서드 내부에 unsubscribe있음 구독해지가능
-    // watch가 처음 동작할 때 기본값 / watch가 변할때의 값을 주시하고 있다가 setFile에 넣어줌.
-    const { unsubscribe } = watch((value) => {
-      const image = value.uploadImageFile[0]
-      setImageFile(image);
-      console.log(value);
-    });
-    return () => unsubscribe();
-  }, [watch, watchImageFileList]);
 
   const onSelectBook = (book: SelectedBookType) => {
     setSelectedBook(book);
@@ -96,29 +83,8 @@ export const PostsNew = () => {
           </div>
         </div>
       </div>
-
+      <InputImage setImageFile={setImageFile} />
       <form onSubmit={handleSubmit(onSubmit)} className={styles.postForm}>
-        <div className={styles.formContents} style={{ marginBottom: "10px" }}>
-          <label className={styles.formLabel} htmlFor="uploadImageFile">
-            다이어리 이미지를 넣어주세요
-          </label>
-          <input
-            id="uploadImageFile"
-            type="file"
-            accept="image/*"
-            {...register("uploadImageFile")}
-          />
-        </div>
-        {imageFile && (
-          <div className={styles.imagePreview}>
-            <img
-              src={`${URL.createObjectURL(imageFile)}`}
-              alt="미리보기 이미지"
-              className={styles.previewImage}
-            />
-          </div>
-        )}
-
         <div className={styles.formContents}>
           <label className={styles.formLabel} htmlFor="diaryTitle">
             다이어리 제목을 적어주세요

@@ -5,7 +5,8 @@ import {
 } from "./inputField/InputField";
 import { BookSearchModal } from "./modal/BookSearchModal";
 import { Items } from "./items/Items";
-import { ErrorFallback } from "./ErrorFallback";
+import { ErrorFallback } from "./ErrorComp/ErrorFallback";
+import { LoadingSpinner } from "./LoadingComp/LoadingSpinner";
 
 export {
   InputField,
@@ -13,5 +14,6 @@ export {
   InputEditField,
   BookSearchModal,
   Items,
-  ErrorFallback
+  ErrorFallback,
+  LoadingSpinner
 };

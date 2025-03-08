@@ -1,6 +1,6 @@
 import { UserBookSkeleton, UserBooks, RecommededBooks } from "./components";
 import { ItemsSkeleton } from "@/components/items";
-import { WrapperSuspense } from "@/components/WrapperSuspense";
+import { WrapperSuspense } from "@/components/ErrorComp/WrapperSuspense";
 
 export const Home = () => {
   return (

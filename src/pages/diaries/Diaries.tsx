@@ -1,6 +1,6 @@
 import { DiaryPageSkeleton } from "./components";
 import { DiaryContents } from "./components/DIaryContents";
-import { WrapperSuspense } from "@/components/WrapperSuspense";
+import { WrapperSuspense } from "@/components/ErrorComp/WrapperSuspense";
 
 export const Diaries = () => {
   return (

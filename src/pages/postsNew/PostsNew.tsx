@@ -4,12 +4,14 @@ import { useRecoilValue } from "recoil";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import styles from "./postNew.module.css";
+import { InputImage } from "./InputImage";
+import { handleSubmitForm } from "./handleSubmitForm";
+
+import { BookSearchModal, LoadingSpinner } from "@/components";
 import { userState } from "@/recoil/atoms";
 import { SelectedBookType, UserType } from "@/services/types/dataTypes";
-import { BookSearchModal } from "@/components";
-import { handleSubmitForm } from "./handleSubmitForm";
 import { uploadCloudImage } from "@/services/cloudinayImage";
-import { InputImage } from "./InputImage";
+
 
 export const PostsNew = () => {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ export const PostsNew = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState<SelectedBookType>();
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   interface DiaryFormDataType {
     diaryTitle: string;
@@ -47,19 +50,21 @@ export const PostsNew = () => {
 
   const onSubmit: SubmitHandler<DiaryFormDataType> = async (data) => {
     if (imageFile) {
+      setIsLoading(true);
       const uploadCloudinaryImage = await uploadCloudImage(imageFile);
       handleSubmitForm(
         selectedBook as SelectedBookType,
         uploadCloudinaryImage as string,
         data,
         user as UserType,
-        navigate
+        navigate,
       );
     }
   };
 
   return (
     <div className={styles.posts}>
+      {isLoading && <LoadingSpinner/>}
       <h2>새 다이어리 만들기</h2>
       <div className={styles.searchSection}>
         <div className={styles.searchBar}>

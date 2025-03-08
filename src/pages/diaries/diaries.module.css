@@ -73,6 +73,9 @@
   color: #666;
   font-size: 12px;
 }
+.diaryImageNull{
+  width: 100%;
+}
 
 /* PostsItems */
 .postsItems {

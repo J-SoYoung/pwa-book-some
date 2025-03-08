@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "../diaries.module.css";
+import { IoBookOutline } from "react-icons/io5";
 
 import { DiaryWithUserType } from "@/services/types/dataTypes";
 import { updateDiary } from "@/services/apis";
@@ -66,8 +67,11 @@ export const DiaryItem = ({ diary, isAuthor }: DiaryPropsType) => {
           {isAuthor && <button onClick={handleDiaryEdit}>수정</button>}
         </div>
       )}
-
-      <img src={diary?.diaryImage} className={styles.bgDiaryImage} />
+      {diary?.diaryImage ? (
+        <img src={diary?.diaryImage} className={styles.bgDiaryImage} />
+      ) : (
+        <IoBookOutline size={200} className={styles.diaryImageNull}/>
+      )}
 
       <div className={styles.diaries}>
         <img

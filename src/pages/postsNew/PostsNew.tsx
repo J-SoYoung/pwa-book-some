@@ -12,7 +12,6 @@ import { userState } from "@/recoil/atoms";
 import { SelectedBookType, UserType } from "@/services/types/dataTypes";
 import { uploadCloudImage } from "@/services/cloudinayImage";
 
-
 export const PostsNew = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -49,22 +48,24 @@ export const PostsNew = () => {
   };
 
   const onSubmit: SubmitHandler<DiaryFormDataType> = async (data) => {
+    setIsLoading(true);
+    let image = "";
     if (imageFile) {
-      setIsLoading(true);
       const uploadCloudinaryImage = await uploadCloudImage(imageFile);
-      handleSubmitForm(
-        selectedBook as SelectedBookType,
-        uploadCloudinaryImage as string,
-        data,
-        user as UserType,
-        navigate,
-      );
+      if (uploadCloudinaryImage) image = uploadCloudinaryImage;
     }
+    handleSubmitForm(
+      selectedBook as SelectedBookType,
+      image as string,
+      data,
+      user as UserType,
+      navigate
+    );
   };
 
   return (
     <div className={styles.posts}>
-      {isLoading && <LoadingSpinner/>}
+      {isLoading && <LoadingSpinner />}
       <h2>새 다이어리 만들기</h2>
       <div className={styles.searchSection}>
         <div className={styles.searchBar}>

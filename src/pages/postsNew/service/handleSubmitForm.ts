@@ -1,11 +1,12 @@
-import { createNewDiaryPost } from "@/shared/apis/apis";
+import { NavigateFunction } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import { createNewDiaryPost } from "./createFirebaseNewDiaryPost";
+
 import {
   NewDiaryDataType,
   SelectedBookType,
   UserType
 } from "@/shared/types/dataTypes";
-import { NavigateFunction } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 
 export interface diaryDataType {
   diaryTitle: string;

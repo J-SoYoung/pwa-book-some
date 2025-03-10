@@ -4,10 +4,10 @@ import { useRecoilValue } from "recoil";
 import { userState } from "@/shared/recoil/atoms";
 
 import styles from "../styles/diaries.module.css";
+import { getDiaryWithUserData } from "../service/getFirebaseData";
 import { DiaryItem, PostLists, PostListsSkeleton } from "../index";
 
 import { WrapperSuspense } from "@/shared/components";
-import { getDiaryWithUserData } from "@/shared/apis/apis";
 
 export const DiaryContents = () => {
   const { diaryId } = useParams<{ diaryId: string }>();

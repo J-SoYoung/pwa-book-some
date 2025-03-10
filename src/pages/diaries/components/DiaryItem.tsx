@@ -1,12 +1,13 @@
 import { useState } from "react";
-import styles from "../styles/diaries.module.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IoBookOutline } from "react-icons/io5";
 
+import styles from "../styles/diaries.module.css";
+import { updateDiary } from "../service/updateFirebaseData";
+
 import { DiaryWithUserType } from "@/shared/types/dataTypes";
-import { updateDiary } from "@/shared/apis/apis";
 import { InputEditField } from "@/shared/components";
 import { validateValue } from "@/shared/services/utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface DiaryPropsType {
   diary: DiaryWithUserType | null;

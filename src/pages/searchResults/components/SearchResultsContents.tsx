@@ -1,10 +1,11 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "../styles/searchResults.module.css";
+import { getSearchResults } from "../service/getSearchResult";
+
 import { searchBooks } from "@/shared/apis/bookApis";
-import { getSearchResults } from "@/shared/apis/apis";
 import { BookType } from "@/shared/types/dataTypes";
 import { Items } from "@/shared/components";
 

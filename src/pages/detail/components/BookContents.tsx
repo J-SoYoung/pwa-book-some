@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 import styles from "../styles/bookContents.module.css";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getOneBookData } from "@/shared/apis/apis";
+import { getOneBookData } from "../service/getFirebaseData";
+
 
 export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
   const [isExpanded, setIsExpanded] = useState(false);

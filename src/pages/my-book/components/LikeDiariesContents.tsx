@@ -2,8 +2,9 @@ import { useRecoilValue } from "recoil";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { ItemLists } from "./ItemLists";
+import { getLikeDiaries } from "../service/getFirebaseData";
+
 import { userState } from "@/shared/recoil/atoms";
-import { getLikeDiaries } from "@/shared/apis/apis";
 import { UserType } from "@/shared/types/dataTypes";
 
 export const LikeDiariesContents = () => {

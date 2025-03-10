@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import styles from "../styles/diaryLists.module.css";
-import { getBookWithDiaryPost } from "@/shared/apis/apis";
+import { getBookWithDiaryPost } from "../service/getFirebaseData";
 
 export const DiaryLists = ({ bookIsbn }: { bookIsbn: string }) => {
   const { data: diaries } = useSuspenseQuery({

@@ -1,7 +1,7 @@
 import { Diaries } from "./Diaries";
 import { DiaryItem } from "./components/DiaryItem";
 import { PostLists } from "./components/PostLists";
-import { DiaryContents } from "./components/DiaryContents";
+import { DiaryContent } from "./components/DiaryContent";
 import {
   DiaryPageSkeleton,
   PostListsSkeleton
@@ -12,6 +12,6 @@ export {
   PostLists,
   DiaryPageSkeleton,
   PostListsSkeleton,
-  DiaryContents
+  DiaryContent
 };
 export default Diaries;

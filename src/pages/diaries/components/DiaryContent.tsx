@@ -9,7 +9,7 @@ import { DiaryItem, PostLists, PostListsSkeleton } from "../index";
 
 import { WrapperSuspense } from "@/shared/components";
 
-export const DiaryContents = () => {
+export const DiaryContent = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
   const user = useRecoilValue(userState);
 

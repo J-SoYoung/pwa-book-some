@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import styles from "./diaryLists.module.css";
-import { getBookWithDiaryPost } from "@/services/apis";
+import styles from "../styles/diaryLists.module.css";
+import { getBookWithDiaryPost } from "@/shared/apis/apis";
 
 export const DiaryLists = ({ bookIsbn }: { bookIsbn: string }) => {
   const { data: diaries } = useSuspenseQuery({

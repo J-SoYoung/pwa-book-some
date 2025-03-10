@@ -1,9 +1,9 @@
 import { useState } from "react";
-import styles from "../diaries.module.css";
-import { PostsType } from "@/services/types/dataTypes";
-import { validateEditPost } from "@/services/utils";
-import { updatePosts } from "@/services/apis";
-import { InputEditField } from "@/components";
+import styles from "../styles/diaries.module.css";
+import { PostsType } from "@/shared/types/dataTypes";
+import { validateEditPost } from "@/shared/services/utils";
+import { updatePosts } from "@/shared/apis/apis";
+import { InputEditField } from "@/shared/components";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface PostsPropsType {
@@ -28,7 +28,7 @@ export const PostItems = ({ post, isAuthor }: PostsPropsType) => {
   const mutation = useMutation({
     mutationFn: updatePosts,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts", post.diaryId] }); 
+      queryClient.invalidateQueries({ queryKey: ["posts", post.diaryId] });
       setIsEditPost(false);
     },
     onError: (error) => {

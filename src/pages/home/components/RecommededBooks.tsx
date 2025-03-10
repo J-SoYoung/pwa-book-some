@@ -1,9 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import styles from "./recommededBooks.module.css";
+import styles from "../styles/recommededBooks.module.css";
 
-import { Items } from "@/components";
-import { BookType } from "@/services/types/dataTypes";
-import { getRecommendBooks } from "@/services/apis";
+import { Items } from "@/shared/components";
+import { BookType } from "@/shared/types/dataTypes";
+import { getRecommendBooks } from "@/shared/apis/apis";
 
 export const RecommededBooks = () => {
   const { data: recommendBooks } = useSuspenseQuery({
@@ -16,7 +16,6 @@ export const RecommededBooks = () => {
       <section className={styles.section}>
         <div className={styles.itemListBox}>
           {recommendBooks?.map((book: BookType, idx) => {
-            console.log(book)
             const data = {
               url: `/detail/${book.isbn}`,
               imageUrl: book.image,

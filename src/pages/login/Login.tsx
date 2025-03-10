@@ -2,9 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { FcGoogle } from "react-icons/fc";
 
-import styles from "./login.module.css";
-import { userState } from "@/recoil/atoms";
-import { signInFormGoogle, signOutFromGoogle } from "@/services/auth";
+import styles from "./styles/login.module.css";
+import { userState } from "@/shared/recoil/atoms";
+import { signInFormGoogle, signOutFromGoogle } from "@/shared/apis/auth";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -48,7 +48,9 @@ export const Login = () => {
           <span>Sign In</span>
         </div>
       )}
-      <Link to="/home" className={styles.moveHomeText}>Home 둘러보기</Link>
+      <Link to="/home" className={styles.moveHomeText}>
+        Home 둘러보기
+      </Link>
     </div>
   );
 };

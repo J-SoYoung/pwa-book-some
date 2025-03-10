@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
-import { DiaryLists, BookContents, DetailPageSkeleton } from "./components";
-import { WrapperSuspense } from "@/components/ErrorComp/WrapperSuspense";
+import { DiaryLists, BookContents, DetailPageSkeleton } from "./index";
+import { WrapperSuspense } from "@/shared/components";
 
 export const Detail = () => {
   const { bookIsbn } = useParams<{ bookIsbn: string }>();

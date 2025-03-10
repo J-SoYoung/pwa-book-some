@@ -70,10 +70,12 @@ export default defineConfig({
     alias: [
       { find: "@/", replacement: "/src" },
       { find: "@/pages", replacement: "/src/pages" },
-      { find: "@/components", replacement: "/src/components" },
-      { find: "@/services", replacement: "/src/services" },
-      { find: "@/bookApis", replacement: "/src/bookApis" },
-      { find: "@/recoil", replacement: "/src/recoil" },
+      { find: "@/routers", replacement: "/src/routers" },
+      { find: "@/shared/apis", replacement: "/src/shared/apis" },
+      { find: "@/shared/components", replacement: "/src/shared/components" },
+      { find: "@/shared/recoil", replacement: "/src/shared/recoil" },
+      { find: "@/shared/services", replacement: "/src/shared/services" },
+      { find: "@/shared/types", replacement: "/src/shared/types" },
     ]
   },
   // 프록시 설정 (naver API)

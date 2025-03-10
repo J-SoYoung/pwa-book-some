@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import styles from "./userBooks.module.css";
+import styles from "../styles/userBooks.module.css";
 
-import { getAllkDiaries } from "@/services/apis";
-import { LikeButton } from "@/components/likeButton/LikeButton";
+import { getAllkDiaries } from "@/shared/apis/apis";
+import { LikeButton } from "@/pages/home/components/LikeButton";
 
-export const UserBooks =()=> {
+export const UserBooks = () => {
   const navigate = useNavigate();
 
   const { data: allDiaries } = useSuspenseQuery({
@@ -51,4 +51,4 @@ export const UserBooks =()=> {
       })}
     </section>
   );
-}
+};

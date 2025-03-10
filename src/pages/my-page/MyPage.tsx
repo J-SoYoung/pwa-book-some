@@ -1,10 +1,10 @@
 import { useRecoilState } from "recoil";
-import styles from "./mypage.module.css";
-import { userState } from "@/recoil/atoms";
+import styles from "./styles/mypage.module.css";
+import { userState } from "@/shared/recoil/atoms";
 
 import { MdArrowBackIosNew } from "react-icons/md";
 import { FaPen } from "react-icons/fa6";
-import { UserType } from "@/services/types/dataTypes";
+import { UserType } from "@/shared/types/dataTypes";
 
 export const MyPage = () => {
   const [user] = useRecoilState(userState);

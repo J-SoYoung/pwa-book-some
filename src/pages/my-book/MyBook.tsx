@@ -1,11 +1,10 @@
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { LikeDiariesContents, ReadingBookContents } from "./index";
 
-import { LikeDiariesContents, ReadingBookContents } from "./components";
-import { userState } from "@/recoil/atoms";
-import { UserType } from "@/services/types/dataTypes";
-import { ItemsSkeleton } from "@/components/items";
-import { WrapperSuspense } from "@/components/ErrorComp/WrapperSuspense";
+import { userState } from "@/shared/recoil/atoms";
+import { UserType } from "@/shared/types/dataTypes";
+import { WrapperSuspense,ItemsSkeleton } from "@/shared/components";
 
 export const MyBook = () => {
   const navigate = useNavigate();

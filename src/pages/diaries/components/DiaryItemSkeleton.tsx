@@ -1,4 +1,4 @@
-import styles from "./diaryItemSkeleton.module.css";
+import styles from "../styles/diaryItemSkeleton.module.css";
 
 export const DiaryItemSkeleton = () => {
   return (

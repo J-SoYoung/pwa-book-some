@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { InstallButton } from "./InstallButton";
+import { InstallButton } from "./components/InstallButton";
 
 export const Landing = () => {
   const navigate = useNavigate();

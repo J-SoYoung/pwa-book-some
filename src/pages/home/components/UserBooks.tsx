@@ -2,9 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import styles from "../styles/userBooks.module.css";
-
-import { getAllkDiaries } from "@/shared/apis/apis";
-import { LikeButton } from "@/pages/home/components/LikeButton";
+import { getAllkDiaries } from "../service/getFirebaseData";
+import { LikeButton } from "./LikeButton";
 
 export const UserBooks = () => {
   const navigate = useNavigate();

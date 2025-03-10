@@ -1,9 +1,10 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+
 import styles from "../styles/recommededBooks.module.css";
+import { getRecommendBooks } from "../service/getFirebaseData";
 
 import { Items } from "@/shared/components";
 import { BookType } from "@/shared/types/dataTypes";
-import { getRecommendBooks } from "@/shared/apis/apis";
 
 export const RecommededBooks = () => {
   const { data: recommendBooks } = useSuspenseQuery({

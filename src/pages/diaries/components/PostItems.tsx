@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import styles from "../styles/diaries.module.css";
+import { updatePosts } from "../service/updateFirebaseData";
+
 import { PostsType } from "@/shared/types/dataTypes";
 import { validateEditPost } from "@/shared/services/utils";
-import { updatePosts } from "@/shared/apis/apis";
 import { InputEditField } from "@/shared/components";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface PostsPropsType {
   post: PostsType;

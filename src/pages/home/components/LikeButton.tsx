@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { GoHeartFill } from "react-icons/go";
 
-import styles from "./likeButton.module.css";
-import { likeSubscribe, updateDiaryLikeState } from "@/shared/apis/apis";
+import styles from "../styles/likeButton.module.css";
+import { likeSubscribe, updateDiaryLikeState } from "../service/fetchLikeDiaries";
+
 import { userState } from "@/shared/recoil/atoms";
 
 export const LikeButton = ({ diaryId }: { diaryId: string }) => {

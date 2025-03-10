@@ -2,8 +2,9 @@ import { useRecoilValue } from "recoil";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { ItemLists } from "./ItemLists";
+import { getMyBookData } from "../service/getFirebaseData";
+
 import { userState } from "@/shared/recoil/atoms";
-import { getMyBookData } from "@/shared/apis/apis";
 import { UserType } from "@/shared/types/dataTypes";
 
 export const ReadingBookContents = () => {

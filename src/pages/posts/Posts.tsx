@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
-
-import styles from "./post.module.css";
-import { userState } from "@/recoil/atoms";
-import { getDiaryList } from "@/services/apis";
-import { UserType } from "@/services/types/dataTypes";
-import { InputField, TextareaField } from "@/components";
-import { handleSubmitForm } from "./handleSubmitForm";
 import { useQuery } from "@tanstack/react-query";
+
+import styles from "./styles/post.module.css";
+import { handleSubmitForm } from "./service/handleSubmitForm";
+
+import { userState } from "@/shared/recoil/atoms";
+import { getDiaryList } from "@/shared/apis/apis";
+import { InputField, TextareaField } from "@/shared/components";
+import { UserType } from "@/shared/types/dataTypes";
 
 export const Posts = () => {
   const navigate = useNavigate();

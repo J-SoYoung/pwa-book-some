@@ -1,14 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { PostItems } from "./PostItems";
-import { getAllPostsData } from "@/services/apis";
+import { getAllPostsData } from "@/shared/apis/apis";
 
 interface PostListsProps {
   diaryId: string;
   isAuthor: boolean;
 }
 export const PostLists = ({ diaryId, isAuthor }: PostListsProps) => {
-
   const { data: posts } = useSuspenseQuery({
     queryKey: ["posts", diaryId],
     queryFn: async () => {

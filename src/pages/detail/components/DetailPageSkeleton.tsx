@@ -1,4 +1,4 @@
-import styles from "./detailPageSkeleton.module.css";
+import styles from "../styles/detailPageSkeleton.module.css";
 
 export const DetailPageSkeleton = () => {
   return (

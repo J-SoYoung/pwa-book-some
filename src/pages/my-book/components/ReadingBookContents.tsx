@@ -2,9 +2,9 @@ import { useRecoilValue } from "recoil";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { ItemLists } from "./ItemLists";
-import { userState } from "@/recoil/atoms";
-import { getMyBookData } from "@/services/apis";
-import { UserType } from "@/services/types/dataTypes";
+import { userState } from "@/shared/recoil/atoms";
+import { getMyBookData } from "@/shared/apis/apis";
+import { UserType } from "@/shared/types/dataTypes";
 
 export const ReadingBookContents = () => {
   const user = useRecoilValue(userState) as UserType;

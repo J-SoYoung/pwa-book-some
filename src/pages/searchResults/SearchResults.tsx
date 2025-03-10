@@ -1,11 +1,10 @@
 import { Suspense } from "react";
 
-import { ErrorFallback, LoadingSpinner } from "@/components";
+import { ErrorFallback, LoadingSpinner } from "@/shared/components";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { SearchResultsContents } from "./SearchResultsContents";
-
+import { SearchResultsContents } from "./index";
 
 export const SearchResults = () => {
   const { reset } = useQueryErrorResetBoundary();

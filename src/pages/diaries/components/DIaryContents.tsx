@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
-import { userState } from "@/recoil/atoms";
+import { userState } from "@/shared/recoil/atoms";
 
-import styles from "../diaries.module.css";
-import { DiaryItem, PostLists, PostListsSkeleton } from "./index";
+import styles from "../styles/diaries.module.css";
+import { DiaryItem, PostLists, PostListsSkeleton } from "../index";
 
-import { WrapperSuspense } from "@/components/ErrorComp/WrapperSuspense";
-import { getDiaryWithUserData } from "@/services/apis";
+import { WrapperSuspense } from "@/shared/components";
+import { getDiaryWithUserData } from "@/shared/apis/apis";
 
 export const DiaryContents = () => {
   const { diaryId } = useParams<{ diaryId: string }>();

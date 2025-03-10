@@ -15,9 +15,11 @@
   "paths": {
     "@/*": ["src/*"],
     "@/pages/*": ["src/pages/*"],
-    "@/components/*": ["src/components/*"],
-    "@/services/*": ["src/services/*"],
-    "@/bookApis/*": ["src/bookApis/*"],
-    "@/recoil/*": ["src/recoil/*"],
+    "@/routers/*": ["src/routers/*"],
+    "@/shared/apis/*": ["src/shared/apis/*"],
+    "@/shared/components/*": ["src/shared/components/*"],
+    "@/shared/recoil/*": ["src/shared/recoil/*"],
+    "@/shared/services/*": ["src/shared/services/*"],
+    "@/shared/types/*": ["src/shared/types/*"],
   }
 }

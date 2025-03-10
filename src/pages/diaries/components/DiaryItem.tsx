@@ -1,11 +1,11 @@
 import { useState } from "react";
-import styles from "../diaries.module.css";
+import styles from "../styles/diaries.module.css";
 import { IoBookOutline } from "react-icons/io5";
 
-import { DiaryWithUserType } from "@/services/types/dataTypes";
-import { updateDiary } from "@/services/apis";
-import { InputEditField } from "@/components";
-import { validateValue } from "@/services/utils";
+import { DiaryWithUserType } from "@/shared/types/dataTypes";
+import { updateDiary } from "@/shared/apis/apis";
+import { InputEditField } from "@/shared/components";
+import { validateValue } from "@/shared/services/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface DiaryPropsType {
@@ -70,7 +70,7 @@ export const DiaryItem = ({ diary, isAuthor }: DiaryPropsType) => {
       {diary?.diaryImage ? (
         <img src={diary?.diaryImage} className={styles.bgDiaryImage} />
       ) : (
-        <IoBookOutline size={200} className={styles.diaryImageNull}/>
+        <IoBookOutline size={200} className={styles.diaryImageNull} />
       )}
 
       <div className={styles.diaries}>

@@ -3,14 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import styles from "./postNew.module.css";
-import { InputImage } from "./InputImage";
-import { handleSubmitForm } from "./handleSubmitForm";
+import styles from "./styles/postNew.module.css";
+import { InputImage, BookSearchModal, handleSubmitForm } from "./index";
 
-import { BookSearchModal, LoadingSpinner } from "@/components";
-import { userState } from "@/recoil/atoms";
-import { SelectedBookType, UserType } from "@/services/types/dataTypes";
-import { uploadCloudImage } from "@/services/cloudinayImage";
+import { LoadingSpinner } from "@/shared/components";
+import { userState } from "@/shared/recoil/atoms";
+import { SelectedBookType, UserType } from "@/shared/types/dataTypes";
+import { uploadCloudImage } from "@/shared/apis/cloudinayImage";
 
 export const PostsNew = () => {
   const navigate = useNavigate();

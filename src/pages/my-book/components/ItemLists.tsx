@@ -1,16 +1,14 @@
-import { DiariesType } from "@/services/types/dataTypes";
-import { Items } from "@/components/items/Items";
-import styles from "./itemLists.module.css";
+import { DiariesType } from "@/shared/types/dataTypes";
+
+import styles from "../styles/itemLists.module.css";
+import { Items } from "@/shared/components";
 
 interface ItemListsProps {
   diaries: DiariesType[];
   noDataText: string;
 }
 
-export const ItemLists = ({
-  diaries,
-  noDataText
-}: ItemListsProps) => {
+export const ItemLists = ({ diaries, noDataText }: ItemListsProps) => {
   return (
     <section className={styles.section}>
       <div className={styles.itemListsBox}>

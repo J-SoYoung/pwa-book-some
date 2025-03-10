@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "./bookContents.module.css";
+import styles from "../styles/bookContents.module.css";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getOneBookData } from "@/services/apis";
+import { getOneBookData } from "@/shared/apis/apis";
 
 export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -18,7 +18,7 @@ export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
       return data;
     }
   });
-  
+
   return (
     <div className={styles.bookSection}>
       <div className={styles.title}>

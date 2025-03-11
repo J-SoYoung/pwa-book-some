@@ -52,11 +52,11 @@ export const handleSubmitForm = async (
       const result = await createNewDiaryPost(newDiaryData);
       if (result) {
         alert(result);
-        navigate("/home");
+        navigate(`/diaries/${diaryId}`);
       }
     }
   } catch (error) {
     console.error(error);
-    alert("포스팅 작성중 에러가 발생했습니다. 다시 시도해주세요요");
+    alert("포스팅 작성중 에러가 발생했습니다. 다시 시도해주세요");
   }
 };

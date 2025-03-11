@@ -1,38 +1,33 @@
 import { createDiaryPost } from "@/shared/apis/apis";
-import { validatePostsForm } from "@/shared/services/utils";
 import { NavigateFunction } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 export const handleSubmitForm = async (
-  e: React.FormEvent<HTMLFormElement>,
-  newDiaryData: { diaryId: string; title: string; content: string },
+  data: { diaryId: string; title: string; content: string },
   navigate: NavigateFunction
 ) => {
-  e.preventDefault();
-  const validation = validatePostsForm(newDiaryData);
-
-  if (!validation.valid) {
-    alert(validation.message);
-    return;
-  }
-
   const postId = uuidv4();
+  const { diaryId, title, content } = data;
   try {
-    if (newDiaryData.diaryId) {
+    if (diaryId) {
       const newPostData = {
-        diaryId: newDiaryData.diaryId,
+        diaryId: diaryId,
         post: {
           createdAt: new Date().toISOString(),
-          content: newDiaryData.content,
-          diaryId: newDiaryData.diaryId,
+          content: content,
+          diaryId: diaryId,
           postId: postId,
-          title: newDiaryData.title
+          title: title
         }
       };
       const result = await createDiaryPost(newPostData);
-      if (result) navigate(`/diaries/${newDiaryData.diaryId}`);
+      if (result) {
+        alert(result);
+        navigate(`/diaries/${diaryId}`);
+      }
     }
   } catch (error) {
     console.error(error);
+    alert("포스팅 작성중 에러가 발생했습니다. 다시 시도해주세요");
   }
 };

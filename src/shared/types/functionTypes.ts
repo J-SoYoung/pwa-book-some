@@ -16,7 +16,7 @@ export type GetAllPostsDataType = (bookId: string) => Promise<PostsType[] | []>;
 
 export type GetUserDataType = (userId: string) => Promise<UserType | null>;
 
-export type getBookWithDiaryPostType = (
+export type GetBookWithDiaryPostType = (
   bookId: string
 ) => Promise<DiaryWithPostsType[] | []>;
 

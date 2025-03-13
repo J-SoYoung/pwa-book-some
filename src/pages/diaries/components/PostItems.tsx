@@ -82,6 +82,7 @@ export const PostItems = ({ post, isAuthor }: PostsPropsType) => {
         ) : (
           <>
             <h3>{post.title}</h3>
+            <p>{post.createdAt.split('T')[0]}</p>
             <p>{post.content}</p>
           </>
         )}

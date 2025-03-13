@@ -5,9 +5,8 @@ import { userState } from "@/shared/recoil/atoms";
 
 import styles from "../styles/diaries.module.css";
 import { getDiaryWithUserData } from "../service/getFirebaseData";
-import { DiaryItem, PostLists, PostListsSkeleton } from "../index";
+import { DiaryItem, PostLists } from "../index";
 
-import { WrapperSuspense } from "@/shared/components";
 import { UserType } from "@/shared/types/dataTypes";
 
 export const DiaryContent = () => {
@@ -26,10 +25,8 @@ export const DiaryContent = () => {
 
   return (
     <main className={styles.diariesContainer}>
-      {diary && <DiaryItem diary={diary} isAuthor={isAuthor} user={user}/>}
-      <WrapperSuspense fallback={<PostListsSkeleton />}>
-        <PostLists diaryId={diaryId as string} isAuthor={isAuthor} />
-      </WrapperSuspense>
+      {diary && <DiaryItem diary={diary} isAuthor={isAuthor} user={user} />}
+      <PostLists diaryId={diaryId as string} isAuthor={isAuthor} />
     </main>
   );
 };

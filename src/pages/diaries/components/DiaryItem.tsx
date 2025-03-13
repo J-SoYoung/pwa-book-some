@@ -3,16 +3,15 @@ import { IoBookOutline } from "react-icons/io5";
 
 import styles from "../styles/diaries.module.css";
 
-import { DiaryWithUserType, UserType } from "@/shared/types/dataTypes";
+import { DiaryWithUserType } from "@/shared/types/dataTypes";
 import { DiaryEditView } from "./DiaryEditView";
 
 interface DiaryPropsType {
   diary: DiaryWithUserType ;
   isAuthor: boolean;
-  user: UserType;
 }
 
-export const DiaryItem = ({ diary, isAuthor, user }: DiaryPropsType) => {
+export const DiaryItem = ({ diary, isAuthor }: DiaryPropsType) => {
   const [isEditDiary, setIsEditDiary] = useState(false);
   const handleDiaryEdit = () => {
     setIsEditDiary(!isEditDiary);
@@ -36,8 +35,8 @@ export const DiaryItem = ({ diary, isAuthor, user }: DiaryPropsType) => {
       </div>
 
       <div className={styles.diaryUserInfo}>
-        <img src={user.avatar} alt={user.username} />
-        <p>{user.username}</p>
+        <img src={diary.user.avatar} alt={diary.user.username} />
+        <p>{diary.user.username}</p>
       </div>
 
       <div className={styles.diaryImageView}>

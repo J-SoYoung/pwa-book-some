@@ -25,7 +25,7 @@ export const DiaryContent = () => {
 
   return (
     <main className={styles.diariesContainer}>
-      {diary && <DiaryItem diary={diary} isAuthor={isAuthor} user={user} />}
+      {diary && <DiaryItem diary={diary} isAuthor={isAuthor} />}
       <PostLists diaryId={diaryId as string} isAuthor={isAuthor} />
     </main>
   );

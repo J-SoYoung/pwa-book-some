@@ -1,78 +1,52 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IoBookOutline } from "react-icons/io5";
 
 import styles from "../styles/diaries.module.css";
-import { updateDiary } from "../service/updateFirebaseData";
 
-import { DiaryWithUserType } from "@/shared/types/dataTypes";
-import { InputEditField } from "@/shared/components";
-import { validateValue } from "@/shared/services/utils";
+import { DiaryWithUserType, UserType } from "@/shared/types/dataTypes";
+import { DiaryEditView } from "./DiaryEditView";
 
 interface DiaryPropsType {
-  diary: DiaryWithUserType | null;
+  diary: DiaryWithUserType ;
   isAuthor: boolean;
+  user: UserType;
 }
 
-export const DiaryItem = ({ diary, isAuthor }: DiaryPropsType) => {
+export const DiaryItem = ({ diary, isAuthor, user }: DiaryPropsType) => {
   const [isEditDiary, setIsEditDiary] = useState(false);
-  const [editDiaryTitle, setEditDiaryTitle] = useState("");
-
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: updateDiary,
-    onSuccess: () => {
-      if (diary?.diaryId) {
-        queryClient.invalidateQueries({ queryKey: ["diary", diary.diaryId] });
-      }
-      setIsEditDiary(false);
-    },
-    onError: (error) => {
-      console.error("다이어리 수정 오류:", error);
-      alert("다이어리 수정 중 오류가 발생했습니다.");
-    }
-  });
-
   const handleDiaryEdit = () => {
     setIsEditDiary(!isEditDiary);
   };
 
-  const handleDiarySave = async () => {
-    const validate = validateValue(editDiaryTitle);
-    if (!validate.valid) return alert(validate.message);
-
-    mutation.mutate({
-      diaryId: diary?.diaryId as string,
-      newTitle: editDiaryTitle
-    });
-  };
-
   return (
-    <div className={styles.diaryContainer}>
-      {isEditDiary ? (
-        <div className={styles.editInput}>
-          <InputEditField
-            defaultValue={diary?.diaryTitle as string}
-            name={"title"}
-            onChange={(e) => setEditDiaryTitle(e.target.value)}
-            inputType={"input"}
+    <section className={styles.diaryContainer}>
+      <div className={styles.diaryTitleView}>
+        {!isEditDiary ? (
+          <>
+            <h3>{diary?.diaryTitle}</h3>
+            {isAuthor && <button onClick={handleDiaryEdit}>수정</button>}
+          </>
+        ) : (
+          <DiaryEditView
+            setIsEditDiary={setIsEditDiary}
+            isEditDiary={isEditDiary}
+            diary={diary}
           />
-          <div>
-            <button onClick={handleDiarySave}>저장</button>
-            <button onClick={handleDiaryEdit}>취소</button>
-          </div>
-        </div>
-      ) : (
-        <div className={styles.diaryTitleView}>
-          <h3>{diary?.diaryTitle}</h3>
-          {isAuthor && <button onClick={handleDiaryEdit}>수정</button>}
-        </div>
-      )}
-      {diary?.diaryImage ? (
-        <img src={diary?.diaryImage} className={styles.bgDiaryImage} />
-      ) : (
-        <IoBookOutline size={200} className={styles.diaryImageNull} />
-      )}
+        )}
+      </div>
+
+      <div className={styles.diaryUserInfo}>
+        <img src={user.avatar} alt={user.username} />
+        <p>{user.username}</p>
+      </div>
+
+      <div className={styles.diaryImageView}>
+        {diary?.diaryImage ? (
+          <img src={diary?.diaryImage} className={styles.bgDiaryImage} />
+        ) : (
+          <IoBookOutline size={200} className={styles.diaryImageNull} />
+        )}
+      </div>
 
       <div className={styles.diaries}>
         <img
@@ -80,7 +54,6 @@ export const DiaryItem = ({ diary, isAuthor }: DiaryPropsType) => {
           className={styles.bookImage}
           alt="책 표지"
         />
-        <div className={styles.userImage}></div>
         <div className={styles.diariesText}>
           <div>
             <span className={styles.label}>책</span>
@@ -88,6 +61,6 @@ export const DiaryItem = ({ diary, isAuthor }: DiaryPropsType) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

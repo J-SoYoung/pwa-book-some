@@ -19,15 +19,15 @@ export const BottomNav = () => {
     }
   };
   const togglePopup = () => {
-    if (userData === null) {
+    if (!userData) {
       unKnownUser();
     } else {
       setShowPopup(!showPopup);
     }
   };
   const moveMyBook = () => {
-    if (userData === null) unKnownUser();
-    else navigate(`/mybook/${userData.userId}`);
+    if (!userData)  unKnownUser();
+    else navigate(`/mybook/${userData?.userId}`);
   };
 
   const onClickLogout = async () => {

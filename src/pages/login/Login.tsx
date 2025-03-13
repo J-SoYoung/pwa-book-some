@@ -45,7 +45,7 @@ export const Login = () => {
       ) : (
         <div className={styles.loginButton} onClick={onClickGoogleSignIn}>
           <FcGoogle className={styles.googleLogo} />
-          <span>Sign In</span>
+          <span>Log In</span>
         </div>
       )}
       <Link to="/home" className={styles.moveHomeText}>

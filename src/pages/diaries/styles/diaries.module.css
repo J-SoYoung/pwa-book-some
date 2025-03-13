@@ -76,37 +76,6 @@ h3 {
 }
 
 
-/* PostsItems */
-.postsItems {
-  padding: 8px;
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  border: 1px solid #9c9c9c;
-}
 
-.details {
-  min-width: 75%;
-  min-height: 120px;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.details > h3 {
-  font-size: 14px;
-  background-color: #eee;
-  border-radius: 4px;
-  padding: 2px 0;
-  text-align: center;
-  margin-bottom: 8px;
-  box-sizing: border-box;
-}
-
-.details > p {
-  font-size: 12px;
-}
 
 /* DiaryItemss */

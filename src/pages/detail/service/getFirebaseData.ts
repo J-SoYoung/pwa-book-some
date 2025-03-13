@@ -1,7 +1,7 @@
 import { getAllPostsData, getDiaryData, getUserData } from "@/shared/apis/apis";
 import { getDataFromFirebase, getKeysFromFirebase } from "@/shared/services/utils";
 import { DiariesType, UserType } from "@/shared/types/dataTypes";
-import { getBookWithDiaryPostType, GetOneBookDataType } from "@/shared/types/functionTypes";
+import { GetBookWithDiaryPostType, GetOneBookDataType } from "@/shared/types/functionTypes";
 
 // basic data - book
 export const getOneBookData: GetOneBookDataType = async (bookId) => {
@@ -13,7 +13,7 @@ export const getOneBookData: GetOneBookDataType = async (bookId) => {
 };
 
 
-export const getBookWithDiaryPost: getBookWithDiaryPostType = async (
+export const getBookWithDiaryPost: GetBookWithDiaryPostType = async (
   bookId
 ) => {
   const diaryIds = await getKeysFromFirebase(`books/${bookId}/diaries`);

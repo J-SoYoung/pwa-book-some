@@ -1,15 +1,13 @@
 import { database } from "@/shared/services/firebase";
 import { ref, update } from "firebase/database";
-import { newPostType } from "../components/PostItems";
+import { newPostType } from "../types";
 
-// 다이어리 수정
-export const updateDiary = async ({
-  diaryId,
-  newTitle
-}: {
+// 다이어리 제목 수정
+type updateDiaryType = {
   diaryId: string;
   newTitle: string;
-}) => {
+};
+export const updateDiary = async ({ diaryId, newTitle }: updateDiaryType) => {
   try {
     const diaryRef = ref(database, `diary/${diaryId}`);
     const updates = { diaryTitle: newTitle };
@@ -22,10 +20,10 @@ export const updateDiary = async ({
 };
 
 // 포스트 수정
-interface updatePostsType {
+type updatePostsType = {
   editPost: newPostType;
   postId: string;
-}
+};
 export const updatePosts = async ({ editPost, postId }: updatePostsType) => {
   try {
     const { title, content, updatedAt } = editPost;

@@ -8,10 +8,11 @@ import { getDiaryWithUserData } from "../service/getFirebaseData";
 import { DiaryItem, PostLists, PostListsSkeleton } from "../index";
 
 import { WrapperSuspense } from "@/shared/components";
+import { UserType } from "@/shared/types/dataTypes";
 
 export const DiaryContent = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(userState) as UserType;
 
   const { data: diary } = useSuspenseQuery({
     queryKey: ["diary", diaryId],
@@ -25,7 +26,7 @@ export const DiaryContent = () => {
 
   return (
     <main className={styles.diariesContainer}>
-      {diary && <DiaryItem diary={diary} isAuthor={isAuthor} />}
+      {diary && <DiaryItem diary={diary} isAuthor={isAuthor} user={user}/>}
       <WrapperSuspense fallback={<PostListsSkeleton />}>
         <PostLists diaryId={diaryId as string} isAuthor={isAuthor} />
       </WrapperSuspense>

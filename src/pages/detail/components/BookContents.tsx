@@ -21,19 +21,19 @@ export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
   });
 
   return (
-    <div className={styles.bookSection}>
+    <section className={styles.bookSection}>
       <div className={styles.title}>
         <p>{book?.title}</p>
         <Link
-          to={book?.link as string}
           className={styles.bookLink}
+          to={book?.link as string}
           target="_blank"
           rel="noopener noreferrer"
         >
           구매하러가기
         </Link>
       </div>
-      <img src={book?.image} alt={book?.title} className={styles.image} />
+      <img className={styles.image} src={book?.image} alt={book?.title}  />
       <p className={styles.author}>{book?.author} </p>
       <p
         className={isExpanded ? `${styles.expanded}` : `${styles.description}`}
@@ -41,6 +41,6 @@ export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
         {book?.description}
       </p>
       <button onClick={handleToggle}>{isExpanded ? "접기" : "더보기"}</button>
-    </div>
+    </section>
   );
 };

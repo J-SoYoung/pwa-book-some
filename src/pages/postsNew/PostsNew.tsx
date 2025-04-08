@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import ReactQuill from "react-quill";
 
 import styles from "./styles/postNew.module.css";
+import "react-quill/dist/quill.snow.css";
 import { InputImage, BookSearchModal, handleSubmitForm } from "./index";
 
 import { LoadingSpinner } from "@/shared/components";
@@ -38,6 +40,7 @@ export const PostsNew = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { isSubmitting, errors }
   } = useForm<DiaryFormDataType>();
 
@@ -138,16 +141,22 @@ export const PostsNew = () => {
           <label className={styles.formLabel} htmlFor="content">
             책을 읽고 느낀점을 적어보세요.
           </label>
-          <textarea
-            id="content"
-            placeholder="오늘 독서 후 느낀점은은"
-            {...register("content", {
-              required: "독서 포스팅 내용용은 필수입니다.",
-              minLength: {
-                value: 30,
-                message: "포스팅 내용은 30자리 이상으로 작성해주세요."
-              }
-            })}
+          <Controller
+            name="content"
+            control={control}
+            rules={{
+              required: "독서 포스팅 내용은 필수입니다.",
+              validate: (value) =>
+                value.replace(/<(.|\n)*?>/g, "").length >= 30 ||
+                "포스팅 내용은 30자 이상으로 작성해주세요."
+            }}
+            render={({ field }) => (
+              <ReactQuill
+                theme="snow"
+                placeholder="오늘 독서 후 느낀점은?"
+                {...field}
+              />
+            )}
           />
           {errors.content && (
             <small className={styles.errorMessage}>
@@ -155,7 +164,17 @@ export const PostsNew = () => {
             </small>
           )}
         </div>
-
+        {/* <textarea
+              id="content"
+              placeholder="오늘 독서 후 느낀점은은"
+              {...register("content", {
+                required: "독서 포스팅 내용용은 필수입니다.",
+                minLength: {
+                  value: 30,
+                  message: "포스팅 내용은 30자리 이상으로 작성해주세요."
+                }
+              })}
+            /> */}
         <button type="submit" disabled={isSubmitting}>
           글작성
         </button>

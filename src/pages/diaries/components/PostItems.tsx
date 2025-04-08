@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "../styles/postItems.module.css";
+import DOMPurify from "dompurify";
 
 import { PostsType } from "@/shared/types/dataTypes";
 import { PostItemsEditView } from "./PostItemsEditView";
@@ -7,7 +8,7 @@ import { PostItemsEditView } from "./PostItemsEditView";
 type PostsPropsType = {
   post: PostsType;
   isAuthor: boolean;
-}
+};
 
 export const PostItems = ({ post, isAuthor }: PostsPropsType) => {
   const [isEditPost, setIsEditPost] = useState(false);
@@ -22,7 +23,12 @@ export const PostItems = ({ post, isAuthor }: PostsPropsType) => {
           <>
             <h3>{post.title}</h3>
             <p>{post.createdAt.split("T")[0]}</p>
-            <p>{post.content}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(post.content)
+              }}
+            />
+
             {isAuthor && <button onClick={handlePostEdit}>수정</button>}
           </>
         ) : (

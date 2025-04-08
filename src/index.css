@@ -49,3 +49,20 @@ body {
   background-color: white;
   box-shadow: 2px 2px 5px #bebebe;
 }
+
+/* Editor Styling */
+.ql-toolbar {
+  border-radius: 8px 8px 0 0;
+  background-color: #f0f0f0;
+}
+.ql-container {
+  border-radius: 0 0 8px 8px;
+  min-height: 250px;
+  background-color: white;
+}
+.ql-editor {
+  padding: 1rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  color: #333;
+}

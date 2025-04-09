@@ -9,21 +9,19 @@ export const getLikeDiaries = async (userId: string) => {
       Record<string, boolean>
     > = await getDataFromFirebase("likes", false);
 
+    if (!likesData) return [];
+
     const likesDiaryIds = Object.keys(likesData);
     const likesDiariesData = likesDiaryIds.filter((diaryId: string) => {
       return likesData[diaryId][userId] === true;
     });
 
-    if (likesDiariesData.length > 0) {
-      const likeDiaries = await Promise.all(
-        likesDiariesData.map(async (diaryId) => {
-          return await getDataFromFirebase(`diary/${diaryId}`, false);
-        })
-      );
-      return likeDiaries;
-    } else {
-      return [];
-    }
+    const likeDiaries = await Promise.all(
+      likesDiariesData.map(async (diaryId) => {
+        return await getDataFromFirebase(`diary/${diaryId}`, false);
+      })
+    );
+    return likeDiaries;
   } catch (error) {
     console.error(error, "좋아요 한 다이어리 가져오기 에러");
     return [];

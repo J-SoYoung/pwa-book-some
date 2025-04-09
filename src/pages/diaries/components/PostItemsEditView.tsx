@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import ReactQuill from "react-quill";
+
+import styles from "../styles/postItems.module.css";
 
 import { updatePosts } from "../service/updateFirebaseData";
 import { newPostType } from "../types";
@@ -41,8 +44,13 @@ export const PostItemsEditView = ({
   const handleChangePosts = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setEditPost({ ...editPost, [e.target.name]: e.target.value });
+    setEditPost({ ...editPost, title: e.target.value });
   };
+
+  const handleQuillChange = (value: string) => {
+    setEditPost((prev) => ({ ...prev, content: value }));
+  };
+
   const handlePostEdit = () => {
     setIsEditPost(!isEditPost);
   };
@@ -68,12 +76,13 @@ export const PostItemsEditView = ({
         onChange={handleChangePosts}
         inputType={"input"}
       />
-      <InputEditField
-        defaultValue={post.content}
-        name={"content"}
-        onChange={handleChangePosts}
-        inputType={"textarea"}
-      />
+      <div className={styles.quillEditor}>
+        <ReactQuill
+          theme="snow"
+          value={editPost.content}
+          onChange={handleQuillChange}
+        />
+      </div>
       <button onClick={handlePostSave}>저장</button>
       <button onClick={handlePostEdit}>취소</button>
     </>

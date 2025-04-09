@@ -17,6 +17,13 @@ export const UserBooks = () => {
     <section className={styles.userBooks}>
       {allDiaries?.map((diaryData) => {
         const { book, diary, post, user } = diaryData;
+        const scriptText = (html: string, length = 70) => {
+          const tmp = document.createElement("div");
+          tmp.innerHTML = html;
+          const text = tmp.innerText;
+          return text.length > length ? text.slice(0, length) + "..." : text;
+        };
+
         return (
           <div className={styles.bookCard} key={diary.diaryId}>
             <div className={styles.imageBox}>
@@ -41,9 +48,14 @@ export const UserBooks = () => {
                 navigate(`/diaries/${diary.diaryId}`);
               }}
             >
-              <h3>{diary.diaryTitle}</h3>
+              <h3>{diary.diaryTitle.slice(0,17)}</h3>
               <p>{post.title}</p>
-              <p>{post.content}</p>
+              <p>{scriptText(post.content)}</p>
+              {/* <p
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(post.content)
+                }}
+              /> */}
             </div>
           </div>
         );

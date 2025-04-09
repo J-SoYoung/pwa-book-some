@@ -33,6 +33,7 @@
       "@/shared/recoil/*": ["src/shared/recoil/*"],
       "@/shared/services/*": ["src/shared/services/*"],
       "@/shared/types/*": ["src/shared/types/*"],
+      "@/shared/utils/*": ["src/shared/utils/*"],
     }
   },
   "include": ["src"],

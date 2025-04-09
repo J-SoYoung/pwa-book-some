@@ -76,6 +76,7 @@ export default defineConfig({
       { find: "@/shared/recoil", replacement: "/src/shared/recoil" },
       { find: "@/shared/services", replacement: "/src/shared/services" },
       { find: "@/shared/types", replacement: "/src/shared/types" },
+      { find: "@/shared/utils", replacement: "/src/shared/utils" }
     ]
   },
   // 프록시 설정 (naver API)

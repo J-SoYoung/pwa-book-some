@@ -30,3 +30,16 @@
 .details > p {
   font-size: 12px;
 }
+.details > .date {
+  text-align: right;
+  color: #555555;
+}
+.details > .content {
+  padding: 8px 0;
+  box-sizing: border-box;
+}
+
+/* PostItemsEditView */
+.quillEditor {
+  margin: 16px 0;
+}

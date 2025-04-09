@@ -18,28 +18,26 @@ export const PostItems = ({ post, isAuthor }: PostsPropsType) => {
 
   return (
     <div className={styles.postsItems}>
-      <div className={styles.details}>
-        {!isEditPost ? (
-          <>
-            <h3>{post.title}</h3>
-            <p className={styles.date}>{post.createdAt.split("T")[0]}</p>
-            <p
-              className={styles.content}
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(post.content)
-              }}
-            />
-
-            {isAuthor && <button onClick={handlePostEdit}>수정</button>}
-          </>
-        ) : (
-          <PostItemsEditView
-            isEditPost={isEditPost}
-            setIsEditPost={setIsEditPost}
-            post={post}
+      {!isEditPost ? (
+        <div className={styles.details}>
+          <h3>{post.title}</h3>
+          <p className={styles.date}>{post.createdAt.split("T")[0]}</p>
+          <p
+            className={styles.content}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(post.content)
+            }}
           />
-        )}
-      </div>
+
+          {isAuthor && <button onClick={handlePostEdit}>수정</button>}
+        </div>
+      ) : (
+        <PostItemsEditView
+          isEditPost={isEditPost}
+          setIsEditPost={setIsEditPost}
+          post={post}
+        />
+      )}
     </div>
   );
 };

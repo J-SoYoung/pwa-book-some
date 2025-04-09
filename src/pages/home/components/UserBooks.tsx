@@ -2,8 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import styles from "../styles/userBooks.module.css";
+
 import { getAllkDiaries } from "../service/getFirebaseData";
 import { LikeButton } from "./LikeButton";
+import { textFromHtml } from "@/shared/utils";
 
 export const UserBooks = () => {
   const navigate = useNavigate();
@@ -17,13 +19,6 @@ export const UserBooks = () => {
     <section className={styles.userBooks}>
       {allDiaries?.map((diaryData) => {
         const { book, diary, post, user } = diaryData;
-        const scriptText = (html: string, length = 70) => {
-          const tmp = document.createElement("div");
-          tmp.innerHTML = html;
-          const text = tmp.innerText;
-          return text.length > length ? text.slice(0, length) + "..." : text;
-        };
-
         return (
           <div className={styles.bookCard} key={diary.diaryId}>
             <div className={styles.imageBox}>
@@ -50,12 +45,7 @@ export const UserBooks = () => {
             >
               <h3>{diary.diaryTitle.slice(0,17)}</h3>
               <p>{post.title}</p>
-              <p>{scriptText(post.content)}</p>
-              {/* <p
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(post.content)
-                }}
-              /> */}
+              <p>{textFromHtml(post.content)}</p>
             </div>
           </div>
         );

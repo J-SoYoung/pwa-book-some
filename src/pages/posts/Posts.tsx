@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import ReactQuill from "react-quill";
 
 import styles from "./styles/post.module.css";
+import "react-quill/dist/quill.snow.css";
 import { handleSubmitForm } from "./service/handleSubmitForm";
 
 import { userState } from "@/shared/recoil/atoms";
@@ -26,6 +28,7 @@ export const Posts = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { isSubmitting, errors }
   } = useForm<DiaryFormDataType>();
 
@@ -107,16 +110,22 @@ export const Posts = () => {
           <label className={styles.formLabel} htmlFor="content">
             오늘 읽은 부분을 기록해보세요.
           </label>
-          <textarea
-            id="content"
-            placeholder="나의 느낀점을 자유롭게 작성해보세요."
-            {...register("content", {
-              required: "독서 포스팅 내용용은 필수입니다.",
-              minLength: {
-                value: 30,
-                message: "포스팅 내용은 30자리 이상으로 작성해주세요."
-              }
-            })}
+          <Controller
+            name="content"
+            control={control}
+            rules={{
+              required: "독서 포스팅 내용은 필수입니다.",
+              validate: (value) =>
+                value.replace(/<(.|\n)*?>/g, "").length >= 30 ||
+                "포스팅 내용은 30자 이상으로 작성해주세요."
+            }}
+            render={({ field }) => (
+              <ReactQuill
+                theme="snow"
+                placeholder="오늘 독서 후 느낀점은?"
+                {...field}
+              />
+            )}
           />
           {errors.content && (
             <small className={styles.errorMessage}>

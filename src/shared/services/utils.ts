@@ -1,7 +1,7 @@
 import { get, ref } from "firebase/database";
 import { database } from "./firebase";
-import { newPostType } from "@/pages/diaries/components/PostItems";
 import { diaryDataType } from "@/pages/postsNew/service/handleSubmitForm";
+import { newPostType } from "@/pages/diaries/types";
 
 // 배열을 랜덤하게 섞어주는 함수
 export const shuffleArray = <T>(array: T[]): T[] => {

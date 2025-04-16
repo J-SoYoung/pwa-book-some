@@ -1,0 +1,25 @@
+.desktop__layout {
+  display: flex;
+}
+.desktop__contents {
+  min-height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.tablet__contents {
+  width: 100%;
+  min-height: 100vh;
+  padding: 16px 24px;
+  box-sizing: border-box;
+  justify-content: center;
+}
+.mobile__contents {
+  width: 100%;
+  min-height: 100vh;
+}
+.mobile__contents > section {
+  padding: 16px;
+  box-sizing: border-box;
+}

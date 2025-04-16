@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "../index.css";
 
-import PWABadge from "./components/PWABadge";
-import Layout from "@/shared/components/layout/Layout";
+// import PWABadge from "./components/PWABadge";
+// import Layout from "@/shared/components/layout/Layout";
+import { NewLayout } from "@/shared/components/newLayout/NewLayout";
 
 import Home from "@/pages/home/";
 import Login from "@/pages/login";
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout />,
+    element: <NewLayout />,
     children: [
       {
         path: "/home",
@@ -67,7 +68,7 @@ const router = createBrowserRouter([
 export default function Router() {
   return (
     <>
-      <PWABadge />
+      {/* <PWABadge /> */}
       <RouterProvider router={router} />
     </>
   );

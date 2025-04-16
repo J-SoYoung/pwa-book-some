@@ -1,4 +1,4 @@
-import styles from "../styles/userBooks.module.css";
+import styles from "../styles/userBooksSkeleton.module.css";
 
 export const UserBookSkeleton = () => {
   return (

@@ -1,53 +1,81 @@
 :root {
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  /* width */
+  --mobile: 480px;
+  --tablet: 768px;
+  --desktop: 1280px;
+
+  /* font */
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  font-size: 16px;
 
-  color-scheme: light dark;
-  background-color: #eee;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-h1: 2.25rem;
+  --font-h2: 2rem;
+  --font-h3: 1.25rem;
+  --font-base: 1rem;
+  --font-small: 0.9rem;
 }
-
 a {
-  font-weight: 500;
   color: black;
   text-decoration: none;
 }
+
+h1 {
+  font-size: var(--font-h1);
+}
+h2 {
+  font-size: var(--font-h2);
+}
+h3 {
+  font-size: var(--font-h3);
+}
+p,
+div,
+li {
+  font-size: var(--font-base);
+}
+
 p,
 div,
 h1,
 h2,
 h3,
-h4 {
+h4,
+body {
   margin: 0;
   padding: 0;
 }
 
-h1 {
-  font-size: 2rem;
-}
-h2 {
-  font-size: 1.2rem;
-}
-h3 {
-  font-size: 1rem;
-}
-p {
-  font-size: 0.8rem;
+/* mobile */
+@media (max-width: 480px) {
+  :root {
+    --font-h1: 1.75rem;
+    --font-h2: 1.25rem;
+    --font-h3: 1rem;
+    --font-base: 0.9rem;
+  }
 }
 
-body {
-  max-width: 400px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding-bottom: 60px;
-  box-sizing: border-box;
-  background-color: white;
-  box-shadow: 2px 2px 5px #bebebe;
+/* tablet */
+@media (min-width: 481px) and (max-width: 1279px) {
+  :root {
+    --font-h1: 2rem;
+    --font-h2: 1.5rem;
+    --font-h3: 1.25rem;
+    --font-base: 0.95rem;
+  }
+}
+
+/* desktop */
+@media (min-width: 1280px) and (max-width: 1600px) {
+  body {
+    border: 1px solid #666;
+  }
 }
 
 /* Editor Styling */
@@ -62,7 +90,7 @@ body {
 }
 .ql-editor {
   padding: 1rem;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 15px;
   color: #333;
 }

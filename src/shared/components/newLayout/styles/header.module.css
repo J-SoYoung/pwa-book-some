@@ -15,8 +15,6 @@
   background-color: #eee;
 }
 
-
-
 /* 모바일은 유저명만 보여줌 */
 @media (max-width: 480px) {
   .button {
@@ -28,11 +26,9 @@
 @media (min-width: 1280px) {
   .header {
     height: 100px;
+    justify-content: right;
   }
   .logo {
     display: none;
-  }
-  .header {
-    justify-content: right;
   }
 }

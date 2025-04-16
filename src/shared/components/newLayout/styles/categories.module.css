@@ -1,0 +1,56 @@
+.top__navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0 ;
+  box-sizing: border-box;
+}
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  list-style: none; /* 점 없애기 */
+  padding: 0;
+  margin: 0;
+}
+.categories li {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #333;
+  position: relative;
+  transition: color 0.2s ease;
+}
+.categories li:hover {
+  color: #000;
+}
+.categories li::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+.categories li:hover::after {
+  width: 100%;
+}
+
+/* mobile: 하단에 navbar 따로 배치 */
+@media (max-width: 480px) {
+  .search {
+    display: none;
+  }
+  .categories > li{
+    padding: 4px;
+  }
+}
+
+/* tablet: nav + 검색 포함 */
+@media (min-width: 481px) and (max-width: 1279px) {
+  .search {
+    display: block;
+  }
+}

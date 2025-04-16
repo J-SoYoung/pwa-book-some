@@ -1,0 +1,14 @@
+.bottom__navbar {
+  width: 100%;
+  height: 50px;
+  padding: 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+
+  position: fixed;
+  bottom: 0;
+}

@@ -1,0 +1,13 @@
+.sidebar {
+  display: none;
+  flex-direction: column;
+  padding: 16px;
+  background-color: #f4f4f4;
+}
+
+@media (min-width: 1280px) {
+  .sidebar {
+    display: flex;
+    width: 250px;
+  }
+}

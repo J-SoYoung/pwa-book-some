@@ -1,0 +1,38 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  box-sizing: border-box;
+}
+
+.right {
+  display: flex;
+  gap: 16px;
+}
+.right > a:hover {
+  background-color: #eee;
+}
+
+
+
+/* 모바일은 유저명만 보여줌 */
+@media (max-width: 480px) {
+  .button {
+    display: none;
+  }
+}
+
+/* desktop */
+@media (min-width: 1280px) {
+  .header {
+    height: 100px;
+  }
+  .logo {
+    display: none;
+  }
+  .header {
+    justify-content: right;
+  }
+}

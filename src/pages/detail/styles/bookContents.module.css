@@ -1,5 +1,5 @@
 .bookSection {
-  padding: 16px 8px;
+  padding: 24px;
   margin-bottom: 40px;
   display: flex;
   flex-direction: column;
@@ -8,27 +8,35 @@
   background-color: #eee;
   border-radius: 8px;
 }
-.bookSection > .title > p {
+.bookContainer {
+  text-align: center;
+}
+.title > p {
   font-size: 18px;
   font-weight: 600;
 }
-.bookSection > .title > a {
+.title > a {
   display: block;
   text-align: right;
   font-size: 14px;
 }
-.bookSection > .image {
+
+/* .bookInfo {
+  text-align: center;
+} */
+
+.bookInfo .imageContainer > img {
   width: 140px;
   height: 200px;
   margin: 20px;
 }
 
-.bookSection > .author {
+.bookInfo .imageContainer > p {
   font-weight: 700;
   margin-bottom: 16px;
 }
 
-.bookSection > .description {
+.bookInfo .description {
   display: -webkit-box;
   white-space: normal;
   -webkit-line-clamp: 6;
@@ -38,11 +46,32 @@
   text-overflow: ellipsis;
   margin-bottom: 16px;
 }
-.bookSection > .expanded {
+.expanded {
   display: block;
   -webkit-line-clamp: unset;
   line-clamp: unset;
   max-height: none;
   overflow: visible;
-  margin-bottom: 16px;
+  margin: 16px;
+  text-align: left;
+}
+
+/* tablet의 중간크기 ~ desktop */
+@media (min-width: 768px) {
+  .bookContainer {
+    width: 70%;
+  }
+  .title > a {
+    margin: 16px 0;
+  }
+  .bookInfo {
+    display: flex;
+    padding: 16px 0 32px 0;
+    box-sizing: border-box;
+  }
+  .bookInfo .description {
+    height: 300px;
+    margin: 0 16px;
+    text-align: left;
+  }
 }

@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import styles from "../styles/bookContents.module.css";
 import { getOneBookData } from "../service/getFirebaseData";
 
-
 export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleToggle = () => {
@@ -22,25 +21,32 @@ export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
 
   return (
     <section className={styles.bookSection}>
-      <div className={styles.title}>
-        <p>{book?.title}</p>
-        <Link
-          className={styles.bookLink}
-          to={book?.link as string}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          구매하러가기
-        </Link>
+      <div className={styles.bookContainer}>
+        <div className={styles.title}>
+          <p>{book?.title}</p>
+          <Link
+            to={book?.link as string}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            구매하러가기
+          </Link>
+        </div>
+        <div className={styles.bookInfo}>
+          <div className={styles.imageContainer}>
+            <img src={book?.image} alt={book?.title} />
+            <p>{book?.author} </p>
+          </div>
+          <p
+            className={
+              isExpanded ? `${styles.expanded}` : `${styles.description}`
+            }
+          >
+            {book?.description}
+          </p>
+        </div>
+        <button onClick={handleToggle}>{isExpanded ? "접기" : "더보기"}</button>
       </div>
-      <img className={styles.image} src={book?.image} alt={book?.title}  />
-      <p className={styles.author}>{book?.author} </p>
-      <p
-        className={isExpanded ? `${styles.expanded}` : `${styles.description}`}
-      >
-        {book?.description}
-      </p>
-      <button onClick={handleToggle}>{isExpanded ? "접기" : "더보기"}</button>
     </section>
   );
 };

@@ -5,6 +5,7 @@ import { DiaryWithPostsType } from "@/shared/types/dataTypes";
 import { textFromHtml } from "@/shared/utils";
 
 export const DiaryItems = ({ diary, post, user }: DiaryWithPostsType) => {
+
   return (
     <div key={diary.diaryId} className={styles.diary}>
       <div className={styles.imgBox}>
@@ -17,7 +18,8 @@ export const DiaryItems = ({ diary, post, user }: DiaryWithPostsType) => {
       <div className={styles.contentBox}>
         <h3>{diary.diaryTitle}</h3>
         <p className={styles.subTitle}>{post.title}</p>
-        <p className={styles.content}>{textFromHtml(post.content)}</p>
+        <p className={styles.content}>
+        {textFromHtml(post.content)}</p>
       </div>
     </div>
   );

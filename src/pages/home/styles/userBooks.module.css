@@ -86,6 +86,7 @@
   font-weight: 700;
 }
 
+/* tablet의 중간크기 ~ desktop */
 @media (min-width: 768px) {
   .userBooks {
     grid-template-columns: repeat(2, 1fr);

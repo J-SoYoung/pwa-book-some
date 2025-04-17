@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
+import styles from "../styles/diaryList.module.css";
 import { DiaryItems } from "./DiaryItems";
 import { getBookWithDiaryPost } from "../service/getFirebaseData";
 
@@ -13,7 +14,7 @@ export const DiaryLists = ({ bookIsbn }: { bookIsbn: string }) => {
   });
 
   return (
-    <>
+    <section className={styles.diarySection}>
       {diaries?.map((diaryData) => {
         const { diary, post, user } = diaryData;
         return (
@@ -25,6 +26,6 @@ export const DiaryLists = ({ bookIsbn }: { bookIsbn: string }) => {
           />
         );
       })}
-    </>
+    </section>
   );
 };

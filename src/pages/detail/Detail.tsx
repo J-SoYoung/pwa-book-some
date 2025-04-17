@@ -8,12 +8,10 @@ export const Detail = () => {
 
   return (
     <>
-      <WrapperSuspense fallback={<DetailPageSkeleton />}>
+      <WrapperSuspense title="Detail" fallback={<DetailPageSkeleton />}>
         <BookContents bookIsbn={bookIsbn as string} />
-        <section>
-          <h3>같은 책을 읽으신 분들의 책장이에요!</h3>
-          <DiaryLists bookIsbn={bookIsbn as string} />
-        </section>
+        <h3>같은 책을 읽으신 분들의 책장이에요!</h3>
+        <DiaryLists bookIsbn={bookIsbn as string} />
       </WrapperSuspense>
     </>
   );

@@ -1,6 +1,6 @@
-import styles from "../styles/diaryItemSkeleton.module.css";
+import styles from "../styles/diaryPageSkeleton.module.css";
 
-export const DiaryItemSkeleton = () => {
+const DiaryItemSkeleton = () => {
   return (
     <>
       <div className={styles.title} />
@@ -10,7 +10,7 @@ export const DiaryItemSkeleton = () => {
     </>
   );
 };
-export const PostListsSkeleton = () => {
+const PostListsSkeleton = () => {
   return (
     <div className={styles.postSkeleton}>
       {[1, 2, 3].map((_, index) => (

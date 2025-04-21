@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { updateDiary } from "../service/updateFirebaseData";
 import { InputEditField } from "@/shared/components";
-import styles from "../styles/diaries.module.css";
+import styles from "../styles/diaryPageSkeleton.module.css";
 import { DiaryWithUserType } from "@/shared/types/dataTypes";
 
 type DiaryEditViewProps = {

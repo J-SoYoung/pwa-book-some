@@ -3,7 +3,7 @@ import { WrapperSuspense,ItemsSkeleton } from "@/shared/components";
 
 export const Home = () => {
   return (
-    <>
+    <main>
       <WrapperSuspense title="이 책을 추천합니다" fallback={<ItemsSkeleton />}>
         <RecommededBooks />
       </WrapperSuspense>
@@ -13,6 +13,6 @@ export const Home = () => {
       >
         <UserBooks />
       </WrapperSuspense>
-    </>
+    </main>
   );
 };

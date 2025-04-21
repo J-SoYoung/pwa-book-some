@@ -1,7 +1,7 @@
 .itemListBox {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 한 줄에 3개 */
+  grid-template-columns: repeat(5, 1fr); /* 한 줄에 5개 */
   gap: 8px; /* 카드 사이 간격 */
-  padding: 16px 0;
+  padding: 8px 0 32px 0;
   box-sizing: border-box;
 }

@@ -3,7 +3,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 
 import { ErrorFallback } from "./ErrorFallback";
-import styles from "./wrapperSuspense.module.css";
 
 interface WrapperSuspenseProps {
   title?: string;
@@ -19,10 +18,10 @@ export const WrapperSuspense = ({
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
-      <section className={styles.section__wrapper}>
+      <Suspense fallback={fallback}>
         {title && <h3>{title}</h3>}
-        <Suspense fallback={fallback}>{children}</Suspense>
-      </section>
+        {children}
+      </Suspense>
     </ErrorBoundary>
   );
 };

@@ -13,9 +13,11 @@ export const Items = ({ data }: ItemsProps) => {
   const { url, imageUrl, title } = data;
 
   return (
-    <Link to={url} key={url} className={styles.bookItem}>
-      <img src={imageUrl} alt={title} />
-      <h3>{title}</h3>
-    </Link>
+    <article>
+      <Link to={url} key={url} className={styles.bookItem}>
+        <img src={imageUrl} alt={title} />
+        <h3>{title}</h3>
+      </Link>
+    </article>
   );
 };

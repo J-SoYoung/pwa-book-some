@@ -20,7 +20,7 @@ export const UserBooks = () => {
       {allDiaries?.map((diaryData) => {
         const { book, diary, post, user } = diaryData;
         return (
-          <div className={styles.bookCard} key={diary.diaryId}>
+          <article className={styles.bookCard} key={diary.diaryId}>
             <div className={styles.imageBox}>
               <img
                 className={styles.bookImage}
@@ -47,7 +47,7 @@ export const UserBooks = () => {
               <p>{post.title}</p>
               <p>{textFromHtml(post.content)}</p>
             </div>
-          </div>
+          </article>
         );
       })}
     </section>

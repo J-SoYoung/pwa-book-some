@@ -3,7 +3,7 @@ import { WrapperSuspense } from "@/shared/components";
 
 export const Diaries = () => {
   return (
-    <WrapperSuspense title="Diaries" fallback={<DiaryPageSkeleton />}>
+    <WrapperSuspense fallback={<DiaryPageSkeleton />}>
       <DiaryContent />
     </WrapperSuspense>
   );

@@ -17,7 +17,7 @@ export const PostItems = ({ post, isAuthor }: PostsPropsType) => {
   };
 
   return (
-    <div className={styles.postsItems}>
+    <article className={styles.article}>
       {!isEditPost ? (
         <div className={styles.details}>
           <h3>{post.title}</h3>
@@ -38,6 +38,6 @@ export const PostItems = ({ post, isAuthor }: PostsPropsType) => {
           post={post}
         />
       )}
-    </div>
+    </article>
   );
 };

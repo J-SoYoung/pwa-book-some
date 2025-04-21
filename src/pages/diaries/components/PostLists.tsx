@@ -1,4 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+import styles from "../styles/postItems.module.css";
 
 import { PostItems } from "./PostItems";
 import { getAllPostsData } from "@/shared/apis/apis";
@@ -17,13 +18,13 @@ export const PostLists = ({ diaryId, isAuthor }: PostListsProps) => {
   });
 
   return (
-    <>
+    <section className={styles.section}>
       {posts &&
         posts.map((post) => {
           return (
             <PostItems key={post.postId} post={post} isAuthor={isAuthor} />
           );
         })}
-    </>
+    </section>
   );
 };

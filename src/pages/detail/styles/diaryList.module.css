@@ -1,14 +1,12 @@
-.diarySection {
-  width: 100%;
+.article {
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin: 16px 0;
 }
-
 /* tablet의 중간크기 ~ desktop */
 @media (min-width: 768px) {
-  .diarySection {
+  .article {
     flex-direction: row;
     justify-content: space-between;
   }

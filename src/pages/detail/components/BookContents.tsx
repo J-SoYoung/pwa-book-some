@@ -5,7 +5,13 @@ import { Link } from "react-router-dom";
 import styles from "../styles/bookContents.module.css";
 import { getOneBookData } from "../service/getFirebaseData";
 
-export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
+export const BookContents = ({
+  bookIsbn,
+  title
+}: {
+  bookIsbn: string;
+  title?: string;
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
@@ -21,6 +27,7 @@ export const BookContents = ({ bookIsbn }: { bookIsbn: string }) => {
 
   return (
     <section className={styles.bookSection}>
+      {title && <h3>{title}</h3>}
       <div className={styles.bookContainer}>
         <div className={styles.title}>
           <p>{book?.title}</p>

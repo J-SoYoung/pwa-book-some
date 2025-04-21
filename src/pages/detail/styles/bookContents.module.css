@@ -7,10 +7,9 @@
   position: relative;
   background-color: #eee;
   border-radius: 8px;
-}
-.bookContainer {
   text-align: center;
 }
+
 .title > p {
   font-size: 18px;
   font-weight: 600;
@@ -20,10 +19,6 @@
   text-align: right;
   font-size: 14px;
 }
-
-/* .bookInfo {
-  text-align: center;
-} */
 
 .bookInfo .imageContainer > img {
   width: 140px;

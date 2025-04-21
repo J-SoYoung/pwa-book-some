@@ -3,11 +3,11 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/shared/recoil/atoms";
 
-import styles from "../styles/diaries.module.css";
 import { getDiaryWithUserData } from "../service/getFirebaseData";
 import { DiaryItem, PostLists } from "../index";
 
 import { UserType } from "@/shared/types/dataTypes";
+import { SectionHeader } from "@/shared/components";
 
 export const DiaryContent = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
@@ -24,7 +24,8 @@ export const DiaryContent = () => {
   const isAuthor = diary?.user.userId === user?.userId;
 
   return (
-    <main className={styles.diariesContainer}>
+    <main>
+      <SectionHeader title='Diary'/>
       {diary && <DiaryItem diary={diary} isAuthor={isAuthor} />}
       <PostLists diaryId={diaryId as string} isAuthor={isAuthor} />
     </main>

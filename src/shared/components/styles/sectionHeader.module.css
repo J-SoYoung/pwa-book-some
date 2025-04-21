@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.header > .backButton {
+  margin-right: 16px;
+  cursor: pointer;
+}
+.header h2 {
+  font-size: var(--font-h2);
+}

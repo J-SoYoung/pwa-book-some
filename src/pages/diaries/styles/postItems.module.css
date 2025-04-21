@@ -1,8 +1,13 @@
 /* PostsItems */
-.postsItems {
+.section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr; /* 모바일 기본: 한 줄에 1개 */
+  gap: 1rem ;
+}
+.article {
   padding: 16px;
   box-sizing: border-box;
-  margin-bottom: 16px;;
   border: 1px solid #9c9c9c;
 }
 
@@ -31,4 +36,11 @@
 /* PostItemsEditView */
 .quillEditor {
   margin: 16px 0;
+}
+
+/* tablet의 중간크기 ~ desktop */
+@media (min-width: 768px) {
+  .section {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

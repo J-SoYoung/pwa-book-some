@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
 
 import { DiaryLists, BookContents, DetailPageSkeleton } from "./index";
-import { WrapperSuspense } from "@/shared/components";
+import { SectionHeader, WrapperSuspense } from "@/shared/components";
 
 export const Detail = () => {
   const { bookIsbn } = useParams<{ bookIsbn: string }>();
 
   return (
     <main>
+      <SectionHeader title="Detail" />
       <WrapperSuspense fallback={<DetailPageSkeleton />}>
         <BookContents bookIsbn={bookIsbn as string} />
         <DiaryLists

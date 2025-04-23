@@ -4,7 +4,8 @@ import { LikeDiariesContents, ReadingBookContents } from "./index";
 
 import { userState } from "@/shared/recoil/atoms";
 import { UserType } from "@/shared/types/dataTypes";
-import { WrapperSuspense,ItemsSkeleton } from "@/shared/components";
+import { SectionHeader, WrapperSuspense } from "@/shared/components";
+import { MyBookSkeleton } from "./components/MyBookSkeleton";
 
 export const MyBook = () => {
   const navigate = useNavigate();
@@ -16,13 +17,12 @@ export const MyBook = () => {
   }
 
   return (
-    <>
-      <WrapperSuspense title="읽고 있는 책" fallback={<ItemsSkeleton />}>
-        <ReadingBookContents />
+    <main>
+      <SectionHeader title="내서재" />
+      <WrapperSuspense fallback={<MyBookSkeleton />}>
+        <ReadingBookContents title="읽고 있는 책" />
+        <LikeDiariesContents title="좋아요 한 다이어리" />
       </WrapperSuspense>
-      <WrapperSuspense title="좋아요 한 다이어리" fallback={<ItemsSkeleton />}>
-        <LikeDiariesContents />
-      </WrapperSuspense>
-    </>
+    </main>
   );
 };

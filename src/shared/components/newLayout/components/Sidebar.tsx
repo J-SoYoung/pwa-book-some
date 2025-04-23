@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "../styles/sidebar.module.css";
 import { SearchBar } from "./SearchBar";
 
@@ -5,7 +6,9 @@ export const Sidebar = () => {
   return (
     <>
       <aside className={styles.sidebar}>
-        <h1 className={styles.logo}>BOOKSOME</h1>
+        <h1 className={styles.logo}>
+          <Link to="/home">BOOKSOME</Link>
+        </h1>
         <SearchBar />
         <ul className={styles.categoryList}>
           <li>IT</li>

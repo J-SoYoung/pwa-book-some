@@ -7,7 +7,7 @@ import { getMyBookData } from "../service/getFirebaseData";
 import { userState } from "@/shared/recoil/atoms";
 import { UserType } from "@/shared/types/dataTypes";
 
-export const ReadingBookContents = () => {
+export const ReadingBookContents = ({ title }: { title: string }) => {
   const user = useRecoilValue(userState) as UserType;
 
   const { data: readingBookDiaries } = useSuspenseQuery({
@@ -18,14 +18,13 @@ export const ReadingBookContents = () => {
   });
 
   return (
-    <>
-      <p>
-        {user?.username}님 총 {readingBookDiaries?.length}권의 책을 읽으셨네요!
-      </p>
+    <section>
+      {title && <h3>{title}</h3>}
+      <p>총 {readingBookDiaries?.length}권의 책을 읽으셨네요!</p>
       <ItemLists
         diaries={readingBookDiaries}
         noDataText="읽을 책을 추가해주세요!"
       />
-    </>
+    </section>
   );
 };

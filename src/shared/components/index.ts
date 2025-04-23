@@ -1,5 +1,4 @@
 import { Items } from "./items/Items";
-import { ItemsSkeleton } from "./items/ItemsSkeleton";
 import { InputField, InputEditField, TextareaField } from "./InputField";
 import { PopupButton } from "./PopupButton";
 import { ScrollTopButton } from "./ScrollTopButton";
@@ -10,7 +9,6 @@ import { SectionHeader } from "./SectionHeader";
 
 export {
   Items,
-  ItemsSkeleton,
   InputField,
   InputEditField,
   TextareaField,

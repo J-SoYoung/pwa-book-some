@@ -23,31 +23,3 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* ItemSkeleton */
-.skeletonContainer {
-  margin-bottom: 32px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 4px;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-}
-.skeletonItem {
-  width: 120px;
-  height: 165px;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 8px;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
